@@ -4,6 +4,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Contexts;
 
-public class DataContext(DbContextOptions<DataContext> options) : IdentityDbContext<AppUser>(options)
+public class DataContext(DbContextOptions<DataContext> options) : IdentityDbContext<MemberEntity>(options)
 {
+    public DbSet<ProjectEntity> Projects { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<ProjectEntity>()
+            .HasMany(x => x.Members)
+            .WithMany(x => x.Projects)
+            .UsingEntity(j => j.ToTable("ProjectMembers"));
+    }
 }
