@@ -2,7 +2,7 @@
 
 namespace WebApp.ViewModels
 {
-    public class MemberSignUpViewModel
+    public class SignUpViewModel
     {
         [Required(ErrorMessage = "First name is required")]
         [Display(Name = "First Name")]
@@ -20,7 +20,7 @@ namespace WebApp.ViewModels
         [Required(ErrorMessage = "Password is required")]
         [Display(Name = "Password")]
         [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-    ErrorMessage = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.")]
+        ErrorMessage = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.")]
         public string Password { get; set; } = null!;
 
         [Required(ErrorMessage = "Confirm password is required")]

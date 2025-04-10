@@ -9,7 +9,13 @@ public class MemberFactory
     {
         FirstName = dto.FirstName,
         LastName = dto.LastName,
-        UserName = dto.Email,
-        Role = dto.Role ?? "User"
+        Email = dto.Email,
+        PhoneNumber = dto.PhoneNumber,
+        JobTitle = dto.JobTitle,
+        Address = dto.Address,
+        DateOfBirth = dto.DateOfBirth,
+
+        //Just the name is needed
+        Projects = dto.Projects.Select(ProjectFactory.CreateEntity).ToList()
     };
 }

@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿namespace Data.Entities;
 
-namespace Data.Entities;
-
-public class MemberEntity : IdentityUser
+public class MemberEntity
 {
-    [ProtectedPersonalData]
     public string FirstName { get; set; } = null!;
-
-    [ProtectedPersonalData]
     public string LastName { get; set; } = null!;
-    public string Role { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
+    public string JobTitle { get; set; } = null!;
+    public string Address { get; set; } = null!;
+    public DateOnly DateOfBirth { get; set; }
 
     public ICollection<ProjectEntity> Projects { get; set; } = [];
 }

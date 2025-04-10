@@ -6,14 +6,9 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(UserService userService) : Controller
     {
-        private readonly MemberService _memberService;
-
-        public AuthController(MemberService memberService)
-        {
-            _memberService = memberService;
-        }
+        private readonly UserService _userService = userService;
 
         [HttpGet]
         public IActionResult SignIn()
@@ -27,7 +22,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _memberService.SignInAsync(form.Email, form.Password);
+                var result = await _userService.SignInAsync(form.Email, form.Password);
                 if (result.Succeeded)
                 {
                     return LocalRedirect(returnUrl);
@@ -37,10 +32,11 @@ namespace WebApp.Controllers
             return View(form);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SignOut()
+
+        [Authorize]
+        public new async Task<IActionResult> SignOut()
         {
-            await _memberService.LogoutAsync();
+            await _userService.SignOutAsync();
             return RedirectToAction("Homepage", "Home");
         }
     }

@@ -1,34 +1,34 @@
 ﻿using Business.Dtos;
 using Business.Factories;
+using Business.Interfaces;
 using Data.Entities;
+using Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business.Services;
 
-public class MemberService(UserManager<MemberEntity> userManager, SignInManager<MemberEntity> signInManager)
+public class MemberService(MemberRepository memberRepository) : IMemberService
 {
-    private readonly UserManager<MemberEntity> _userManager = userManager;
-    private readonly SignInManager<MemberEntity> _signInManager = signInManager;
+    private readonly MemberRepository _memberRepository = memberRepository;
 
-    public async Task<IdentityResult> CreateMemberAsync(MemberDto dto, string password)
+    public async Task<bool> CreateMemberAsync(MemberDto dto)
     {
-        var member = MemberFactory.CreateEntity(dto);
-        var result = await _userManager.CreateAsync(member, password);
-        return result;
-    }
-
-    public async Task<SignInResult> SignInAsync(string email, string password)
-    {
-        var user = await _userManager.FindByEmailAsync(email);
-        if (user != null)
+        await _memberRepository.BeginTransactionAsync();
+        try
         {
-            return await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
+            var member = MemberFactory.CreateEntity(dto);
+            var result = await _memberRepository.CreateAsync(member);
+            if (result)
+            {
+                await _memberRepository.CommitTransactionAsync();
+                return true;
+            }
+            return false;
         }
-        return SignInResult.Failed;
-    }
-
-    public async Task LogoutAsync()
-    {
-        await _signInManager.SignOutAsync();
+        catch
+        {
+            await _memberRepository.RollbackTransactionAsync();
+            throw;
+        }
     }
 }

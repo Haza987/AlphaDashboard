@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Contexts;
 
-public class DataContext(DbContextOptions<DataContext> options) : IdentityDbContext<MemberEntity>(options)
+public class DataContext(DbContextOptions<DataContext> options) : IdentityDbContext<UserEntity>(options)
 {
     public DbSet<ProjectEntity> Projects { get; set; } = null!;
+    public DbSet<MemberEntity> Members { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

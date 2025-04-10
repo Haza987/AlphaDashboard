@@ -13,12 +13,7 @@ public class ProjectFactory
         ProjectDescription = dto.ProjectDescription,
         StartDate = dto.StartDate,
         EndDate = dto.EndDate,
-        Budget = dto.Budget,
-        Members = dto.Members.Select(m => new MemberEntity
-        {
-            FirstName = m.FirstName,
-            LastName = m.LastName
-        }).ToList()
+        Budget = dto.Budget
     };
 
     

@@ -1,3 +1,4 @@
+using Business.Interfaces;
 using Business.Services;
 using Data.Contexts;
 using Data.Entities;
@@ -8,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
-builder.Services.AddIdentity<MemberEntity, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+builder.Services.AddIdentity<UserEntity, IdentityRole>().AddEntityFrameworkStores<DataContext>();
 
-builder.Services.AddScoped<MemberService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

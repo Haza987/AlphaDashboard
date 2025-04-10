@@ -6,6 +6,7 @@ namespace WebApp.Controllers
     {
         public IActionResult Members()
         {
+            ViewBag.Title = "Members";
             return View();
         }
     }
