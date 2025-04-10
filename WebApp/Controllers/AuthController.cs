@@ -1,32 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Dtos;
+using Business.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
     public class AuthController : Controller
     {
-        #region Sign Up
+        private readonly MemberService _memberService;
 
-        public IActionResult SignUp()
+        public AuthController(MemberService memberService)
         {
-            ViewBag.Title = "Sign Up";
-            return View();
+            _memberService = memberService;
         }
-        #endregion
 
-        #region Sign In
+        [HttpGet]
         public IActionResult SignIn()
         {
             ViewBag.Title = "Sign In";
-            return View();
+            return View(new SignInViewModel());
         }
 
-        #endregion
-
-        #region Sign Out
-        public new IActionResult SignOut()
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInViewModel form, string returnUrl = "~/")
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = await _memberService.SignInAsync(form.Email, form.Password);
+                if (result.Succeeded)
+                {
+                    return LocalRedirect(returnUrl);
+                }
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+            return View(form);
         }
-        #endregion
+
+        [HttpPost]
+        public async Task<IActionResult> SignOut()
+        {
+            await _memberService.LogoutAsync();
+            return RedirectToAction("Homepage", "Home");
+        }
     }
 }

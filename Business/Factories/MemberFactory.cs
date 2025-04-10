@@ -9,11 +9,7 @@ public class MemberFactory
     {
         FirstName = dto.FirstName,
         LastName = dto.LastName,
-        Email = dto.Email,
-        Role = dto.Role,
-        Projects = dto.Projects.Select(p => new ProjectEntity
-        {    
-            ProjectName = p.ProjectName
-        }).ToList()
+        UserName = dto.Email,
+        Role = dto.Role ?? "User"
     };
 }
