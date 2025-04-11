@@ -16,7 +16,7 @@ public class MemberService(MemberRepository memberRepository) : IMemberService
         await _memberRepository.BeginTransactionAsync();
         try
         {
-            var member = MemberFactory.CreateEntity(dto);
+            var member = MemberFactory.CreateMemberEntity(dto);
             var result = await _memberRepository.CreateAsync(member);
             if (result)
             {

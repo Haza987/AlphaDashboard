@@ -5,7 +5,7 @@ namespace Business.Factories;
 
 public class MemberFactory
 {
-    public static MemberEntity CreateEntity(MemberDto dto) => new()
+    public static MemberEntity CreateMemberEntity(MemberDto dto) => new()
     {
         FirstName = dto.FirstName,
         LastName = dto.LastName,

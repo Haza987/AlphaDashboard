@@ -21,8 +21,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contexts\Migrations\" />
-  </ItemGroup>
-
 </Project>
