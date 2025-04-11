@@ -61,7 +61,7 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
         await _userRepository.BeginTransactionAsync();
         var userEntity = await _userRepository.GetAsync(x => x.Id == id);
 
-        if(userEntity == null)
+        if (userEntity == null)
         {
             return false;
         }
@@ -74,6 +74,7 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
             {
                 await _userRepository.CommitTransactionAsync();
             }
+
             return true;
         }
         catch

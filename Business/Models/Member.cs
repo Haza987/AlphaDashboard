@@ -1,6 +1,8 @@
-﻿namespace Business.Dtos;
+﻿using Business.Dtos;
 
-public class MemberDto
+namespace Business.Models;
+
+public class Member
 {
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
@@ -9,6 +11,5 @@ public class MemberDto
     public string JobTitle { get; set; } = null!;
     public string Address { get; set; } = null!;
     public DateOnly DateOfBirth { get; set; }
-
-    public List<string> ProjectNames { get; set; } = [];
+    public List<ProjectDto> Projects { get; set; } = [];
 }

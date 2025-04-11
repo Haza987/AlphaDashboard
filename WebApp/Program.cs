@@ -1,26 +1,30 @@
+using Business.Factories;
 using Business.Interfaces;
 using Business.Services;
 using Data.Contexts;
 using Data.Entities;
-using Data.Repositories; // Add this namespace
+using Data.Interfaces;
+using Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
-
-// Register DataContext with connection string
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 
-// Register Identity services
 builder.Services.AddIdentity<UserEntity, IdentityRole>()
     .AddEntityFrameworkStores<DataContext>();
 
-// Register application services
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<MemberFactory>();
+
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<MemberRepository>(); // Register MemberRepository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserFactory>();
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 var app = builder.Build();
 
