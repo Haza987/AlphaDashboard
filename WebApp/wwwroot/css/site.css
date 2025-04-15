@@ -1,0 +1,1473 @@
+:root {
+    --accent: #2D99FF;
+    --accent-dark: #2682D9;
+    --background-light: #F1F3F7;
+    --body-light: #637085;
+    --body-dark: #28263B;
+    --border-100: #EBEEF2;
+    --border-200: #E3E5E8;
+    --border-300: #C6C8CC;
+    --gray-100: #F5F7FA;
+    --gray-200: #F0F1F5;
+    --gray-300: #E8EAED;
+    --gray-400: #E3E5E8;
+    --heading: #1A1926;
+    --surface: #FFFFFF;
+    --blue: #2CD9D9;
+    --green: #31D482;
+    --orange: #FF9640;
+    --purple: #826AF9;
+    --red: #FF6640;
+    --yellow: #FFD422;
+    --dark-blue: #1A8FE3;
+    --dark-green: #24B26B;
+    --dark-orange: #F09330;
+    --dark-purple: #6A4FF9;
+    --dark-red: #E94D3F;
+    --dark-yellow: #FCBB42;
+    --accent-opacity: rgba(26, 140, 255, 0.1);
+    --green-opacity: rgba(85, 212, 106, 0.1);
+    --red-opacity: rgba(255, 102, 64, 0.1);
+    --purple-opactiy: rgba(130, 106, 249, 0.1);
+}
+
+.btn {
+    font-size: 16px;
+    height: 3rem;
+    border-radius: 1rem;
+    background-color: var(--accent);
+    border: none;
+    color: var(--surface);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn--add {
+    width: 10rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+}
+
+.btn--create, .btn--update {
+    width: 90%;
+}
+
+.btn--signup, .btn--signin {
+    width: 24rem;
+    margin: 2rem 0 1rem 0;
+}
+
+body {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Nunito, sans-serif;
+    font-style: normal;
+    color: var(--heading);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--background-light);
+    margin: 0;
+}
+
+.container {
+    padding-inline: 1rem;
+    width: 100%;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 200px 1fr;
+    height: 100vh;
+    grid-template-areas: "sidebar header" "sidebar main" "sidebar footer";
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    align-items: center;
+}
+
+#admin-signin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "left right";
+    gap: 1rem;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+    #admin-signin .left-side {
+        grid-area: left;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        /* Github Copilot helped me with the blurring of the image */
+    }
+
+        #admin-signin .left-side img {
+            -o-object-fit: cover;
+            object-fit: cover;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: calc(100% + 30px);
+            height: calc(100vh + 30px);
+            filter: blur(10px);
+        }
+
+        #admin-signin .left-side .admin-signin-text {
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            color: white;
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+            #admin-signin .left-side .admin-signin-text .admin-signin-title {
+                display: flex;
+                flex-direction: column;
+                font-size: 2.5rem;
+            }
+
+            #admin-signin .left-side .admin-signin-text .orange {
+                margin-top: -3.5rem;
+                color: var(--orange);
+            }
+
+    #admin-signin .right-side {
+        grid-area: right;
+    }
+
+        #admin-signin .right-side iframe {
+            width: 100%;
+            height: 100vh;
+        }
+
+#header {
+    grid-area: header;
+    height: 80px;
+    border-bottom: 2px solid var(--border-200);
+    margin-right: -1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+    #header .header-left {
+        display: flex;
+        gap: 1rem;
+    }
+
+        #header .header-left .search {
+            border: none;
+            outline: none;
+            background-color: var(--background-light);
+        }
+
+    #header .header-right {
+        display: flex;
+        gap: 2rem;
+        margin-left: auto;
+        padding-right: 1rem;
+        position: relative;
+    }
+
+        #header .header-right i {
+            cursor: pointer;
+        }
+
+        #header .header-right .notification-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+            #header .header-right .notification-icon .notification-indicator {
+                /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+                /* display: none; */
+                position: absolute;
+                top: -0.1rem;
+                right: -0.23rem;
+                width: 0.6em;
+                height: 0.6rem;
+                background-color: red;
+                border-radius: 50%;
+                border: 2px solid var(--surface);
+            }
+
+        #header .header-right .notification-container {
+            display: none;
+            /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+            /* display: flex; */
+            flex-direction: column;
+            position: absolute;
+            top: 1.5rem;
+            right: 5rem;
+            width: 22rem;
+            border-radius: 1rem;
+            padding: 1rem;
+            background-color: var(--surface);
+            z-index: 1;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+            #header .header-right .notification-container .notification-container-top {
+                grid-area: top;
+                height: 4rem;
+                display: flex;
+                border-bottom: 1px solid black;
+                margin-bottom: 1rem;
+                align-items: center;
+            }
+
+                #header .header-right .notification-container .notification-container-top p {
+                    margin-left: auto;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 20px;
+                    height: 20px;
+                    font-size: 11px;
+                    border-radius: 50%;
+                    background-color: var(--red);
+                    color: white;
+                }
+
+            #header .header-right .notification-container .notification-container-bottom {
+                grid-area: bottom;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+                #header .header-right .notification-container .notification-container-bottom .notification {
+                    width: 100%;
+                    height: 4.5rem;
+                    background-color: var(--gray-100);
+                    border-radius: 1rem;
+                    display: flex;
+                    align-items: center;
+                    padding: 0.5rem;
+                    gap: 1rem;
+                }
+
+                    #header .header-right .notification-container .notification-container-bottom .notification .notification-info .notification-title {
+                        font-size: 15px;
+                    }
+
+                    #header .header-right .notification-container .notification-container-bottom .notification .notification-info .notification-time {
+                        font-size: 14px;
+                        color: var(--body-light);
+                    }
+
+                    #header .header-right .notification-container .notification-container-bottom .notification i {
+                        margin-left: auto;
+                        cursor: pointer;
+                    }
+
+        #header .header-right::after {
+            content: "";
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border-200);
+            height: 2rem;
+        }
+
+    #header .user-icon {
+        margin-inline: 1rem;
+        width: 40px;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    #header .user-container {
+        display: none;
+        /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+        /* display: grid; */
+        position: absolute;
+        top: 4rem;
+        right: 5rem;
+        height: 13rem;
+        width: 18rem;
+        background-color: var(--surface);
+        border-radius: 1rem;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        z-index: 1;
+    }
+
+        #header .user-container .user {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding-inline: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        #header .user-container .dark-mode {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            border-bottom: 1px solid var(--border-200);
+            border-top: 1px solid var(--border-200);
+            padding-inline: 1rem;
+        }
+
+            #header .user-container .dark-mode .custom-checkbox {
+                display: none;
+            }
+
+            #header .user-container .dark-mode .custom-slider {
+                position: relative;
+                margin-left: auto;
+                width: 3rem;
+                height: 1.5rem;
+                background-color: var(--border-200);
+                border-radius: 1rem;
+                cursor: pointer;
+            }
+
+                #header .user-container .dark-mode .custom-slider::before {
+                    content: "";
+                    position: absolute;
+                    top: 0.25rem;
+                    left: 0.2rem;
+                    width: 1rem;
+                    height: 1rem;
+                    border-radius: 50%;
+                    background-color: var(--dark-green);
+                }
+
+                #header .user-container .dark-mode .custom-slider::after {
+                    /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+                    display: none;
+                    content: "";
+                    position: absolute;
+                    top: 0.25rem;
+                    right: 0.2rem;
+                    width: 1rem;
+                    height: 1rem;
+                    border-radius: 50%;
+                    background-color: var(--dark-green);
+                }
+
+        #header .user-container .logout {
+            display: flex;
+            align-items: center;
+            padding-inline: 1rem;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+#hero {
+    grid-area: main;
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+    #hero .hero-top {
+        display: flex;
+        align-items: center;
+    }
+
+        #hero .hero-top h2 {
+            color: var(--heading);
+            padding-top: 1rem;
+        }
+
+    #hero .hero-selection {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1rem;
+        margin-right: 1.5rem;
+        position: relative;
+    }
+
+        #hero .hero-selection::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0.4rem;
+            border-bottom: 2px solid var(--border-200);
+        }
+
+        #hero .hero-selection .active {
+            position: relative;
+        }
+
+            #hero .hero-selection .active::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -0.5rem;
+                height: 2px;
+                background-color: currentColor;
+                border-top-left-radius: 1rem;
+                border-top-right-radius: 1rem;
+            }
+
+    #hero .hero-main {
+        margin-top: 1.5rem;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+    }
+
+        #hero .hero-main .project-card {
+            display: grid;
+            width: 22rem;
+            height: 17rem;
+            padding: 1rem 1rem 0.5rem 1rem;
+            background-color: var(--surface);
+            border: 1px solid var(--border-200);
+            border-radius: 1rem;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-areas: "top" "description" "bottom";
+        }
+
+            #hero .hero-main .project-card .project-top {
+                grid-area: top;
+                display: flex;
+                align-items: center;
+                position: relative;
+                gap: 1rem;
+            }
+
+                #hero .hero-main .project-card .project-top .project-info .project-title {
+                    margin-bottom: -0.5rem;
+                    color: var(--heading);
+                }
+
+                #hero .hero-main .project-card .project-top .project-info .project-company {
+                    font-size: 14px;
+                    color: var(--body-light);
+                }
+
+                #hero .hero-main .project-card .project-top .more {
+                    margin-left: auto;
+                    margin-right: 1rem;
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: var(--gray-100);
+                    color: var(--body-light);
+                    border-radius: 1rem;
+                    cursor: pointer;
+                }
+
+                #hero .hero-main .project-card .project-top .more-expanded {
+                    /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+                    display: none !important;
+                    width: 15rem;
+                    height: 10rem;
+                    position: absolute;
+                    top: 3rem;
+                    right: 2.5rem;
+                    background-color: var(--surface);
+                    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    display: grid;
+                    grid-template-rows: 1fr 1fr 1fr;
+                    grid-template-areas: "edit" "add" "delete";
+                }
+
+                    #hero .hero-main .project-card .project-top .more-expanded .more-edit {
+                        grid-area: edit;
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                    }
+
+                    #hero .hero-main .project-card .project-top .more-expanded .more-add {
+                        grid-area: add;
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        border-top: 1px solid var(--border-100);
+                        border-bottom: 1px solid var(--border-100);
+                    }
+
+                    #hero .hero-main .project-card .project-top .more-expanded .more-delete {
+                        grid-area: delete;
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        color: var(--red);
+                    }
+
+            #hero .hero-main .project-card .description {
+                grid-area: description;
+            }
+
+            #hero .hero-main .project-card .project-bottom {
+                grid-area: bottom;
+                align-self: end;
+                display: flex;
+            }
+
+                #hero .hero-main .project-card .project-bottom .time-remaining {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 14px;
+                    width: 7rem;
+                    height: 2rem;
+                    border: 1px solid var(--border-200);
+                    border-radius: 1rem;
+                    background-color: var(--gray200);
+                    font-size: 14px;
+                    gap: 0.5rem;
+                }
+
+                #hero .hero-main .project-card .project-bottom .members {
+                    margin-left: auto;
+                }
+
+    #hero .over-box {
+        width: 30rem;
+        height: 90vh;
+        padding: 2rem 0.1rem 2rem 2rem;
+        border-radius: 1rem;
+        box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.1);
+        background-color: var(--surface);
+    }
+
+    #hero .over-box-content {
+        height: 100%;
+        padding-right: 0.9rem;
+        overflow: auto;
+    }
+
+    #hero .add-project {
+        display: none;
+        /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+    }
+
+        #hero .add-project .add-project-top {
+            display: flex;
+            align-items: center;
+        }
+
+            #hero .add-project .add-project-top i {
+                margin-left: auto;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+        #hero .add-project .add-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-inline: auto;
+            width: 10rem;
+            height: 10rem;
+            border: 2px dashed var(--border-300);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+            #hero .add-project .add-image i {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: var(--body-light);
+                border-radius: 50%;
+                color: #ffffff;
+            }
+
+        #hero .add-project .add-project-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+            #hero .add-project .add-project-form input {
+                height: 3rem;
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                padding-inline: 1rem;
+                width: 90%;
+            }
+
+            #hero .add-project .add-project-form textarea {
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                resize: none;
+                padding: 1rem;
+            }
+
+            #hero .add-project .add-project-form .name-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #hero .add-project .add-project-form .client-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #hero .add-project .add-project-form .description-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #hero .add-project .add-project-form .date-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                grid-template-areas: "start end";
+            }
+
+                #hero .add-project .add-project-form .date-container .project-start {
+                    grid-area: start;
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-direction: column;
+                }
+
+                #hero .add-project .add-project-form .date-container .project-end {
+                    grid-area: end;
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-direction: column;
+                }
+
+            #hero .add-project .add-project-form .members-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+                width: auto;
+                height: auto;
+                border: 5px solid black;
+            }
+
+            #hero .add-project .add-project-form .budget-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+                #hero .add-project .add-project-form .budget-container input {
+                    border: none;
+                }
+
+        #hero .add-project .add-project-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+    #hero .edit-project {
+        display: none;
+        /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+    }
+
+        #hero .edit-project .edit-project-top {
+            display: flex;
+            align-items: center;
+        }
+
+            #hero .edit-project .edit-project-top i {
+                margin-left: auto;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+        #hero .edit-project .edit-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-inline: auto;
+            width: 10rem;
+            height: 10rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+            #hero .edit-project .edit-image img {
+                width: 100%;
+                height: 100%;
+            }
+
+            #hero .edit-project .edit-image i {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: rgba(99, 112, 133, 0.8);
+                border-radius: 50%;
+                color: #ffffff;
+                cursor: pointer;
+                position: absolute;
+                bottom: 1rem;
+            }
+
+        #hero .edit-project .edit-project-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            color: var(--body-dark);
+        }
+
+            #hero .edit-project .edit-project-form input {
+                height: 3rem;
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                padding-inline: 1rem;
+                width: 90%;
+            }
+
+            #hero .edit-project .edit-project-form textarea {
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                height: 7.5rem;
+                resize: none;
+                padding: 1rem;
+            }
+
+            #hero .edit-project .edit-project-form .name-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #hero .edit-project .edit-project-form .client-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #hero .edit-project .edit-project-form .description-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #hero .edit-project .edit-project-form .date-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                grid-template-areas: "start end";
+            }
+
+                #hero .edit-project .edit-project-form .date-container .project-start {
+                    grid-area: start;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                #hero .edit-project .edit-project-form .date-container .project-end {
+                    grid-area: end;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                #hero .edit-project .edit-project-form .date-container input {
+                    cursor: pointer;
+                }
+
+            #hero .edit-project .edit-project-form .members-container {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                grid-template-areas: "title" "members icon";
+                gap: 0.5rem;
+                width: auto;
+                height: 4.5rem;
+                margin-bottom: 1rem;
+            }
+
+                #hero .edit-project .edit-project-form .members-container label {
+                    grid-template-areas: "title";
+                }
+
+                #hero .edit-project .edit-project-form .members-container .project-members {
+                    border: 1px solid var(--border-100);
+                    grid-template-areas: "members";
+                    margin-left: auto;
+                    padding: 0.2rem 0.5rem;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                    #hero .edit-project .edit-project-form .members-container .project-members .project-member {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        height: 3rem;
+                        width: auto;
+                        background-color: var(--gray-100);
+                        border-radius: 1rem;
+                        padding: 0.5rem;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+
+                    #hero .edit-project .edit-project-form .members-container .project-members i {
+                        margin-left: auto;
+                        cursor: pointer;
+                    }
+
+            #hero .edit-project .edit-project-form .budget-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+                #hero .edit-project .edit-project-form .budget-container input {
+                    border: none;
+                }
+
+        #hero .edit-project .edit-project-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+#members-main {
+    margin-top: 1.5rem;
+}
+
+    #members-main .members-container {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+        #members-main .members-container .member {
+            display: flex;
+            flex-direction: column;
+            width: 20rem;
+            height: 27rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+            #members-main .members-container .member .more {
+                margin-left: auto;
+                cursor: pointer;
+            }
+
+            #members-main .members-container .member .member-icon {
+                height: 10rem;
+                width: 10rem;
+            }
+
+            #members-main .members-container .member .name {
+                margin-bottom: -0.5rem;
+            }
+
+            #members-main .members-container .member .role {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 12px;
+                width: 10rem;
+                height: 2rem;
+                border-radius: 1rem;
+                background-color: var(--gray-200);
+            }
+
+            #members-main .members-container .member .email {
+                margin-bottom: -0.5rem;
+            }
+
+            #members-main .members-container .member .message {
+                cursor: pointer;
+            }
+
+            #members-main .members-container .member .name, #members-main .members-container .member .role, #members-main .members-container .member .message {
+                color: var(--heading);
+            }
+
+            #members-main .members-container .member .email, #members-main .members-container .member .phone {
+                color: var(--body-dark);
+            }
+
+    #members-main .over-box {
+        width: 30rem;
+        height: 90vh;
+        padding: 2rem 0.1rem 2rem 2rem;
+        border-radius: 1rem;
+        box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.1);
+        background-color: var(--surface);
+    }
+
+    #members-main .over-box-content {
+        height: 100%;
+        padding-right: 0.9rem;
+        overflow: auto;
+    }
+
+    #members-main .add-member {
+        display: none;
+    }
+
+        #members-main .add-member .add-member-top {
+            display: flex;
+            align-items: center;
+        }
+
+            #members-main .add-member .add-member-top i {
+                margin-left: auto;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+        #members-main .add-member .add-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-inline: auto;
+            width: 10rem;
+            height: 10rem;
+            border: 2px dashed var(--border-300);
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+
+            #members-main .add-member .add-image i {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: var(--body-light);
+                border-radius: 50%;
+                color: #ffffff;
+            }
+
+        #members-main .add-member .add-member-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+            #members-main .add-member .add-member-form input {
+                height: 3rem;
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                padding-inline: 1rem;
+                width: 90%;
+            }
+
+            #members-main .add-member .add-member-form textarea {
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                resize: none;
+                padding: 1rem;
+            }
+
+            #members-main .add-member .add-member-form .name-container {
+                display: flex;
+                gap: 0.5rem;
+            }
+
+            #members-main .add-member .add-member-form .email-container, #members-main .add-member .add-member-form .phone-container, #members-main .add-member .add-member-form .job-container, #members-main .add-member .add-member-form .address-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #members-main .add-member .add-member-form .date-of-birth-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1rem;
+                grid-template-areas: "start middle end";
+            }
+
+                #members-main .add-member .add-member-form .date-of-birth-container .day-container {
+                    grid-area: start;
+                }
+
+                #members-main .add-member .add-member-form .date-of-birth-container .month-container {
+                    grid-area: middle;
+                }
+
+                #members-main .add-member .add-member-form .date-of-birth-container .year-container {
+                    grid-area: end;
+                }
+
+                #members-main .add-member .add-member-form .date-of-birth-container .day-container, #members-main .add-member .add-member-form .date-of-birth-container .month-container, #members-main .add-member .add-member-form .date-of-birth-container .year-container {
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-direction: column;
+                }
+
+        #members-main .add-member .add-member-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+    #members-main .edit-member {
+        display: none;
+    }
+
+        #members-main .edit-member .edit-member-top {
+            display: flex;
+            align-items: center;
+        }
+
+            #members-main .edit-member .edit-member-top i {
+                margin-left: auto;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+        #members-main .edit-member .edit-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-inline: auto;
+            width: 10rem;
+            height: 10rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+            #members-main .edit-member .edit-image img {
+                width: 100%;
+                height: 100%;
+            }
+
+            #members-main .edit-member .edit-image i {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: rgba(99, 112, 133, 0.9);
+                border-radius: 50%;
+                color: #ffffff;
+                cursor: pointer;
+                position: absolute;
+                bottom: 1rem;
+            }
+
+        #members-main .edit-member .edit-member-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+            #members-main .edit-member .edit-member-form input {
+                height: 3rem;
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                padding-inline: 1rem;
+                width: 90%;
+            }
+
+            #members-main .edit-member .edit-member-form textarea {
+                border: 1px solid var(--border-100);
+                border-radius: 1rem;
+                resize: none;
+                padding: 1rem;
+            }
+
+            #members-main .edit-member .edit-member-form .name-container {
+                display: flex;
+                gap: 0.5rem;
+            }
+
+            #members-main .edit-member .edit-member-form .email-container, #members-main .edit-member .edit-member-form .phone-container, #members-main .edit-member .edit-member-form .job-container, #members-main .edit-member .edit-member-form .address-container {
+                display: flex;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            #members-main .edit-member .edit-member-form .date-of-birth-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1rem;
+                grid-template-areas: "start middle end";
+            }
+
+                #members-main .edit-member .edit-member-form .date-of-birth-container .day-container {
+                    grid-area: start;
+                }
+
+                #members-main .edit-member .edit-member-form .date-of-birth-container .month-container {
+                    grid-area: middle;
+                }
+
+                #members-main .edit-member .edit-member-form .date-of-birth-container .year-container {
+                    grid-area: end;
+                }
+
+                #members-main .edit-member .edit-member-form .date-of-birth-container .day-container, #members-main .edit-member .edit-member-form .date-of-birth-container .month-container, #members-main .edit-member .edit-member-form .date-of-birth-container .year-container {
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-direction: column;
+                }
+
+        #members-main .edit-member .edit-member-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+#sidebar {
+    grid-area: sidebar;
+    border-right: 2px solid var(--border-200);
+}
+
+    #sidebar .logo {
+        display: flex;
+        margin-left: 1rem;
+        justify-content: left;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: Comfortaa, sans-serif;
+        font-weight: 800;
+        font-size: 26px;
+        color: var(--body-dark);
+        cursor: pointer;
+    }
+
+    #sidebar .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 1rem;
+        margin-left: -2.5rem;
+        position: relative;
+    }
+
+    #sidebar .item-box {
+        list-style: none;
+        width: 10rem;
+        height: 3.5rem;
+        border-radius: 1rem;
+        cursor: pointer;
+        margin-bottom: 1rem;
+    }
+
+    #sidebar .list-item {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding-top: 1rem;
+        padding-left: 1rem;
+    }
+
+        #sidebar .list-item a {
+            text-decoration: none;
+            color: var(--heading);
+        }
+
+    #sidebar .active {
+        background-color: var(--accent-opacity);
+        color: var(--accent);
+    }
+
+        #sidebar .active a {
+            color: var(--accent);
+        }
+
+#signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+    #signin a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    #signin .signin-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        min-width: 30svw;
+        margin: 2rem;
+        padding: 2rem;
+        background-color: var(--surface);
+        border-radius: 1rem;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        height: 90svh;
+    }
+
+        #signin .signin-container .google-signin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-inline: 1rem;
+            width: 24rem;
+            height: 3rem;
+            background-color: var(--gray-100);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 3rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+            #signin .signin-container .google-signin img {
+                position: absolute;
+                left: 1rem;
+            }
+
+        #signin .signin-container .or {
+            display: flex;
+            align-items: center;
+            color: var(--body-light);
+            margin: 1rem 0;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+            #signin .signin-container .or::before, #signin .signin-container .or::after {
+                content: "";
+                flex: 1;
+                border-bottom: 1px solid var(--border-100);
+                margin: 0 1rem;
+            }
+
+        #signin .signin-container .form-signin {
+            display: flex;
+            flex-direction: column;
+        }
+
+            #signin .signin-container .form-signin .email-container, #signin .signin-container .form-signin .password-container {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1rem;
+                width: 24rem;
+                gap: 0.5rem;
+            }
+
+                #signin .signin-container .form-signin .email-container input, #signin .signin-container .form-signin .password-container input {
+                    height: 3rem;
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                }
+
+            #signin .signin-container .form-signin .password-container {
+                position: relative;
+            }
+
+                #signin .signin-container .form-signin .password-container .fa-eye-slash {
+                    position: absolute;
+                    right: 1rem;
+                    top: 70%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+
+            #signin .signin-container .form-signin .bottom-container {
+                display: flex;
+                width: 100%;
+            }
+
+                #signin .signin-container .form-signin .bottom-container input {
+                    cursor: pointer;
+                    height: 0.9rem;
+                    width: 0.9rem;
+                    background-color: var(--accent);
+                    color: var(--surface);
+                }
+
+                #signin .signin-container .form-signin .bottom-container .forgotten-password {
+                    margin-left: auto;
+                }
+
+        #signin .signin-container .no-account {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+#signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+    #signup a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    #signup .signup-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        min-width: 30svw;
+        margin: 2rem;
+        padding: 2rem;
+        background-color: var(--surface);
+        border-radius: 1rem;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        overflow: auto;
+        min-height: 90svh;
+    }
+
+        #signup .signup-container .google-signup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-inline: 1rem;
+            width: 24rem;
+            height: 3rem;
+            background-color: var(--gray-100);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 3rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+            #signup .signup-container .google-signup img {
+                position: absolute;
+                left: 1rem;
+            }
+
+        #signup .signup-container .or {
+            display: flex;
+            align-items: center;
+            color: var(--body-light);
+            margin: 1rem 0;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+            #signup .signup-container .or::before, #signup .signup-container .or::after {
+                content: "";
+                flex: 1;
+                border-bottom: 1px solid var(--border-100);
+                margin: 0 1rem;
+            }
+
+        #signup .signup-container .form-signup {
+            display: flex;
+            flex-direction: column;
+        }
+
+            #signup .signup-container .form-signup .name-container {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 1rem;
+                width: 24rem;
+                gap: 0.5rem;
+            }
+
+                #signup .signup-container .form-signup .name-container input {
+                    height: 3rem;
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                }
+
+            #signup .signup-container .form-signup .email-container, #signup .signup-container .form-signup .password-container {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1rem;
+                width: 24rem;
+                gap: 0.5rem;
+            }
+
+                #signup .signup-container .form-signup .email-container input, #signup .signup-container .form-signup .password-container input {
+                    height: 3rem;
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                }
+
+            #signup .signup-container .form-signup .password-container {
+                position: relative;
+            }
+
+                #signup .signup-container .form-signup .password-container .fa-eye-slash {
+                    position: absolute;
+                    right: 1rem;
+                    top: 70%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+
+            #signup .signup-container .form-signup .bottom-container {
+                display: flex;
+                width: 100%;
+                gap: 0.4rem;
+            }
+
+                #signup .signup-container .form-signup .bottom-container input {
+                    cursor: pointer;
+                    height: 0.9rem;
+                    width: 0.9rem;
+                    background-color: var(--accent);
+                    color: var(--surface);
+                }
+
+        #signup .signup-container .has-account {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
