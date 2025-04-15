@@ -1,14 +1,14 @@
 ﻿using Business.Dtos;
-using Business.Services;
+using Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class AuthController(UserService userService) : Controller
+    public class AuthController(IUserService userService) : Controller
     {
-        private readonly UserService _userService = userService;
+        private readonly IUserService _userService = userService;
 
         [HttpGet]
         public IActionResult SignIn()
@@ -28,6 +28,36 @@ namespace WebApp.Controllers
                     return LocalRedirect(returnUrl);
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+            return View(form);
+        }
+
+        [HttpGet]
+        public IActionResult SignUp()
+        {
+            ViewBag.Title = "Create Account";
+            return View(new SignUpViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpViewModel form)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new UserDto
+                {
+                    FirstName = form.FirstName,
+                    LastName = form.LastName,
+                    Email = form.Email,
+                    Password = form.Password,
+                    Role = "User"
+                };
+
+                var result = await _userService.CreateUserAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("SignIn");
+                }
             }
             return View(form);
         }

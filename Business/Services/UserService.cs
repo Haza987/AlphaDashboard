@@ -16,7 +16,7 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
     private readonly UserFactory _userFactory = userFactory;
 
     #region CRUD operations
-    public async Task<bool> CreateUserAsync(UserDto dto)
+    public async Task<IdentityResult> CreateUserAsync(UserDto dto)
     {
         await _userRepository.BeginTransactionAsync();
         try
@@ -27,7 +27,7 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
             {
                 await _userRepository.CommitTransactionAsync();
             }
-            return result.Succeeded;
+            return result;
         }
         catch
         {
