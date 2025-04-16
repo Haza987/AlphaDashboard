@@ -2,7 +2,7 @@
 
 <section id="signup">
     <div class="signup-container">
-        <h1>Create Account</h1>
+        <h1>@ViewBag.Title</h1>
 
         <div class="google-signup">
             <img src="~/images/google-icon.svg" alt="google logo">
@@ -46,9 +46,10 @@
                 </div>
 
                 <div class="bottom-container">
-                    <input type="checkbox" class="remember" id="remember" name="remember" />
-                    <label for="remember" class="custom-checkbox">I accept the</label>
+                    <input asp-for="TermsAccepted" type="checkbox" name="Terms" />
+                    <label Asp-for="TermsAccepted" class="custom-checkbox">I accept the</label>
                     <a class="terms-and-conditions" href="#">Terms and Conditions</a>
+                    <span asp-validation-for="TermsAccepted" class="text-danger"></span>
                 </div>
 
                 <button type="submit" class="btn btn--signup">Create Account</button>
@@ -56,7 +57,7 @@
 
             <div class="has-account">
                 <p>Already have an account?</p>
-                <a asp-action="Login">Log In</a>
+                <a asp-action="SignIn">Sign in</a>
             </div>
         </div>
     </div>

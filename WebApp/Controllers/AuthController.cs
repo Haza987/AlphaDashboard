@@ -2,6 +2,7 @@
 using Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -42,8 +43,12 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel form)
         {
+            Debug.WriteLine("SignUp method invoked.");
+
             if (ModelState.IsValid)
             {
+                Debug.WriteLine("ModelState is valid. Preparing to create user.");
+
                 var user = new UserDto
                 {
                     FirstName = form.FirstName,
@@ -53,14 +58,41 @@ namespace WebApp.Controllers
                     Role = "User"
                 };
 
+                Debug.WriteLine($"User details: FirstName={user.FirstName}, LastName={user.LastName}, Email={user.Email}, Role={user.Role}");
+                Debug.WriteLine("Calling UserService CreateUserAsync");
                 var result = await _userService.CreateUserAsync(user);
                 if (result.Succeeded)
                 {
+                    Debug.WriteLine("User creation succeeded. Redirecting to SignIn.");
                     return RedirectToAction("SignIn");
                 }
             }
+            Debug.WriteLine("Returning to SignUp view with form data.");
             return View(form);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> SignUp(SignUpViewModel form)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = new UserDto
+        //        {
+        //            FirstName = form.FirstName,
+        //            LastName = form.LastName,
+        //            Email = form.Email,
+        //            Password = form.Password,
+        //            Role = "User"
+        //        };
+
+        //        var result = await _userService.CreateUserAsync(user);
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("SignIn");
+        //        }
+        //    }
+        //    return View(form);
+        //}
 
 
         [Authorize]

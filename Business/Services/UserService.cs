@@ -5,6 +5,7 @@ using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace Business.Services;
 
@@ -18,20 +19,39 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
     #region CRUD operations
     public async Task<IdentityResult> CreateUserAsync(UserDto dto)
     {
+        Debug.WriteLine("UserService, CreateUserAsync, method called");
+
         await _userRepository.BeginTransactionAsync();
+        Debug.WriteLine("UserService, CreateUserAsync, transaction started");
+
         try
         {
             var member = _userFactory.CreateUserEntity(dto);
+            Debug.WriteLine($"UserService, CreateUserAsync, user entity created: FirstName={member.FirstName}, LastName={member.LastName}, Email={member.Email}");
+
             var result = await _userManager.CreateAsync(member);
+            Debug.WriteLine($"UserService, CreateUserAsync, user creation result: Succeeded={result.Succeeded}");
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    Debug.WriteLine($"UserService, CreateUserAsync, error: Code={error.Code}, Description={error.Description}");
+                }
+            }
+
             if (result.Succeeded)
             {
                 await _userRepository.CommitTransactionAsync();
+                Debug.WriteLine("UserService, CreateUserAsync, transaction committed");
             }
+
             return result;
         }
-        catch
+        catch (Exception ex)
         {
             await _userRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"UserService, CreateUserAsync, transaction rolled back due to exception: {ex.Message}");
             throw;
         }
     }

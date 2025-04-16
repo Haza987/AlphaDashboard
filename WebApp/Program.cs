@@ -40,6 +40,8 @@ app.UseAuthentication();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserEntity>>();
+
     string[] roles = { "Admin", "User" };
 
     foreach (var role in roles)
@@ -48,6 +50,24 @@ using (var scope = app.Services.CreateScope())
         if (!exists)
         {
             await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+    if (!userManager.Users.Any())
+    {
+        var adminUser = new UserEntity
+        {
+            FirstName = "Admin",
+            LastName = "Account",
+            Email = "admin@domain.com",
+            UserName = "admin@domain.com",
+            Role = "Admin"
+        };
+
+        var result = await userManager.CreateAsync(adminUser, "AdminPassword123!");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
         }
     }
 }

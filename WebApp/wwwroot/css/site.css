@@ -108,6 +108,10 @@ html, body {
     align-items: center;
 }
 
+.text-danger {
+    color: var(--red);
+}
+
 #admin-signin {
     display: grid;
     grid-template-columns: 1fr 1fr;

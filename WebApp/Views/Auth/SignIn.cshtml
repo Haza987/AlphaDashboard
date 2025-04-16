@@ -1,18 +1,44 @@
 ﻿@model SignInViewModel
 
-<h1>@ViewBag.Title</h1>
+<section id="signin">
+    <div class="signin-container">
+        <h1>@ViewBag.Title</h1>
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+        <div class="google-signin">
+            <img src="~/images/google-icon.svg" alt="google logo">
+            <p>Sign in with Google</p>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Log In</button>
-</form>
+        <p class="or">OR</p>
+
+        <div class="form-signin">
+            <form asp-action="SignIn" method="post">
+                <div class="email-container">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="email" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="password-container">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="password" type="password" placeholder="Enter your password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="bottom-container">
+                    <input asp-for="RememberMe" type="checkbox" name="RememberMe" />
+                    <label asp-for="RememberMe" class="custom-checkbox">Remember Me</label>
+                    <span asp-validation-for="RememberMe" class="text-danger"></span>
+                    <a class="forgotten-password" href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn--signin">Sign In</button>
+            </form>
+
+            <div class="no-account">
+                <p>Don't have an account?</p>
+                <a asp-action="SignUp">Create Account</a>
+            </div>
+        </div>
+    </div>
+</section>

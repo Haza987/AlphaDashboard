@@ -17,6 +17,7 @@ public class UserFactory(IPasswordHasher<UserEntity> passwordHasher)
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             Email = dto.Email,
+            UserName = dto.Email,
             Role = dto.Role
         };
 

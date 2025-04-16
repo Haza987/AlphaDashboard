@@ -27,5 +27,7 @@ namespace WebApp.ViewModels
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; } = null!;
+
+        public bool TermsAccepted { get; set; }
     }
 }
