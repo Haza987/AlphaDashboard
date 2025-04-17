@@ -1,25 +1,29 @@
 ﻿using Business.Dtos;
 using Business.Interfaces;
+using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class AuthController(IUserService userService) : Controller
+    public class AuthController(IUserService userService, UserManager<UserEntity> userManager) : Controller
     {
         private readonly IUserService _userService = userService;
+        private readonly UserManager<UserEntity> _userManager = userManager;
 
         [HttpGet]
         public IActionResult SignIn()
         {
             ViewBag.Title = "Sign In";
+            ViewBag.FormAction = "SignIn";
             return View(new SignInViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInViewModel form, string returnUrl = "~/")
+        public async Task<IActionResult> SignIn(SignInViewModel form, string returnUrl = "/projects")
         {
             if (ModelState.IsValid)
             {
@@ -43,12 +47,8 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel form)
         {
-            Debug.WriteLine("SignUp method invoked.");
-
             if (ModelState.IsValid)
             {
-                Debug.WriteLine("ModelState is valid. Preparing to create user.");
-
                 var user = new UserDto
                 {
                     FirstName = form.FirstName,
@@ -58,41 +58,51 @@ namespace WebApp.Controllers
                     Role = "User"
                 };
 
-                Debug.WriteLine($"User details: FirstName={user.FirstName}, LastName={user.LastName}, Email={user.Email}, Role={user.Role}");
-                Debug.WriteLine("Calling UserService CreateUserAsync");
                 var result = await _userService.CreateUserAsync(user);
                 if (result.Succeeded)
                 {
-                    Debug.WriteLine("User creation succeeded. Redirecting to SignIn.");
                     return RedirectToAction("SignIn");
                 }
             }
-            Debug.WriteLine("Returning to SignUp view with form data.");
             return View(form);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> SignUp(SignUpViewModel form)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = new UserDto
-        //        {
-        //            FirstName = form.FirstName,
-        //            LastName = form.LastName,
-        //            Email = form.Email,
-        //            Password = form.Password,
-        //            Role = "User"
-        //        };
+        [HttpGet]
+        public IActionResult AdminSignIn()
+        {
+            ViewBag.Title = "Admin sign in";
+            ViewBag.FormAction = "AdminSignIn";
+            return View(new SignInViewModel());
+        }
 
-        //        var result = await _userService.CreateUserAsync(user);
-        //        if (result.Succeeded)
-        //        {
-        //            return RedirectToAction("SignIn");
-        //        }
-        //    }
-        //    return View(form);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AdminSignIn(SignInViewModel form, string returnUrl = "/members")
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.SignInAsync(form.Email, form.Password);
+                if (result.Succeeded)
+                {
+                    var user = await _userManager.FindByEmailAsync(form.Email);
+
+                    var isAdmin = await _userManager.IsInRoleAsync(user!, "Admin");
+                    if (isAdmin)
+                    {
+                        return LocalRedirect(returnUrl); 
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "You are not authorized to access this page.");
+                        await _userService.SignOutAsync();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                }
+            }
+            return View(form);
+        }
 
 
         [Authorize]

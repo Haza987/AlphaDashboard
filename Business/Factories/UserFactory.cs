@@ -29,7 +29,7 @@ public class UserFactory(IPasswordHasher<UserEntity> passwordHasher)
     {
         FirstName = entity.FirstName,
         LastName = entity.LastName,
-        Email = entity.Email,
+        Email = entity.Email!,
         Role = entity.Role
     };
     

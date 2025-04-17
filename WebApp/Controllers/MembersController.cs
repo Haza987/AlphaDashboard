@@ -4,6 +4,7 @@ namespace WebApp.Controllers
 {
     public class MembersController : Controller
     {
+        [Route("members")]
         public IActionResult Members()
         {
             ViewBag.Title = "Members";
