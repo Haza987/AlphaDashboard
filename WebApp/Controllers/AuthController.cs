@@ -4,7 +4,6 @@ using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers

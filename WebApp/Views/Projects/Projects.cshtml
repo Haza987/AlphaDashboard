@@ -1,1 +1,12 @@
-﻿<h1>@ViewBag.Title</h1>
+﻿<main id="project">
+    <div class="project-top">
+        <h2>@ViewBag.Title</h2>
+        <button class="btn btn--add">+ Add Project</button>
+    </div>
+
+    <div class="project-selection">
+        <p class="active">ALL [@ViewBag.ProjectCount]</p>
+        <p>STARTED [@ViewBag.ProjectInProgress]</p>
+        <p>COMPLETED [@ViewBag.ProjectComplete]</p>
+    </div>
+</main>

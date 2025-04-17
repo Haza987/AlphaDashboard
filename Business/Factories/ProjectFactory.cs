@@ -15,6 +15,7 @@ public class ProjectFactory
         StartDate = dto.StartDate,
         EndDate = dto.EndDate,
         Budget = dto.Budget,
+        IsCompleted = dto.IsCompleted,
 
         Members = members
         .Where(m => dto.Members.Contains($"{m.FirstName} {m.LastName}"))
@@ -30,6 +31,7 @@ public class ProjectFactory
         StartDate = entity.StartDate,
         EndDate = entity.EndDate,
         Budget = entity.Budget,
+        IsCompleted = entity.IsCompleted,
         Members = entity.Members?.Select(m => new MemberDto
         {
             FirstName = m.FirstName,
@@ -45,6 +47,7 @@ public class ProjectFactory
         projectEntity.StartDate = projectUpdate.StartDate ?? projectEntity.StartDate;
         projectEntity.EndDate = projectUpdate.EndDate ?? projectEntity.EndDate;
         projectEntity.Budget = projectUpdate.Budget ?? projectEntity.Budget;
+        projectEntity.IsCompleted = projectUpdate.IsCompleted ?? projectEntity.IsCompleted;
         if (projectUpdate.Members != null)
         {
             projectEntity.Members = projectEntity.Members?
