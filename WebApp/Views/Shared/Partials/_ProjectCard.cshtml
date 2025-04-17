@@ -1,4 +1,6 @@
-﻿@model Business.Models.Project
+﻿@* GitHub Copilot helped me with the time remaining part. *@
+
+@model Business.Models.Project
 
 <div class="project-card">
     <div class="project-top">
@@ -31,7 +33,44 @@
     <div class="project-bottom">
         <div class="time-remaining">
             <i class="fa-solid fa-clock"></i>
-            <p>@(Model.IsCompleted ? "Completed" : "In Progress")</p>
+            <p>
+                @{
+                    if (Model.IsCompleted)
+                    {
+                        @:Completed
+                    }
+                    else
+                    {
+                        var today = DateTime.Now.Date;
+                        var endDate = Model.EndDate.Date;
+
+                        if (endDate < today)
+                        {
+                            @:Overdue
+                        }
+                        else if (endDate == today)
+                        {
+                            @:Due Today
+                        }
+                        else if ((endDate - today).TotalDays <= 7)
+                        {
+                            @($"{Math.Floor((endDate - today).TotalDays)} days left")
+                        }
+                        else if ((endDate - today).TotalDays <= 30)
+                        {
+                            @($"{Math.Floor((endDate - today).TotalDays / 7)} weeks left")
+                        }
+                        else if ((endDate - today).TotalDays <= 365)
+                        {
+                            @($"{Math.Floor((endDate - today).TotalDays / 30.44)} months left")
+                        }
+                        else
+                        {
+                            @:In Progress
+                        }
+                    }
+                }
+            </p>
         </div>
 
         <div class="members">
