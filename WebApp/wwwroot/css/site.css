@@ -87,7 +87,7 @@ html, body {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 200px 1fr;
     height: 100vh;
-    grid-template-areas: "sidebar header" "sidebar main" "sidebar footer";
+    grid-template-areas: "sidebar header" "sidebar main";
 }
 
 .icon {
@@ -683,8 +683,8 @@ html, body {
     }
 
     #project .add-project {
+        display: none;
         /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
-        display: flex;
     }
 
         #project .add-project .add-project-top {
@@ -1276,6 +1276,7 @@ html, body {
 #sidebar {
     grid-area: sidebar;
     border-right: 2px solid var(--border-200);
+    height: 100vh;
 }
 
     #sidebar .logo {

@@ -7,6 +7,7 @@ namespace WebApp.Controllers
         [Route("projects")]
         public IActionResult Projects()
         {
+            ViewBag.Title = "Projects";
             return View();
         }
     }

@@ -6,26 +6,33 @@
     <title>@ViewData["Title"] - WebApp</title>
     <script type="importmap"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://kit.fontawesome.com/a576612222.css" crossorigin="anonymous">
-    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
+
+<body class="container">
+    <div class="wrapper">
+
+        <header id="header">
+            <partial name="Partials/_Header" />
+        </header>
+
+        <aside id="sidebar">
+            <partial name="Partials/_Sidebar" />
+        </aside>
+
+        <main>
+            @RenderBody()
+        </main>
+
+
+        <footer>
         
-    </header>
+        </footer>
 
-    <main>
-        @RenderBody()
-    </main>
-
-
-    <footer>
-        
-    </footer>
-
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    </div>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
