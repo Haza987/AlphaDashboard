@@ -1,0 +1,40 @@
+﻿@model Business.Models.Project
+
+<div class="project-card">
+    <div class="project-top">
+        <img class="project-img" alt="project image" src="">
+        <div class="project-info">
+            <h4 class="project-title">@Model.ProjectName</h4>
+            <p class="project-company">@Model.ClientName</p>
+        </div>
+        <i class="more fa-solid fa-ellipsis"></i>
+        <div class="more-expanded">
+            <div class="more-edit">
+                <i class="fa-duotone fa-solid fa-pencil"></i>
+                <p>Edit</p>
+            </div>
+
+            <div class="more-add">
+                <i class="fa-duotone fa-solid fa-user-plus"></i>
+                <p>Add</p>
+            </div>
+
+            <div class="more-delete">
+                <i class="fa-duotone fa-solid fa-trash"></i>
+                <p>Delete</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="description">@Model.ProjectDescription</p>
+
+    <div class="project-bottom">
+        <div class="time-remaining">
+            <i class="fa-solid fa-clock"></i>
+            <p>@(Model.IsCompleted ? "Completed" : "In Progress")</p>
+        </div>
+
+        <div class="members">
+        </div>
+    </div>
+</div>

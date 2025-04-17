@@ -1,4 +1,6 @@
-﻿<main id="project">
+﻿@model ProjectViewModel
+
+<main id="project">
     <div class="project-top">
         <h2>@ViewBag.Title</h2>
         <button class="btn btn--add">+ Add Project</button>
@@ -8,5 +10,12 @@
         <p class="active">ALL [@ViewBag.ProjectCount]</p>
         <p>STARTED [@ViewBag.ProjectInProgress]</p>
         <p>COMPLETED [@ViewBag.ProjectComplete]</p>
+    </div>
+
+    <div class="project-main">
+        @foreach (var project in Model.Projects)
+        {
+            <partial name="Partials/_ProjectCard" model="project" />
+        }
     </div>
 </main>
