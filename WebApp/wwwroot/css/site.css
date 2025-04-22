@@ -328,7 +328,6 @@ html, body {
         #header .header-right .notification-container {
             display: none;
             /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
-            /* display: flex; */
             flex-direction: column;
             position: absolute;
             top: 1.5rem;
@@ -998,6 +997,7 @@ html, body {
         border-radius: 1rem;
         padding: 1rem;
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        position: relative;
     }
 
         .members-main .members-container .more {
@@ -1040,6 +1040,34 @@ html, body {
         .members-main .members-container .email, .members-main .members-container .phone {
             color: var(--body-dark);
         }
+
+        .members-main .members-container .more-container {
+            flex-direction: column;
+            position: absolute;
+            right: 2.5rem;
+            top: 1.5rem;
+            width: 7rem;
+            border-radius: 1rem;
+            padding: 1rem;
+            background-color: var(--surface);
+            z-index: 1;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+            .members-main .members-container .more-container .edit, .members-main .members-container .more-container .delete {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                cursor: pointer;
+            }
+
+            .members-main .members-container .more-container .edit {
+                margin-bottom: 0.5rem;
+            }
+
+            .members-main .members-container .more-container .delete {
+                color: var(--red);
+            }
 
     .members-main .over-box {
         width: 30rem;

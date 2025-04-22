@@ -9,11 +9,15 @@
     <div class="members-main">
         @foreach (var member in Model.Members)
         {
-            <partial name="Partials/_MemberCard" model="member" />
+            <partial name="MemberPartials/_MemberCard" model="member" />
         }
 
         <div class="overlay add-member" id="add-member-modal" style="display: none;">
-            <partial name="Partials/_MemberCreation" model ="Model.MemberDto" />
+            <partial name="MemberPartials/_MemberCreation" model ="Model.MemberDto" />
+        </div>
+
+        <div class="overlay edit-member" id="edit-member-modal" style="display: none;">
+            <partial name="MemberPartials/_MemberUpdate" model="Model.MemberUpdateDto" />
         </div>
     </div>
 

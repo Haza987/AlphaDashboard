@@ -29,7 +29,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult CreateMember()
         {
-            return PartialView("_MemberCreation", new MemberDto());
+            return PartialView("MemberPartials/_MemberCreation", new MemberDto());
         }
 
         [HttpPost]
@@ -37,25 +37,47 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var member = new MemberDto
-                {
-                    FirstName = form.FirstName,
-                    LastName = form.LastName,
-                    Email = form.Email,
-                    PhoneNumber = form.PhoneNumber,
-                    JobTitle = form.JobTitle,
-                    Address = form.Address,
-                    DateOfBirth = form.DateOfBirth,
-                    ProjectNames = form.ProjectNames
-                };
-
-                var result = await _memberService.CreateMemberAsync(member);
+                var result = await _memberService.CreateMemberAsync(form);
                 if (result)
                 {
                     return RedirectToAction("Members");
                 }
             }
             return View(form);
+        }
+
+        [HttpGet]
+        public IActionResult UpdateMember()
+        {
+            return PartialView("MemberPartials/_MemberUpdate", new MemberUpdateDto());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMember(int id, MemberUpdateDto form)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _memberService.UpdateMemberAsync(id, form);
+                if (result)
+                {
+                    return RedirectToAction("Members");
+                }
+            }
+            return View("MemberPartials/_MemberUpdate", form);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMemberById(int id)
+        {
+            var member = await _memberService.GetMemberByIdAsync(id);
+            if (member == null)
+            {
+                return NotFound();
+            }
+            Debug.WriteLine($"Member Data: {System.Text.Json.JsonSerializer.Serialize(member)}");
+
+
+            return Json(member);
         }
     }
 }

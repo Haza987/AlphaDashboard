@@ -1,0 +1,23 @@
+﻿@model Business.Models.Member
+
+<div class="members-container">
+    <i onclick="showMemberMoreModal(this)" class="more fa-solid fa-ellipsis"></i>
+    <img class="member-icon" alt="member image" src="" />
+    <h4 class="name">@Model.FirstName @Model.LastName</h4>
+    <p class="role">@Model.JobTitle</p>
+    <p class="email">@Model.Email</p>
+    <p class="phone">@Model.PhoneNumber</p>
+    <p class="message">Message</p>
+
+    <div class="member-more-modal more-container" style="display: none;">
+        <div class="edit" onclick="hideMemberMoreModal(); showEditMemberModal(@Model.Id)">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <p class="edit">Edit</p>
+        </div>
+
+        <div class="delete">
+            <i class="fa-solid fa-trash-can" onclick="hideMemberMoreModal()"></i>
+            <p class="delete">Delete</p>
+        </div>
+    </div>
+</div>

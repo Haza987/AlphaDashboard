@@ -25,6 +25,7 @@ public class MemberFactory
 
     public static Member CreateMemberModel(MemberEntity entity) => new Member
     {
+        Id = entity.Id,
         FirstName = entity.FirstName,
         LastName = entity.LastName,
         Email = entity.Email,

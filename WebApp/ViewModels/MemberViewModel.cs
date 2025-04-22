@@ -7,4 +7,5 @@ public class MemberViewModel
 {
     public List<Member> Members { get; set; } = [];
     public MemberDto MemberDto { get; set; } = new();
+    public MemberUpdateDto MemberUpdateDto { get; set; } = new();
 }

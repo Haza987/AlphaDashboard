@@ -1,0 +1,89 @@
+﻿@model MemberUpdateDto
+
+<div class="over-box">
+    <div class="over-box-content">
+        <div class="edit-member-top">
+            <h2>Edit Member</h2>
+            <i class="fa-solid fa-times close" id="close-button"></i>
+        </div>
+
+        <div class="edit-image">
+            <i class="fa-duotone fa-solid fa-camera"></i>
+        </div>
+
+        <form class="edit-member-form" asp-action="UpdateMember" method="post">
+            <div class="name-container">
+                <div class="first-name">
+                    <label asp-for="FirstName">First Name</label>
+                    <input asp-for="FirstName" type="text" id="first-name" placeholder="Your first name" />
+                </div>
+
+                <div class="last-name">
+                    <label asp-for="LastName">Last Name</label>
+                    <input asp-for="LastName" type="text" id="last-name" placeholder="Your Last name" />
+                </div>
+            </div>
+
+            <div class="email-container">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="text" id="member-email" placeholder="Your email address" />
+            </div>
+
+            <div class="phone-container">
+                <label asp-for="PhoneNumber">Phone</label>
+                <input asp-for="PhoneNumber" id="member-phone" placeholder="Your phone number" />
+            </div>
+
+            <div class="job-container">
+                <label asp-for="JobTitle">Job Title</label>
+                <input asp-for="JobTitle" id="member-job" placeholder="Your job title" />
+            </div>
+
+            <div class="address-container">
+                <label asp-for="Address">Address</label>
+                <input asp-for="Address" id="member-address" placeholder="Your address" />
+            </div>
+
+            <div class="date-of-birth-container">
+                <div class="day-container">
+                    <label for="member-day">Day</label>
+                    <select id="member-day" onchange="addDateOfBirth()">
+                        <option value="">Day</option>
+                        @for (int i = 1; i <= 31; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="month-container">
+                    <label for="member-month">Month</label>
+                    <select id="member-month" onchange="addDateOfBirth()">
+                        <option value="">Month</option>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <option value="@i.ToString("D2")">@i</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="year-container">
+                    <label for="member-year">Year</label>
+                    <select id="member-year" onchange="addDateOfBirth()">
+                        <option value="">Year</option>
+                        @for (int i = DateTime.Now.Year; i >= 1900; i--)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+
+                <input asp-for="DateOfBirth" type="hidden" id="date-of-birth" />
+            </div>
+
+            <div class="edit-member-bottom">
+                <button class="btn btn--create">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
