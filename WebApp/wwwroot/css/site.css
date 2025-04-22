@@ -95,7 +95,6 @@ html, body {
 }
 
 .overlay {
-    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -496,23 +495,23 @@ html, body {
             cursor: pointer;
         }
 
-#project {
+#hero {
     grid-area: main;
     margin-left: 2rem;
     margin-top: 2rem;
 }
 
-    #project .project-top {
+    #hero .hero-top {
         display: flex;
         align-items: center;
     }
 
-        #project .project-top h2 {
+        #hero .hero-top h2 {
             color: var(--heading);
             padding-top: 1rem;
         }
 
-    #project .project-selection {
+    #hero .project-selection {
         display: flex;
         gap: 2rem;
         margin-top: 1rem;
@@ -520,7 +519,7 @@ html, body {
         position: relative;
     }
 
-        #project .project-selection::after {
+        #hero .project-selection::after {
             content: "";
             position: absolute;
             left: 0;
@@ -529,11 +528,11 @@ html, body {
             border-bottom: 2px solid var(--border-200);
         }
 
-        #project .project-selection .active {
+        #hero .project-selection .active {
             position: relative;
         }
 
-            #project .project-selection .active::after {
+            #hero .project-selection .active::after {
                 content: "";
                 position: absolute;
                 left: 0;
@@ -545,7 +544,7 @@ html, body {
                 border-top-right-radius: 1rem;
             }
 
-    #project .project-main {
+    #hero .project-main {
         margin-top: 1.5rem;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
@@ -553,7 +552,7 @@ html, body {
         gap: 1rem;
     }
 
-        #project .project-main .project-card {
+        #hero .project-main .project-card {
             display: grid;
             width: 22rem;
             height: 17rem;
@@ -566,7 +565,7 @@ html, body {
             grid-template-areas: "top" "description" "bottom";
         }
 
-            #project .project-main .project-card .project-top {
+            #hero .project-main .project-card .project-top {
                 grid-area: top;
                 display: flex;
                 align-items: center;
@@ -574,17 +573,17 @@ html, body {
                 gap: 1rem;
             }
 
-                #project .project-main .project-card .project-top .project-info .project-title {
+                #hero .project-main .project-card .project-top .project-info .project-title {
                     margin-bottom: -0.5rem;
                     color: var(--heading);
                 }
 
-                #project .project-main .project-card .project-top .project-info .project-company {
+                #hero .project-main .project-card .project-top .project-info .project-company {
                     font-size: 14px;
                     color: var(--body-light);
                 }
 
-                #project .project-main .project-card .project-top .more {
+                #hero .project-main .project-card .project-top .more {
                     margin-left: auto;
                     margin-right: 1rem;
                     width: 2.5rem;
@@ -598,7 +597,7 @@ html, body {
                     cursor: pointer;
                 }
 
-                #project .project-main .project-card .project-top .more-expanded {
+                #hero .project-main .project-card .project-top .more-expanded {
                     /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
                     display: none !important;
                     width: 15rem;
@@ -615,14 +614,14 @@ html, body {
                     grid-template-areas: "edit" "add" "delete";
                 }
 
-                    #project .project-main .project-card .project-top .more-expanded .more-edit {
+                    #hero .project-main .project-card .project-top .more-expanded .more-edit {
                         grid-area: edit;
                         display: flex;
                         align-items: center;
                         gap: 1rem;
                     }
 
-                    #project .project-main .project-card .project-top .more-expanded .more-add {
+                    #hero .project-main .project-card .project-top .more-expanded .more-add {
                         grid-area: add;
                         display: flex;
                         align-items: center;
@@ -631,7 +630,7 @@ html, body {
                         border-bottom: 1px solid var(--border-100);
                     }
 
-                    #project .project-main .project-card .project-top .more-expanded .more-delete {
+                    #hero .project-main .project-card .project-top .more-expanded .more-delete {
                         grid-area: delete;
                         display: flex;
                         align-items: center;
@@ -639,17 +638,17 @@ html, body {
                         color: var(--red);
                     }
 
-            #project .project-main .project-card .description {
+            #hero .project-main .project-card .description {
                 grid-area: description;
             }
 
-            #project .project-main .project-card .project-bottom {
+            #hero .project-main .project-card .project-bottom {
                 grid-area: bottom;
                 align-self: end;
                 display: flex;
             }
 
-                #project .project-main .project-card .project-bottom .time-remaining {
+                #hero .project-main .project-card .project-bottom .time-remaining {
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -663,11 +662,11 @@ html, body {
                     gap: 0.5rem;
                 }
 
-                #project .project-main .project-card .project-bottom .members {
+                #hero .project-main .project-card .project-bottom .members {
                     margin-left: auto;
                 }
 
-    #project .over-box {
+    #hero .over-box {
         width: 30rem;
         height: 90vh;
         padding: 2rem 0.1rem 2rem 2rem;
@@ -676,29 +675,29 @@ html, body {
         background-color: var(--surface);
     }
 
-    #project .over-box-content {
+    #hero .over-box-content {
         height: 100%;
         padding-right: 0.9rem;
         overflow: auto;
     }
 
-    #project .add-project {
+    #hero .add-project {
         display: none;
         /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
     }
 
-        #project .add-project .add-project-top {
+        #hero .add-project .add-project-top {
             display: flex;
             align-items: center;
         }
 
-            #project .add-project .add-project-top i {
+            #hero .add-project .add-project-top i {
                 margin-left: auto;
                 font-size: 20px;
                 cursor: pointer;
             }
 
-        #project .add-project .add-image {
+        #hero .add-project .add-image {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -711,7 +710,7 @@ html, body {
             cursor: pointer;
         }
 
-            #project .add-project .add-image i {
+            #hero .add-project .add-image i {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -722,13 +721,13 @@ html, body {
                 color: #ffffff;
             }
 
-        #project .add-project .add-project-form {
+        #hero .add-project .add-project-form {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
-            #project .add-project .add-project-form input {
+            #hero .add-project .add-project-form input {
                 height: 3rem;
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
@@ -736,53 +735,53 @@ html, body {
                 width: 90%;
             }
 
-            #project .add-project .add-project-form textarea {
+            #hero .add-project .add-project-form textarea {
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
                 resize: none;
                 padding: 1rem;
             }
 
-            #project .add-project .add-project-form .name-container {
+            #hero .add-project .add-project-form .name-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #project .add-project .add-project-form .client-container {
+            #hero .add-project .add-project-form .client-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #project .add-project .add-project-form .description-container {
+            #hero .add-project .add-project-form .description-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #project .add-project .add-project-form .date-container {
+            #hero .add-project .add-project-form .date-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
                 grid-template-areas: "start end";
             }
 
-                #project .add-project .add-project-form .date-container .project-start {
+                #hero .add-project .add-project-form .date-container .project-start {
                     grid-area: start;
                     display: flex;
                     gap: 0.5rem;
                     flex-direction: column;
                 }
 
-                #project .add-project .add-project-form .date-container .project-end {
+                #hero .add-project .add-project-form .date-container .project-end {
                     grid-area: end;
                     display: flex;
                     gap: 0.5rem;
                     flex-direction: column;
                 }
 
-            #project .add-project .add-project-form .members-container {
+            #hero .add-project .add-project-form .members-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
@@ -791,40 +790,40 @@ html, body {
                 border: 5px solid black;
             }
 
-            #project .add-project .add-project-form .budget-container {
+            #hero .add-project .add-project-form .budget-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-                #project .add-project .add-project-form .budget-container input {
+                #hero .add-project .add-project-form .budget-container input {
                     border: none;
                 }
 
-        #project .add-project .add-project-bottom {
+        #hero .add-project .add-project-bottom {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
         }
 
-    #project .edit-project {
+    #hero .edit-project {
         display: none;
         /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
     }
 
-        #project .edit-project .edit-project-top {
+        #hero .edit-project .edit-project-top {
             display: flex;
             align-items: center;
         }
 
-            #project .edit-project .edit-project-top i {
+            #hero .edit-project .edit-project-top i {
                 margin-left: auto;
                 font-size: 20px;
                 cursor: pointer;
             }
 
-        #project .edit-project .edit-image {
+        #hero .edit-project .edit-image {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -836,12 +835,12 @@ html, body {
             position: relative;
         }
 
-            #project .edit-project .edit-image img {
+            #hero .edit-project .edit-image img {
                 width: 100%;
                 height: 100%;
             }
 
-            #project .edit-project .edit-image i {
+            #hero .edit-project .edit-image i {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -855,14 +854,14 @@ html, body {
                 bottom: 1rem;
             }
 
-        #project .edit-project .edit-project-form {
+        #hero .edit-project .edit-project-form {
             display: flex;
             flex-direction: column;
             gap: 1rem;
             color: var(--body-dark);
         }
 
-            #project .edit-project .edit-project-form input {
+            #hero .edit-project .edit-project-form input {
                 height: 3rem;
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
@@ -870,7 +869,7 @@ html, body {
                 width: 90%;
             }
 
-            #project .edit-project .edit-project-form textarea {
+            #hero .edit-project .edit-project-form textarea {
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
                 height: 7.5rem;
@@ -878,50 +877,50 @@ html, body {
                 padding: 1rem;
             }
 
-            #project .edit-project .edit-project-form .name-container {
+            #hero .edit-project .edit-project-form .name-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #project .edit-project .edit-project-form .client-container {
+            #hero .edit-project .edit-project-form .client-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #project .edit-project .edit-project-form .description-container {
+            #hero .edit-project .edit-project-form .description-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #project .edit-project .edit-project-form .date-container {
+            #hero .edit-project .edit-project-form .date-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
                 grid-template-areas: "start end";
             }
 
-                #project .edit-project .edit-project-form .date-container .project-start {
+                #hero .edit-project .edit-project-form .date-container .project-start {
                     grid-area: start;
                     display: flex;
                     flex-direction: column;
                     gap: 0.5rem;
                 }
 
-                #project .edit-project .edit-project-form .date-container .project-end {
+                #hero .edit-project .edit-project-form .date-container .project-end {
                     grid-area: end;
                     display: flex;
                     flex-direction: column;
                     gap: 0.5rem;
                 }
 
-                #project .edit-project .edit-project-form .date-container input {
+                #hero .edit-project .edit-project-form .date-container input {
                     cursor: pointer;
                 }
 
-            #project .edit-project .edit-project-form .members-container {
+            #hero .edit-project .edit-project-form .members-container {
                 display: grid;
                 grid-template-rows: 1fr 1fr;
                 grid-template-areas: "title" "members icon";
@@ -931,11 +930,11 @@ html, body {
                 margin-bottom: 1rem;
             }
 
-                #project .edit-project .edit-project-form .members-container label {
+                #hero .edit-project .edit-project-form .members-container label {
                     grid-template-areas: title;
                 }
 
-                #project .edit-project .edit-project-form .members-container .project-members {
+                #hero .edit-project .edit-project-form .members-container .project-members {
                     border: 1px solid var(--border-100);
                     grid-template-areas: members;
                     margin-left: auto;
@@ -946,7 +945,7 @@ html, body {
                     gap: 0.5rem;
                 }
 
-                    #project .edit-project .edit-project-form .members-container .project-members .project-member {
+                    #hero .edit-project .edit-project-form .members-container .project-members .project-member {
                         display: flex;
                         align-items: center;
                         gap: 0.5rem;
@@ -959,92 +958,90 @@ html, body {
                         cursor: pointer;
                     }
 
-                    #project .edit-project .edit-project-form .members-container .project-members i {
+                    #hero .edit-project .edit-project-form .members-container .project-members i {
                         margin-left: auto;
                         cursor: pointer;
                     }
 
-            #project .edit-project .edit-project-form .budget-container {
+            #hero .edit-project .edit-project-form .budget-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-                #project .edit-project .edit-project-form .budget-container input {
+                #hero .edit-project .edit-project-form .budget-container input {
                     border: none;
                 }
 
-        #project .edit-project .edit-project-bottom {
+        #hero .edit-project .edit-project-bottom {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
         }
 
-#members-main {
+.members-main {
     margin-top: 1.5rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
 }
 
-    #members-main .members-container {
-        display: grid;
-        grid-template-rows: 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
+    .members-main .members-container {
+        display: flex;
+        flex-direction: column;
+        width: 20rem;
+        height: 27rem;
+        align-items: center;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
     }
 
-        #members-main .members-container .member {
-            display: flex;
-            flex-direction: column;
-            width: 20rem;
-            height: 27rem;
-            align-items: center;
-            margin-bottom: 2rem;
-            border-radius: 1rem;
-            padding: 1rem;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        .members-main .members-container .more {
+            margin-left: auto;
+            cursor: pointer;
         }
 
-            #members-main .members-container .member .more {
-                margin-left: auto;
-                cursor: pointer;
-            }
+        .members-main .members-container .member-icon {
+            height: 10rem;
+            width: 10rem;
+        }
 
-            #members-main .members-container .member .member-icon {
-                height: 10rem;
-                width: 10rem;
-            }
+        .members-main .members-container .name {
+            margin-bottom: -0.5rem;
+        }
 
-            #members-main .members-container .member .name {
-                margin-bottom: -0.5rem;
-            }
+        .members-main .members-container .role {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            width: 10rem;
+            height: 2rem;
+            border-radius: 1rem;
+            background-color: var(--gray-200);
+        }
 
-            #members-main .members-container .member .role {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 12px;
-                width: 10rem;
-                height: 2rem;
-                border-radius: 1rem;
-                background-color: var(--gray-200);
-            }
+        .members-main .members-container .email {
+            margin-bottom: -0.5rem;
+        }
 
-            #members-main .members-container .member .email {
-                margin-bottom: -0.5rem;
-            }
+        .members-main .members-container .message {
+            cursor: pointer;
+        }
 
-            #members-main .members-container .member .message {
-                cursor: pointer;
-            }
+        .members-main .members-container .name, .members-main .members-container .role, .members-main .members-container .message {
+            color: var(--heading);
+        }
 
-            #members-main .members-container .member .name, #members-main .members-container .member .role, #members-main .members-container .member .message {
-                color: var(--heading);
-            }
+        .members-main .members-container .email, .members-main .members-container .phone {
+            color: var(--body-dark);
+        }
 
-            #members-main .members-container .member .email, #members-main .members-container .member .phone {
-                color: var(--body-dark);
-            }
-
-    #members-main .over-box {
+    .members-main .over-box {
         width: 30rem;
         height: 90vh;
         padding: 2rem 0.1rem 2rem 2rem;
@@ -1054,28 +1051,28 @@ html, body {
         overflow: none;
     }
 
-    #members-main .over-box-content {
+    .members-main .over-box-content {
         height: 100%;
         padding-right: 0.9rem;
         overflow: auto;
     }
 
-    #members-main .add-member {
+    .members-main .add-member {
         display: none;
     }
 
-        #members-main .add-member .add-member-top {
+        .members-main .add-member .add-member-top {
             display: flex;
             align-items: center;
         }
 
-            #members-main .add-member .add-member-top i {
+            .members-main .add-member .add-member-top i {
                 margin-left: auto;
                 font-size: 20px;
                 cursor: pointer;
             }
 
-        #members-main .add-member .add-image {
+        .members-main .add-member .add-image {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1088,7 +1085,7 @@ html, body {
             cursor: pointer;
         }
 
-            #members-main .add-member .add-image i {
+            .members-main .add-member .add-image i {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1099,13 +1096,13 @@ html, body {
                 color: #ffffff;
             }
 
-        #members-main .add-member .add-member-form {
+        .members-main .add-member .add-member-form {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
-            #members-main .add-member .add-member-form input {
+            .members-main .add-member .add-member-form input {
                 height: 3rem;
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
@@ -1113,72 +1110,72 @@ html, body {
                 width: 90%;
             }
 
-            #members-main .add-member .add-member-form textarea {
+            .members-main .add-member .add-member-form textarea {
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
                 resize: none;
                 padding: 1rem;
             }
 
-            #members-main .add-member .add-member-form .name-container {
+            .members-main .add-member .add-member-form .name-container {
                 display: flex;
                 gap: 0.5rem;
             }
 
-            #members-main .add-member .add-member-form .email-container, #members-main .add-member .add-member-form .phone-container, #members-main .add-member .add-member-form .job-container, #members-main .add-member .add-member-form .address-container {
+            .members-main .add-member .add-member-form .email-container, .members-main .add-member .add-member-form .phone-container, .members-main .add-member .add-member-form .job-container, .members-main .add-member .add-member-form .address-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #members-main .add-member .add-member-form .date-of-birth-container {
+            .members-main .add-member .add-member-form .date-of-birth-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
                 gap: 1rem;
                 grid-template-areas: "start middle end";
             }
 
-                #members-main .add-member .add-member-form .date-of-birth-container .day-container {
+                .members-main .add-member .add-member-form .date-of-birth-container .day-container {
                     grid-area: start;
                 }
 
-                #members-main .add-member .add-member-form .date-of-birth-container .month-container {
+                .members-main .add-member .add-member-form .date-of-birth-container .month-container {
                     grid-area: middle;
                 }
 
-                #members-main .add-member .add-member-form .date-of-birth-container .year-container {
+                .members-main .add-member .add-member-form .date-of-birth-container .year-container {
                     grid-area: end;
                 }
 
-                #members-main .add-member .add-member-form .date-of-birth-container .day-container, #members-main .add-member .add-member-form .date-of-birth-container .month-container, #members-main .add-member .add-member-form .date-of-birth-container .year-container {
+                .members-main .add-member .add-member-form .date-of-birth-container .day-container, .members-main .add-member .add-member-form .date-of-birth-container .month-container, .members-main .add-member .add-member-form .date-of-birth-container .year-container {
                     display: flex;
                     gap: 0.5rem;
                     flex-direction: column;
                 }
 
-        #members-main .add-member .add-member-bottom {
+        .members-main .add-member .add-member-bottom {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
         }
 
-    #members-main .edit-member {
+    .members-main .edit-member {
         display: none;
     }
 
-        #members-main .edit-member .edit-member-top {
+        .members-main .edit-member .edit-member-top {
             display: flex;
             align-items: center;
         }
 
-            #members-main .edit-member .edit-member-top i {
+            .members-main .edit-member .edit-member-top i {
                 margin-left: auto;
                 font-size: 20px;
                 cursor: pointer;
             }
 
-        #members-main .edit-member .edit-image {
+        .members-main .edit-member .edit-image {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1190,12 +1187,12 @@ html, body {
             position: relative;
         }
 
-            #members-main .edit-member .edit-image img {
+            .members-main .edit-member .edit-image img {
                 width: 100%;
                 height: 100%;
             }
 
-            #members-main .edit-member .edit-image i {
+            .members-main .edit-member .edit-image i {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1209,13 +1206,13 @@ html, body {
                 bottom: 1rem;
             }
 
-        #members-main .edit-member .edit-member-form {
+        .members-main .edit-member .edit-member-form {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
-            #members-main .edit-member .edit-member-form input {
+            .members-main .edit-member .edit-member-form input {
                 height: 3rem;
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
@@ -1223,50 +1220,50 @@ html, body {
                 width: 90%;
             }
 
-            #members-main .edit-member .edit-member-form textarea {
+            .members-main .edit-member .edit-member-form textarea {
                 border: 1px solid var(--border-100);
                 border-radius: 1rem;
                 resize: none;
                 padding: 1rem;
             }
 
-            #members-main .edit-member .edit-member-form .name-container {
+            .members-main .edit-member .edit-member-form .name-container {
                 display: flex;
                 gap: 0.5rem;
             }
 
-            #members-main .edit-member .edit-member-form .email-container, #members-main .edit-member .edit-member-form .phone-container, #members-main .edit-member .edit-member-form .job-container, #members-main .edit-member .edit-member-form .address-container {
+            .members-main .edit-member .edit-member-form .email-container, .members-main .edit-member .edit-member-form .phone-container, .members-main .edit-member .edit-member-form .job-container, .members-main .edit-member .edit-member-form .address-container {
                 display: flex;
                 gap: 0.5rem;
                 flex-direction: column;
             }
 
-            #members-main .edit-member .edit-member-form .date-of-birth-container {
+            .members-main .edit-member .edit-member-form .date-of-birth-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
                 gap: 1rem;
                 grid-template-areas: "start middle end";
             }
 
-                #members-main .edit-member .edit-member-form .date-of-birth-container .day-container {
+                .members-main .edit-member .edit-member-form .date-of-birth-container .day-container {
                     grid-area: start;
                 }
 
-                #members-main .edit-member .edit-member-form .date-of-birth-container .month-container {
+                .members-main .edit-member .edit-member-form .date-of-birth-container .month-container {
                     grid-area: middle;
                 }
 
-                #members-main .edit-member .edit-member-form .date-of-birth-container .year-container {
+                .members-main .edit-member .edit-member-form .date-of-birth-container .year-container {
                     grid-area: end;
                 }
 
-                #members-main .edit-member .edit-member-form .date-of-birth-container .day-container, #members-main .edit-member .edit-member-form .date-of-birth-container .month-container, #members-main .edit-member .edit-member-form .date-of-birth-container .year-container {
+                .members-main .edit-member .edit-member-form .date-of-birth-container .day-container, .members-main .edit-member .edit-member-form .date-of-birth-container .month-container, .members-main .edit-member .edit-member-form .date-of-birth-container .year-container {
                     display: flex;
                     gap: 0.5rem;
                     flex-direction: column;
                 }
 
-        #members-main .edit-member .edit-member-bottom {
+        .members-main .edit-member .edit-member-bottom {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1276,7 +1273,6 @@ html, body {
 #sidebar {
     grid-area: sidebar;
     border-right: 2px solid var(--border-200);
-    height: 100vh;
 }
 
     #sidebar .logo {

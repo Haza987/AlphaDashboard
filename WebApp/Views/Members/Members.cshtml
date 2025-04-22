@@ -1,1 +1,20 @@
-﻿<h1>@ViewBag.Title</h1>
+﻿@model MemberViewModel
+
+<main id="hero">
+    <div class="hero-top">
+        <h2>@ViewBag.Title</h2>
+        <button class="btn btn--add" onclick="showAddMemberModal()">+ Add Project</button>
+    </div>
+
+    <div class="members-main">
+        @foreach (var member in Model.Members)
+        {
+            <partial name="Partials/_MemberCard" model="member" />
+        }
+
+        <div class="overlay add-member" id="add-member-modal" style="display: none;">
+            <partial name="Partials/_MemberCreation" model ="Model.MemberDto" />
+        </div>
+    </div>
+
+</main>
