@@ -1,4 +1,26 @@
-﻿// Member more modal
+﻿// Sidebar scripts
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sidebarItems = document.querySelectorAll(".menu .item-box a");
+    const currentPath = window.location.pathname.toLowerCase();
+
+    sidebarItems.forEach((item) => {
+        const href = item.getAttribute("href").toLowerCase();
+        if (currentPath.includes(href)) {
+            item.closest("li").classList.add("active");
+        } else {
+            item.closest("li").classList.remove("active");
+        }
+    });
+});
+
+// End of sidebar scripts
+
+
+
+// Member scripts
+
+// Member more
 
 function showMemberMoreModal(icon) {
     const container = icon.closest(".members-container"); // Find the closest parent container
@@ -30,11 +52,10 @@ function closeModal(event) {
     });
 }
 
-// End of member more modal
+// End of member more
 
 
-
-// Add member modal
+// Add member
 function showAddMemberModal() {
     const modal = document.getElementById("add-member-modal");
     if (modal) {
@@ -61,10 +82,23 @@ document.addEventListener("click", (event) => {
         hideAddMemberModal();
     }
 });
-// End of add member modal
+
+// Add date of birth logic
+function addDateOfBirth() {
+    const day = document.getElementById("member-day").value;
+    const month = document.getElementById("member-month").value;
+    const year = document.getElementById("member-year").value;
+
+    if (day && month && year) {
+        const formattedDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+        document.getElementById("date-of-birth").value = formattedDate;
+    }
+}
+
+// End of add member
 
 
-// Edit member modal
+// Edit member
 
 async function showEditMemberModal(memberId) {
     const modal = document.getElementById("edit-member-modal");
@@ -183,7 +217,7 @@ document.querySelector(".edit-member-form").addEventListener("submit", async (ev
     }
 });
 
-// End of edit member modal
+// End of edit member
 
 
 // Delete Member
@@ -250,14 +284,5 @@ document.addEventListener("click", (event) => {
 });
 // End of delete member
 
-// Add date of birth logic
-function addDateOfBirth() {
-    const day = document.getElementById("member-day").value;
-    const month = document.getElementById("member-month").value;
-    const year = document.getElementById("member-year").value;
 
-    if (day && month && year) {
-        const formattedDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-        document.getElementById("date-of-birth").value = formattedDate;
-    }
-}
+// End of member scripts

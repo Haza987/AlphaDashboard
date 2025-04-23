@@ -1,15 +1,26 @@
-﻿<div class="logo">
+﻿<a class="logo" asp-action="Homepage" asp-controller="Home">
     <img src="Images/Logo.svg" alt="Logo">
     <p>alpha</p>
-</div>
+</a>
 
 <div class="menu">
     <ul>
-        <li class="active item-box">
-            <div class="list-item">
-                <i class="fa-duotone fa-solid fa-briefcase"></i>
-                <a class="sidebar-active" href="#">Projects</a>
-            </div>
+        <li class="item-box">
+            <a asp-action="Projects" asp-controller="Projects">
+                <div class="list-item">
+                    <i class="fa-duotone fa-solid fa-briefcase"></i>
+                    <span class="sidebar-active">Projects</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="item-box">
+            <a asp-action="Members" asp-controller="Members">
+                <div class="list-item">
+                    <i class="fa-duotone fa-solid fa-users"></i>
+                    <span class="sidebar-active">Members</span>
+                </div>
+            </a>
         </li>
     </ul>
 </div>

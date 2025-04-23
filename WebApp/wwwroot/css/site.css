@@ -1,6 +1,7 @@
 :root {
     --accent: #2D99FF;
     --accent-dark: #2682D9;
+    --accent-light: #3da1ff;
     --background-light: #F1F3F7;
     --body-light: #637085;
     --body-dark: #28263B;
@@ -25,6 +26,7 @@
     --dark-purple: #6A4FF9;
     --dark-red: #E94D3F;
     --dark-yellow: #FCBB42;
+    --light-red: #ff6c47;
     --accent-opacity: rgba(26, 140, 255, 0.1);
     --green-opacity: rgba(85, 212, 106, 0.1);
     --red-opacity: rgba(255, 102, 64, 0.1);
@@ -44,6 +46,14 @@
     justify-content: center;
     transition: background-color 0.3s ease;
 }
+
+    .btn:hover {
+        background-color: var(--accent-light);
+    }
+
+    .btn:active {
+        background-color: var(--accent-dark);
+    }
 
 .btn--add {
     width: 10rem;
@@ -68,6 +78,14 @@
     background-color: var(--red);
 }
 
+    .btn--delete:hover {
+        background-color: var(--light-red);
+    }
+
+    .btn--delete:active {
+        background-color: var(--dark-red);
+    }
+
 body {
     font-size: 16px;
     font-weight: 400;
@@ -84,6 +102,20 @@ html, body {
     background-color: var(--background-light);
     margin: 0;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+    a:visited {
+        color: inherit;
+    }
+
+    a:hover, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
 
 .container {
     padding-inline: 1rem;
@@ -205,6 +237,10 @@ html, body {
                 #admin-signin .right-side .signin-container .google-signin img {
                     position: absolute;
                     left: 1rem;
+                }
+
+                #admin-signin .right-side .signin-container .google-signin:hover {
+                    background-color: var(--gray-300);
                 }
 
             #admin-signin .right-side .signin-container .or {
@@ -1073,9 +1109,17 @@ html, body {
                 margin-bottom: 0.5rem;
             }
 
+                .members-main .members-container .more-container .edit:hover {
+                    color: var(--accent);
+                }
+
             .members-main .members-container .more-container .delete {
                 color: var(--red);
             }
+
+                .members-main .members-container .more-container .delete:hover {
+                    color: var(--dark-red);
+                }
 
     .members-main .over-box {
         width: 30rem;
@@ -1372,6 +1416,7 @@ html, body {
         font-size: 26px;
         color: var(--body-dark);
         cursor: pointer;
+        text-decoration: none;
     }
 
     #sidebar .menu {
@@ -1405,6 +1450,14 @@ html, body {
             color: var(--heading);
         }
 
+    #sidebar .inactive {
+        color: var(--heading);
+    }
+
+        #sidebar .inactive a {
+            color: var(--heading);
+        }
+
     #sidebar .active {
         background-color: var(--accent-opacity);
         color: var(--accent);
@@ -1425,6 +1478,10 @@ html, body {
         color: var(--accent);
         text-decoration: none;
     }
+
+        #signin a:hover {
+            color: var(--accent-dark);
+        }
 
     #signin .signin-container {
         display: flex;
@@ -1458,6 +1515,10 @@ html, body {
             #signin .signin-container .google-signin img {
                 position: absolute;
                 left: 1rem;
+            }
+
+            #signin .signin-container .google-signin:hover {
+                background-color: var(--gray-300);
             }
 
         #signin .signin-container .or {
@@ -1545,6 +1606,10 @@ html, body {
         text-decoration: none;
     }
 
+        #signup a:hover {
+            color: var(--accent-dark);
+        }
+
     #signup .signup-container {
         display: flex;
         align-items: center;
@@ -1578,6 +1643,10 @@ html, body {
             #signup .signup-container .google-signup img {
                 position: absolute;
                 left: 1rem;
+            }
+
+            #signup .signup-container .google-signup:hover {
+                background-color: var(--gray-300);
             }
 
         #signup .signup-container .or {
