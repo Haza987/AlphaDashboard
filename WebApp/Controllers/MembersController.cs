@@ -11,7 +11,7 @@ namespace WebApp.Controllers
     {
         private readonly IMemberService _memberService = memberService;
 
-        [Route("members")]
+        [Route("Members")]
         public async Task<IActionResult> Members()
         {
             var members = await _memberService.GetAllMembersAsync();
@@ -21,7 +21,7 @@ namespace WebApp.Controllers
                 Members = members?.ToList() ?? new List<Member>(),
                 MemberDto = new MemberDto()
             };
-            Debug.WriteLine($"Members count: {members?.Count()}");
+
             ViewBag.Title = "Members";
             return View(viewModel);
         }
@@ -47,9 +47,34 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateMember()
+        public async Task<IActionResult> GetMemberById(int id)
         {
-            return PartialView("MemberPartials/_MemberUpdate", new MemberUpdateDto());
+            var member = await _memberService.GetMemberByIdAsync(id);
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            return Json(member);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateMember(int id)
+        {
+            var member = await _memberService.GetMemberByIdAsync(id);
+
+            var updateDto = new MemberUpdateDto
+            {
+                FirstName = member!.FirstName,
+                LastName = member.LastName,
+                Email = member.Email,
+                PhoneNumber = member.PhoneNumber,
+                JobTitle = member.JobTitle,
+                Address = member.Address,
+                DateOfBirth = member.DateOfBirth
+            };
+
+            return PartialView("MemberPartials/_MemberUpdate", updateDto);
         }
 
         [HttpPost]
@@ -58,26 +83,27 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _memberService.UpdateMemberAsync(id, form);
+
                 if (result)
                 {
                     return RedirectToAction("Members");
                 }
             }
-            return View("MemberPartials/_MemberUpdate", form);
+            return PartialView("MemberPartials/_MemberUpdate", form);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMemberById(int id)
+        [HttpPost]
+        public async Task<IActionResult> DeleteMember(int id)
         {
-            var member = await _memberService.GetMemberByIdAsync(id);
-            if (member == null)
+            Debug.WriteLine($"Received ID for deletion: {id}");
+            var result = await _memberService.DeleteMemberAsync(id);
+            if (result)
             {
-                return NotFound();
+                Debug.WriteLine($"Successfully deleted member with ID: {id}");
+                return Ok();
             }
-            Debug.WriteLine($"Member Data: {System.Text.Json.JsonSerializer.Serialize(member)}");
-
-
-            return Json(member);
+            Debug.WriteLine($"Failed to delete member with ID: {id}");
+            return BadRequest("Failed to delete member.");
         }
     }
 }

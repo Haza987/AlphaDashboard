@@ -3,6 +3,7 @@ using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 using Data.Interfaces;
+using System.Diagnostics;
 
 namespace Business.Services;
 
@@ -54,8 +55,8 @@ public class MemberService(IMemberRepository memberRepository, IProjectRepositor
     public async Task<bool> UpdateMemberAsync(int id, MemberUpdateDto updateDto)
     {
         await _memberRepository.BeginTransactionAsync();
-        var memberEntity = await _memberRepository.GetAsync(x => x.Id == id);
 
+        var memberEntity = await _memberRepository.GetAsync(x => x.Id == id);
         if (memberEntity == null)
         {
             return false;
@@ -63,15 +64,10 @@ public class MemberService(IMemberRepository memberRepository, IProjectRepositor
 
         try
         {
-            var updatedMember = MemberFactory.UpdateMember(memberEntity, updateDto);
-            var result = await _memberRepository.UpdateAsync(updatedMember);
-
-            if (result)
-            {
-                await _memberRepository.CommitTransactionAsync();
-            }
-
-            return true;
+            memberEntity = MemberFactory.UpdateMember(memberEntity, updateDto);
+            var result = await _memberRepository.UpdateAsync(memberEntity);
+            await _memberRepository.CommitTransactionAsync();
+            return result;
         }
         catch
         {

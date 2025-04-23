@@ -6,42 +6,51 @@
             <h2>Edit Member</h2>
             <i class="fa-solid fa-times close" id="close-button"></i>
         </div>
-
+        
         <div class="edit-image">
             <i class="fa-duotone fa-solid fa-camera"></i>
         </div>
 
         <form class="edit-member-form" asp-action="UpdateMember" method="post">
             <div class="name-container">
+
+                <input type="hidden" name="id" value="@ViewData["MemberId"]" />
+
                 <div class="first-name">
                     <label asp-for="FirstName">First Name</label>
                     <input asp-for="FirstName" type="text" id="first-name" placeholder="Your first name" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
 
                 <div class="last-name">
                     <label asp-for="LastName">Last Name</label>
                     <input asp-for="LastName" type="text" id="last-name" placeholder="Your Last name" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="email-container">
                 <label asp-for="Email">Email</label>
                 <input asp-for="Email" type="text" id="member-email" placeholder="Your email address" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="phone-container">
                 <label asp-for="PhoneNumber">Phone</label>
                 <input asp-for="PhoneNumber" id="member-phone" placeholder="Your phone number" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
 
             <div class="job-container">
                 <label asp-for="JobTitle">Job Title</label>
                 <input asp-for="JobTitle" id="member-job" placeholder="Your job title" />
+                <span asp-validation-for="JobTitle" class="text-danger"></span>
             </div>
 
             <div class="address-container">
                 <label asp-for="Address">Address</label>
                 <input asp-for="Address" id="member-address" placeholder="Your address" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
 
             <div class="date-of-birth-container">
@@ -51,7 +60,14 @@
                         <option value="">Day</option>
                         @for (int i = 1; i <= 31; i++)
                         {
-                            <option value="@i">@i</option>
+                            if (Model.DateOfBirth.HasValue && Model.DateOfBirth.Value.Day == i)
+                            {
+                                <option value="@i" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@i</option>
+                            }
                         }
                     </select>
                 </div>
@@ -62,7 +78,14 @@
                         <option value="">Month</option>
                         @for (int i = 1; i <= 12; i++)
                         {
-                            <option value="@i.ToString("D2")">@i</option>
+                            if (Model.DateOfBirth.HasValue && Model.DateOfBirth.Value.Month == i)
+                            {
+                                <option value="@i.ToString("D2")" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i.ToString("D2")">@i</option>
+                            }
                         }
                     </select>
                 </div>
@@ -73,16 +96,24 @@
                         <option value="">Year</option>
                         @for (int i = DateTime.Now.Year; i >= 1900; i--)
                         {
-                            <option value="@i">@i</option>
+                            if (Model.DateOfBirth.HasValue && Model.DateOfBirth.Value.Year == i)
+                            {
+                                <option value="@i" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@i</option>
+                            }
                         }
                     </select>
                 </div>
 
                 <input asp-for="DateOfBirth" type="hidden" id="date-of-birth" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
 
             <div class="edit-member-bottom">
-                <button class="btn btn--create">Update</button>
+                <button class="btn btn--create" type="submit">Update</button>
             </div>
         </form>
     </div>

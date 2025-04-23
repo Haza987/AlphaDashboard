@@ -68,100 +68,75 @@ document.addEventListener("click", (event) => {
 
 async function showEditMemberModal(memberId) {
     const modal = document.getElementById("edit-member-modal");
-    console.log("Modal Found:", modal); // Check if the modal is found
 
     if (modal) {
         const member = await getMemberDataById(memberId);
-        console.log("Member Data:", member); // Check the data returned from the server
 
         if (member) {
-            // Debug each field being populated
+            const idInput = modal.querySelector("input[name='id']");
+            if (idInput) {
+                idInput.value = memberId;
+            }
+
             const firstNameInput = modal.querySelector("#first-name");
-            console.log("First Name Input Found:", firstNameInput);
             if (firstNameInput) {
                 firstNameInput.value = member.firstName;
-                console.log("First Name Set:", member.firstName);
             }
 
             const lastNameInput = modal.querySelector("#last-name");
-            console.log("Last Name Input Found:", lastNameInput);
             if (lastNameInput) {
                 lastNameInput.value = member.lastName;
-                console.log("Last Name Set:", member.lastName);
             }
 
             const emailInput = modal.querySelector("#member-email");
-            console.log("Email Input Found:", emailInput);
             if (emailInput) {
                 emailInput.value = member.email;
-                console.log("Email Set:", member.email);
             }
 
             const phoneInput = modal.querySelector("#member-phone");
-            console.log("Phone Input Found:", phoneInput);
             if (phoneInput) {
-                phoneInput.value = member.phoneNumber; // Ensure this matches the API response
-                console.log("Phone Number Set:", member.phoneNumber);
+                phoneInput.value = member.phoneNumber;
             }
 
             const jobInput = modal.querySelector("#member-job");
-            console.log("Job Input Found:", jobInput);
             if (jobInput) {
-                jobInput.value = member.jobTitle; // Ensure this matches the API response
-                console.log("Job Title Set:", member.jobTitle);
+                jobInput.value = member.jobTitle;
             }
 
             const addressInput = modal.querySelector("#member-address");
-            console.log("Address Input Found:", addressInput);
             if (addressInput) {
                 addressInput.value = member.address;
-                console.log("Address Set:", member.address);
             }
 
-            // Debug date of birth fields
-            console.log("Raw Date of Birth:", member.dateOfBirth);
             const [year, month, day] = member.dateOfBirth.split("-");
-            console.log("Date of Birth Split:", { year, month, day });
 
             const dayInput = modal.querySelector("#member-day");
-            console.log("Day Input Found:", dayInput);
             if (dayInput) {
                 dayInput.value = day;
-                console.log("Day Set:", day);
             }
 
             const monthInput = modal.querySelector("#member-month");
-            console.log("Month Input Found:", monthInput);
             if (monthInput) {
                 monthInput.value = month;
-                console.log("Month Set:", month);
             }
 
             const yearInput = modal.querySelector("#member-year");
-            console.log("Year Input Found:", yearInput);
             if (yearInput) {
                 yearInput.value = year;
-                console.log("Year Set:", year);
             }
 
             const dateOfBirthInput = modal.querySelector("#date-of-birth");
-            console.log("Date of Birth Input Found:", dateOfBirthInput);
             if (dateOfBirthInput) {
                 dateOfBirthInput.value = member.dateOfBirth;
-                console.log("Date of Birth Set:", member.dateOfBirth);
             }
 
             modal.style.display = "flex";
-            console.log("Modal Displayed");
-        } else {
-            console.error("Member data is null or undefined.");
         }
-    } else {
-        console.error("Modal with id 'edit-member-modal' not found.");
     }
 }
 
 async function getMemberDataById(memberId) {
+    console.log("Fetching member data for ID:", memberId);
     const response = await fetch(`/Members/GetMemberById?id=${memberId}`);
     return await response.json();
 }
@@ -186,7 +161,7 @@ document.addEventListener("click", (event) => {
 });
 
 document.querySelector(".edit-member-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
+    //event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
@@ -210,6 +185,70 @@ document.querySelector(".edit-member-form").addEventListener("submit", async (ev
 
 // End of edit member modal
 
+
+// Delete Member
+
+async function showDeleteMemberModal(memberId) {
+    console.log("Member ID passed to modal:", memberId);
+    const modal = document.getElementById("delete-member-modal");
+    if (modal) {
+        const member = await getMemberDataById(memberId);
+
+        if (member) {
+            const id = modal.querySelector("input[name='id']");
+            if (id) {
+                id.value = memberId;
+            }
+
+            const nameElement = modal.querySelector("#member-name");
+            if (nameElement) {
+                nameElement.textContent = `${member.firstName} ${member.lastName}`;
+            }
+        }
+        modal.style.display = "flex";
+    }
+}
+
+async function confirmDelete() {
+    const modal = document.getElementById("delete-member-modal");
+    const id = modal.querySelector("input[name='id']");
+    const memberId = id ? id.value : null;
+
+    if (!memberId) {
+        console.error("Member ID is missing.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/Members/DeleteMember?id=${memberId}`, {
+            method: "POST",
+        });
+
+        if (response.ok) {
+            location.reload();
+        } else {
+            console.error("Failed to delete member.");
+            alert("Failed to delete member.");
+        }
+    } catch (error) {
+        console.error("Error deleting member:", error);
+        alert("An error occurred while deleting the member.");
+    }
+}
+function hideDeleteMemberModal() {
+    const modal = document.getElementById("delete-member-modal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+document.addEventListener("click", (event) => {
+    if (event.target && event.target.id === "close-button" || event.target.id === "btn-cancel") {
+
+        hideDeleteMemberModal();
+    }
+});
+// End of delete member
 
 // Add date of birth logic
 function addDateOfBirth() {

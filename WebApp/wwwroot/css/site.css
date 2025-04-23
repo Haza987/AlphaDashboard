@@ -60,6 +60,14 @@
     margin: 2rem 0 1rem 0;
 }
 
+.btn--delete, .btn--cancel {
+    width: 10rem;
+}
+
+.btn--delete {
+    background-color: var(--red);
+}
+
 body {
     font-size: 16px;
     font-weight: 400;
@@ -1297,6 +1305,56 @@ html, body {
             justify-content: center;
             margin-bottom: 2rem;
         }
+
+    .members-main .delete-member {
+        display: flex;
+    }
+
+        .members-main .delete-member .delete-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--surface);
+        }
+
+            .members-main .delete-member .delete-container i {
+                margin-left: auto;
+                cursor: pointer;
+            }
+
+            .members-main .delete-member .delete-container .delete-top {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .members-main .delete-member .delete-container .delete-info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .members-main .delete-member .delete-container .delete-bottom {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+                .members-main .delete-member .delete-container .delete-bottom .delete-btns {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 2rem;
+                }
 
 #sidebar {
     grid-area: sidebar;
