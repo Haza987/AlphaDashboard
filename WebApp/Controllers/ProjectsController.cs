@@ -1,4 +1,5 @@
-﻿using Business.Interfaces;
+﻿using Business.Dtos;
+using Business.Interfaces;
 using Business.Models;
 using Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,37 @@ namespace WebApp.Controllers
             ViewBag.ProjectInProgress = projectInProgress;
             ViewBag.ProjectComplete = projectComplete;
 
+            ViewBag.Members = _context.Members
+                .Select(m => new MemberDto
+                {
+                    Id = m.Id,
+                    FirstName = m.FirstName,
+                    LastName = m.LastName
+                })
+                .ToList();
+
+
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult CreateProject()
+        {
+            return PartialView("ProjectPartials/_ProjectCreation", new ProjectDto());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProject(ProjectDto form)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _projectService.CreateProjectAsync(form);
+                if (result)
+                {
+                    return RedirectToAction("Projects");
+                }
+            }
+            return View("ProjectPartials/_ProjectCreation", form);
         }
     }
 }

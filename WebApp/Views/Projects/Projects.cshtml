@@ -3,7 +3,7 @@
 <main id="hero">
     <div class="hero-top">
         <h2>@ViewBag.Title</h2>
-        <button class="btn btn--add">+ Add Project</button>
+        <button class="btn btn--add" onclick="showAddProjectModal()">+ Add Project</button>
     </div>
 
     <div class="project-selection">
@@ -17,5 +17,9 @@
         {
             <partial name="ProjectPartials/_ProjectCard" model="project" />
         }
+    </div>
+
+    <div class="overlay add-project" id="add-project-modal" style="display: none;">
+        <partial name="ProjectPartials/_ProjectCreation" model="Model.ProjectDto" />
     </div>
 </main>

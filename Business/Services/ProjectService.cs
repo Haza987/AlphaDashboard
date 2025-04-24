@@ -16,7 +16,24 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
         await _projectRepository.BeginTransactionAsync();
         try
         {
+            if (await _projectRepository.ExistsAsync(x => x.ProjectName == dto.ProjectName))
+            {
+                // Project with the same name already exists message
+                return false;
+            }
+
             var members = (await _memberRepository.GetAllAsync())?.ToList() ?? [];
+
+            // New ProjectId
+            var highestPID = await _projectRepository.GetAllAsync();
+            var lastPID = highestPID!
+                .Select(x => int.Parse(x.ProjectId.Substring(2)))
+                .DefaultIfEmpty(101)
+                .Max();
+            var nextPN = lastPID + 1;
+            var newPN = $"P-{nextPN}";
+            dto.ProjectId = newPN;
+
             var project = ProjectFactory.CreateProjectEntity(dto, members);
             var result = await _projectRepository.CreateAsync(project);
             if (result)

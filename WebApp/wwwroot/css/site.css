@@ -149,6 +149,10 @@ a {
     color: var(--red);
 }
 
+i {
+    cursor: pointer;
+}
+
 #admin-signin {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -284,12 +288,11 @@ a {
                     position: relative;
                 }
 
-                    #admin-signin .right-side .signin-container .form-signin .password-container .fa-eye-slash {
+                    #admin-signin .right-side .signin-container .form-signin .password-container i {
                         position: absolute;
                         right: 1rem;
                         top: 70%;
                         transform: translateY(-50%);
-                        cursor: pointer;
                     }
 
                 #admin-signin .right-side .signin-container .form-signin .bottom-container {
@@ -435,7 +438,6 @@ a {
 
                     #header .header-right .notification-container .notification-container-bottom .notification i {
                         margin-left: auto;
-                        cursor: pointer;
                     }
 
         #header .header-right::after {
@@ -725,8 +727,8 @@ a {
     }
 
     #hero .add-project {
-        display: none;
         /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+        display: flex;
     }
 
         #hero .add-project .add-project-top {
@@ -737,7 +739,6 @@ a {
             #hero .add-project .add-project-top i {
                 margin-left: auto;
                 font-size: 20px;
-                cursor: pointer;
             }
 
         #hero .add-project .add-image {
@@ -812,17 +813,25 @@ a {
 
                 #hero .add-project .add-project-form .date-container .project-start {
                     grid-area: start;
+                }
+
+                #hero .add-project .add-project-form .date-container .project-end {
+                    grid-area: end;
+                }
+
+                #hero .add-project .add-project-form .date-container .project-start, #hero .add-project .add-project-form .date-container .project-end {
                     display: flex;
                     gap: 0.5rem;
                     flex-direction: column;
                 }
 
-                #hero .add-project .add-project-form .date-container .project-end {
-                    grid-area: end;
-                    display: flex;
-                    gap: 0.5rem;
-                    flex-direction: column;
-                }
+                    #hero .add-project .add-project-form .date-container .project-start input, #hero .add-project .add-project-form .date-container .project-end input {
+                        cursor: text;
+                    }
+
+                        #hero .add-project .add-project-form .date-container .project-start input::-webkit-calendar-picker-indicator, #hero .add-project .add-project-form .date-container .project-end input::-webkit-calendar-picker-indicator {
+                            cursor: pointer;
+                        }
 
             #hero .add-project .add-project-form .members-container {
                 display: flex;
@@ -830,8 +839,50 @@ a {
                 flex-direction: column;
                 width: auto;
                 height: auto;
-                border: 5px solid black;
             }
+
+                #hero .add-project .add-project-form .members-container .member-select {
+                    height: 3rem;
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    width: 90%;
+                    cursor: pointer;
+                }
+
+                #hero .add-project .add-project-form .members-container .selected-members {
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    width: 90%;
+                }
+
+                    #hero .add-project .add-project-form .members-container .selected-members .selected-members-container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+                        cursor: pointer;
+                        gap: 0.5rem;
+                        margin-inline: 1rem;
+                        padding-bottom: 1rem;
+                    }
+
+                        #hero .add-project .add-project-form .members-container .selected-members .selected-members-container .selected-member {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 1rem;
+                            height: auto;
+                            width: 45%;
+                            border: 1px solid var(--border-100);
+                            background-color: var(--accent-opacity);
+                            border-radius: 1rem;
+                            padding-inline: 1rem;
+                            font-size: 0.7rem;
+                            -webkit-hyphens: auto;
+                            hyphens: auto;
+                            overflow-wrap: break-word;
+                        }
 
             #hero .add-project .add-project-form .budget-container {
                 display: flex;
@@ -863,7 +914,6 @@ a {
             #hero .edit-project .edit-project-top i {
                 margin-left: auto;
                 font-size: 20px;
-                cursor: pointer;
             }
 
         #hero .edit-project .edit-image {
@@ -892,7 +942,6 @@ a {
                 background-color: rgba(99, 112, 133, 0.8);
                 border-radius: 50%;
                 color: #ffffff;
-                cursor: pointer;
                 position: absolute;
                 bottom: 1rem;
             }
@@ -1003,7 +1052,6 @@ a {
 
                     #hero .edit-project .edit-project-form .members-container .project-members i {
                         margin-left: auto;
-                        cursor: pointer;
                     }
 
             #hero .edit-project .edit-project-form .budget-container {
@@ -1044,9 +1092,8 @@ a {
         position: relative;
     }
 
-        .members-main .members-container .more {
+        .members-main .members-container i {
             margin-left: auto;
-            cursor: pointer;
         }
 
         .members-main .members-container .member-icon {
@@ -1149,7 +1196,6 @@ a {
             .members-main .add-member .add-member-top i {
                 margin-left: auto;
                 font-size: 20px;
-                cursor: pointer;
             }
 
         .members-main .add-member .add-image {
@@ -1252,7 +1298,6 @@ a {
             .members-main .edit-member .edit-member-top i {
                 margin-left: auto;
                 font-size: 20px;
-                cursor: pointer;
             }
 
         .members-main .edit-member .edit-image {
@@ -1281,7 +1326,6 @@ a {
                 background-color: rgba(99, 112, 133, 0.9);
                 border-radius: 50%;
                 color: #ffffff;
-                cursor: pointer;
                 position: absolute;
                 bottom: 1rem;
             }
@@ -1367,7 +1411,6 @@ a {
 
             .members-main .delete-member .delete-container i {
                 margin-left: auto;
-                cursor: pointer;
             }
 
             .members-main .delete-member .delete-container .delete-top {
@@ -1562,12 +1605,11 @@ a {
                 position: relative;
             }
 
-                #signin .signin-container .form-signin .password-container .fa-eye-slash {
+                #signin .signin-container .form-signin .password-container i {
                     position: absolute;
                     right: 1rem;
                     top: 70%;
                     transform: translateY(-50%);
-                    cursor: pointer;
                 }
 
             #signin .signin-container .form-signin .bottom-container {
@@ -1705,12 +1747,11 @@ a {
                 position: relative;
             }
 
-                #signup .signup-container .form-signup .password-container .fa-eye-slash {
+                #signup .signup-container .form-signup .password-container i {
                     position: absolute;
                     right: 1rem;
                     top: 70%;
                     transform: translateY(-50%);
-                    cursor: pointer;
                 }
 
             #signup .signup-container .form-signup .bottom-container {

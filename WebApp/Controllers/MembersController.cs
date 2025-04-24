@@ -11,7 +11,7 @@ namespace WebApp.Controllers
     {
         private readonly IMemberService _memberService = memberService;
 
-        [Route("Members")]
+        [Route("members")]
         public async Task<IActionResult> Members()
         {
             var members = await _memberService.GetAllMembersAsync();

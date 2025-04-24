@@ -1,0 +1,74 @@
+﻿@model ProjectDto
+
+<div class="over-box">
+    <div class="over-box-content">
+
+        <div class="add-project-top">
+            <h2>Add Project</h2>
+            <i class="fa-solid fa-times close" id="project-close-button"></i>
+        </div>
+
+        <div class="add-image">
+            <i class="fa-duotone fa-solid fa-camera"></i>
+        </div>
+        
+        <form class="add-project-form" asp-action="CreateProject" method="post">
+            <div class="name-container">
+                <label asp-for="ProjectName">Project Name</label>
+                <input asp-for="ProjectName" type="text" id="project-name" placeholder="Project name"/>
+            </div>
+
+            <div class="client-container">
+                <label asp-for="ClientName">Client Name</label>
+                <input asp-for="ClientName" type="text" id="project-client" placeholder="Client name"/>
+            </div>
+
+            <div class="description-container">
+                <label asp-for="ProjectDescription">Description</label>
+                <input asp-for="ProjectDescription" id="project-description" placeholder="Type Something"/>
+            </div>
+
+            <div class="date-container">
+                <div class="project-start">
+                    <label asp-for="StartDate">Start Date</label>
+                    <input asp-for="StartDate" type="date" id="project-start"/>
+                </div>
+
+                <div class="project-end">
+                    <label asp-for="EndDate">End Date</label>
+                    <input asp-for="EndDate" type="date" id="project-end"/>
+                </div>
+            </div>
+
+            <div class="members-container">
+                <label asp-for="Members">Members</label>
+                <select asp-for="Members" class="member-select" id="member-select" onchange="updateSelectedMembers()">
+                    <option disabled selected>-- Assign members --</option>
+                    @foreach (var member in ViewBag.Members)
+                    {
+                        <option value="@member.Id" data-name="@member.FirstName @member.LastName">@member.FirstName @member.LastName</option>
+                    }
+                </select>
+
+                <div id="selected-members-container" class="selected-members">
+                    <p>Selected Members</p>
+                    <div class="selected-members-container">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="budget-container">
+                <label asp-for="Budget">Budget</label>
+                <div class="input-container">
+                    <span>$</span>
+                    <input asp-for="Budget" type="text" id="project-budget" placeholder="0"/>
+                </div>
+            </div>
+
+            <div class="add-project-bottom">
+                <button class="btn btn--update">Create</button>
+            </div>
+        </form>
+    </div>
+</div>

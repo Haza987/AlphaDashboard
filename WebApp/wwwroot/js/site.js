@@ -1,24 +1,4 @@
-﻿// Sidebar scripts
-
-document.addEventListener("DOMContentLoaded", () => {
-    const sidebarItems = document.querySelectorAll(".menu .item-box a");
-    const currentPath = window.location.pathname.toLowerCase();
-
-    sidebarItems.forEach((item) => {
-        const href = item.getAttribute("href").toLowerCase();
-        if (currentPath.includes(href)) {
-            item.closest("li").classList.add("active");
-        } else {
-            item.closest("li").classList.remove("active");
-        }
-    });
-});
-
-// End of sidebar scripts
-
-
-
-// Member scripts
+﻿// Member scripts
 
 // Member more
 
@@ -194,28 +174,32 @@ document.addEventListener("click", (event) => {
     }
 });
 
-document.querySelector(".edit-member-form").addEventListener("submit", async (event) => {
-    //event.preventDefault();
+const editMemberForm = document.querySelector(".edit-member-form");
+if (editMemberForm) {
+    editMemberForm.addEventListener("submit", async (event) => {
+        //event.preventDefault();
 
-    const form = event.target;
-    const formData = new FormData(form);
+        const form = event.target;
+        const formData = new FormData(form);
 
-    try {
-        const response = await fetch(form.action, {
-            method: "POST",
-            body: formData,
-        });
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+            });
 
-        if (response.ok) {
-            const html = await response.text();
-            document.querySelector(".over-box").innerHTML = html; // Update the modal content
-        } else {
-            console.error("Failed to update member.");
+            if (response.ok) {
+                const html = await response.text();
+                document.querySelector(".over-box").innerHTML = html;
+            } else {
+                console.error("Failed to update member.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
         }
-    } catch (error) {
-        console.error("Error:", error);
-    }
-});
+    })
+};
+    
 
 // End of edit member
 
@@ -286,3 +270,109 @@ document.addEventListener("click", (event) => {
 
 
 // End of member scripts
+
+
+
+// Project scripts
+
+// Add project
+function showAddProjectModal() {
+    const modal = document.getElementById("add-project-modal");
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+function hideAddProjectModal() {
+    const modal = document.getElementById("add-project-modal");
+    if (modal) {
+        modal.style.display = "none";
+
+        const form = modal.querySelector(".add-project-form");
+        if (form) {
+            form.reset();
+        }
+    }
+}
+
+document.addEventListener("click", (event) => {
+    if (event.target && event.target.id === "project-close-button") {
+
+        hideAddProjectModal();
+    }
+});
+
+// Population of Selected members container
+const selectedMembers = new Set();
+
+function updateSelectedMembers() {
+    const dropdown = document.getElementById("member-select");
+    const selectedMemberId = dropdown.value;
+    const selectedMemberName = dropdown.options[dropdown.selectedIndex].getAttribute('data-name');
+
+    if (!selectedMembers.has(selectedMemberId)) {
+        selectedMembers.add(selectedMemberId);
+
+        const container = document.querySelector(".selected-members-container");
+
+        const memberDiv = document.createElement("div");
+        memberDiv.classList.add("selected-member");
+        memberDiv.setAttribute("data-id", selectedMemberId);
+
+        memberDiv.innerHTML = `
+
+            <p>${selectedMemberName}</p>
+            <i id="remove-member-${selectedMemberId}" class="fa-solid fa-times close"></i>
+        `;
+
+        container.appendChild(memberDiv);
+    }
+}
+// add this back into the memberDiv.innerHTML part of the function later.
+//<img class="member-icon" src="" alt="Member Image" />
+
+// Removal of selected member from container
+function removeSelectedMember(memberId) {
+    selectedMembers.delete(memberId);
+
+    const memberDiv = document.querySelector(`.selected-member[data-id="${memberId}"]`);
+    if (memberDiv) {
+        memberDiv.remove();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const selectedMembersContainer = document.querySelector(".selected-members-container");
+    if (selectedMembersContainer) {
+        selectedMembersContainer.addEventListener("click", (event) => {
+            if (event.target && event.target.id.startsWith("remove-member-")) {
+                const memberId = event.target.id.replace("remove-member-", "");
+                removeSelectedMember(memberId);
+            }
+        });
+    }
+});
+
+// End of add project
+
+// End of project scripts
+
+
+
+// Sidebar scripts
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sidebarItems = document.querySelectorAll(".menu .item-box a");
+    const currentPath = window.location.pathname.toLowerCase();
+
+    sidebarItems.forEach((item) => {
+        const href = item.getAttribute("href").toLowerCase();
+        if (currentPath.includes(href)) {
+            item.closest("li").classList.add("active");
+        } else {
+            item.closest("li").classList.remove("active");
+        }
+    });
+});
+
+// End of sidebar scripts

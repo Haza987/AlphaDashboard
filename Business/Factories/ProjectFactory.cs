@@ -8,7 +8,7 @@ public class ProjectFactory
 {
     public static ProjectEntity CreateProjectEntity(ProjectDto dto, List<MemberEntity> members) => new()
     {
-        ProjectId = dto.ProjectId,
+        ProjectId = dto.ProjectId!,
         ProjectName = dto.ProjectName,
         ClientName = dto.ClientName,
         ProjectDescription = dto.ProjectDescription,
@@ -18,7 +18,7 @@ public class ProjectFactory
         IsCompleted = dto.IsCompleted,
 
         Members = members
-        .Where(m => dto.Members.Contains($"{m.FirstName} {m.LastName}"))
+        .Where(m => m.Id == dto.Members)
         .ToList()
     };
 
