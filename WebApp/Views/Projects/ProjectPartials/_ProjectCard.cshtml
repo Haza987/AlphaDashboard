@@ -12,9 +12,9 @@
         <i onclick="showProjectMoreModal(this)" class="more fa-solid fa-ellipsis"></i>
 
         <div class="project-more-modal more-container" style="display: none;">
-            <div class="edit" onclick="hideProjectMoreModal();">
+            <div class="edit" onclick="hideProjectMoreModal(); showEditProjectModal(@Model.Id)">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <p class="edit">Edit
+                <p class="edit">Edit</p>
             </div>
 
             <div class="delete" onclick="hideProjectMoreModal();">

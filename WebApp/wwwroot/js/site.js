@@ -298,6 +298,8 @@ function closeProjectMoreModal(event) {
     });
 }
 
+// End of project more
+
 // Add project
 function showAddProjectModal() {
     const modal = document.getElementById("add-project-modal");
@@ -324,50 +326,6 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// Population of Selected members container
-const selectedMembers = new Set();
-
-// Function to add a selected member to the container
-function updateSelectedMembers() {
-    const dropdown = document.getElementById("member-select");
-    const selectedMemberId = dropdown.value;
-    const selectedMemberName = dropdown.options[dropdown.selectedIndex].getAttribute('data-name');
-
-    const container = document.querySelector(".selected-members-container");
-
-    if (!selectedMembers.has(selectedMemberId)) {
-        selectedMembers.add(selectedMemberId);
-
-        const memberDiv = document.createElement("div");
-        memberDiv.classList.add("selected-member");
-        memberDiv.setAttribute("data-id", selectedMemberId);
-
-        memberDiv.innerHTML = `
-
-               <p>${selectedMemberName}</p>
-               <button type="button" class="btn-close" onclick="removeSelectedMember('${selectedMemberId}')"><i class="fa-solid fa-times close"></i></button>
-               <input type="hidden" name="Members" value="${selectedMemberId}" />
-           `;
-
-        container.appendChild(memberDiv);
-    }
-}
-
-//add this back in when image functionality works
-//<img class="member-icon" src="" alt="Member Image" />
-
-// Function to remove a selected member from the container
-function removeSelectedMember(memberId) {
-    selectedMembers.delete(memberId);
-
-    const memberDiv = document.querySelector(`.selected-member[data-id="${memberId}"]`);
-
-    if (memberDiv) {
-        memberDiv.remove();
-    }
-}
-
-
 // Add hidden inputs for selected members before form submission
 const addProjectForm = document.querySelector(".add-project-form");
 if (addProjectForm) {
@@ -390,6 +348,192 @@ if (addProjectForm) {
 }
 
 // End of add project
+
+// Shared selected members container
+
+// Set to track selected members globally
+const selectedMembers = new Set();
+
+// Generic function to update selected members
+function updateSelectedMembers(dropdownId, containerClass) {
+    const dropdown = document.getElementById(dropdownId);
+    const selectedMemberId = dropdown.value;
+    const selectedMemberName = dropdown.options[dropdown.selectedIndex]?.getAttribute('data-name');
+
+    // Ignore the default option
+    if (selectedMemberId === "-- Assign members --" || !selectedMemberName) {
+        console.error("[ERROR] Member ID or Name is invalid.");
+        return;
+    }
+
+    const container = document.querySelector(`.${containerClass}`);
+
+    if (!selectedMembers.has(selectedMemberId)) {
+        selectedMembers.add(selectedMemberId);
+
+        const memberDiv = document.createElement("div");
+        memberDiv.classList.add("selected-member");
+        memberDiv.setAttribute("data-id", selectedMemberId);
+
+        memberDiv.innerHTML = `
+            <p>${selectedMemberName}</p>
+            <button type="button" class="btn-close" onclick="removeSelectedMember('${selectedMemberId}', '${containerClass}')">
+                <i class="fa-solid fa-times close"></i>
+            </button>
+            <input type="hidden" name="Members" value="${selectedMemberId}" />
+        `;
+
+        container.appendChild(memberDiv);
+    } else {
+        console.log("[DEBUG] Member already exists in selectedMembers.");
+    }
+}
+
+//add this back in when image functionality works
+//<img class="member-icon" src="" alt="Member Image" />
+
+// Generic function to remove a selected member
+function removeSelectedMember(memberId, containerClass) {
+    selectedMembers.delete(memberId);
+
+    const memberDiv = document.querySelector(`.${containerClass} .selected-member[data-id="${memberId}"]`);
+
+    if (memberDiv) {
+        memberDiv.remove();
+    }
+}
+
+// End of shared section
+
+// Edit project
+
+async function showEditProjectModal(projectId) {
+    const modal = document.getElementById("edit-project-modal");
+
+    if (modal) {
+        const response = await fetch(`/Projects/UpdateProject?id=${projectId}`);
+        if (response.ok) {
+            const html = await response.text();
+            modal.innerHTML = html;
+        }
+
+        const project = await getProjectDataById(projectId);
+
+        if (project) {
+            const idInput = modal.querySelector("input[name='id']");
+            if (idInput) {
+                idInput.value = projectId;
+            }
+
+            const ProjectNameInput = modal.querySelector("#project-name");
+            if (ProjectNameInput) {
+                ProjectNameInput.value = project.projectName;
+            }
+
+            const ClientNameInput = modal.querySelector("#project-client");
+            if (ClientNameInput) {
+                ClientNameInput.value = project.clientName;
+            }
+
+            const ProjectDescriptionInput = modal.querySelector("#project-description");
+            if (ProjectDescriptionInput) {
+                ProjectDescriptionInput.value = project.projectDescription;
+            }
+
+            const startDateInput = modal.querySelector("#project-start");
+            if (startDateInput) {
+                startDateInput.value = project.startDate.split("T")[0];
+            }
+
+            const endDateInput = modal.querySelector("#project-end");
+            if (endDateInput) {
+                endDateInput.value = project.endDate.split("T")[0];
+            }
+
+            const membersContainer = modal.querySelector(".selected-members-container");
+            if (membersContainer && project.members) {
+                project.members.forEach(member => {
+                    const memberDiv = document.createElement("div");
+                    memberDiv.classList.add("selected-member");
+                    memberDiv.setAttribute("data-id", selectedMemberId);
+
+                    memberDiv.innerHTML = `
+       <p>${selectedMemberName}</p>
+       <button type="button" class="btn-close" onclick="removeSelectedMember('${selectedMemberId}', '${containerClass}')">
+           <i class="fa-solid fa-times close"></i>
+       </button>
+       <input type="hidden" name="Members" value="${selectedMemberId}" />
+   `;
+
+                    membersContainer.appendChild(memberDiv);
+                });
+            }
+
+            const budgetInput = modal.querySelector("#project-budget");
+            if (budgetInput) {
+                budgetInput.value = project.budget;
+            }
+
+            modal.style.display = "flex";
+        }
+    }
+}
+
+async function getProjectDataById(projectId) {
+    const response = await fetch(`/Projects/GetProjectById?id=${projectId}`);
+    return await response.json();
+}
+
+function hideEditProjectModal() {
+    const modal = document.getElementById("edit-project-modal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+document.addEventListener("click", (event) => {
+    if (event.target && event.target.id === "close-button") {
+        hideEditProjectModal();
+    }
+});
+
+const editProjectForm = document.querySelector(".edit-project-form");
+if (editProjectForm) {
+    editProjectForm.addEventListener("submit", async (event) => {
+        const form = event.target;
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const html = await response.text();
+                document.querySelector(".over-box").innerHTML = html;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+        form.querySelectorAll("input[name='Members']").forEach(input => {
+            input.remove();
+        });
+
+        // Add hidden inputs for each selected member
+        selectedMembers.forEach(memberId => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "Members";
+            input.value = memberId;
+            form.appendChild(input);
+        });
+    });
+}
+
+// End of edit project
 
 // End of project scripts
 

@@ -4,7 +4,7 @@ namespace Business.Models;
 
 public class Project
 {
-    public int id { get; set; }
+    public int Id { get; set; }
     public string ProjectId { get; set; } = null!;
     public string ProjectName { get; set; } = null!;
     public string ClientName { get; set; } = null!;

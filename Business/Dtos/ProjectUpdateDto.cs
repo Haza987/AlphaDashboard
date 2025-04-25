@@ -11,5 +11,5 @@ public class ProjectUpdateDto
     public DateTime? EndDate { get; set; }
     public decimal? Budget { get; set; }
     public bool? IsCompleted { get; set; }
-    public List<string>? Members { get; set; } = [];
+    public List<int>? Members { get; set; } = [];
 }

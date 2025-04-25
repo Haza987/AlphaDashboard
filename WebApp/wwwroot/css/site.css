@@ -842,15 +842,6 @@ i {
                 height: auto;
             }
 
-                #hero .add-project .add-project-form .members-container .member-select {
-                    height: 3rem;
-                    border: 1px solid var(--border-100);
-                    border-radius: 1rem;
-                    padding-inline: 1rem;
-                    width: 90%;
-                    cursor: pointer;
-                }
-
                 #hero .add-project .add-project-form .members-container .selected-members {
                     border: 1px solid var(--border-100);
                     border-radius: 1rem;
@@ -903,8 +894,8 @@ i {
         }
 
     #hero .edit-project {
-        display: none;
         /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+        display: flex;
     }
 
         #hero .edit-project .edit-project-top {
@@ -1014,46 +1005,46 @@ i {
                 }
 
             #hero .edit-project .edit-project-form .members-container {
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                grid-template-areas: "title" "members icon";
+                display: flex;
                 gap: 0.5rem;
+                flex-direction: column;
                 width: auto;
-                height: 4.5rem;
-                margin-bottom: 1rem;
+                height: auto;
             }
 
-                #hero .edit-project .edit-project-form .members-container label {
-                    grid-template-areas: title;
-                }
-
-                #hero .edit-project .edit-project-form .members-container .project-members {
+                #hero .edit-project .edit-project-form .members-container .selected-members {
                     border: 1px solid var(--border-100);
-                    grid-template-areas: members;
-                    margin-left: auto;
-                    padding: 0.2rem 0.5rem;
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    width: 90%;
                 }
 
-                    #hero .edit-project .edit-project-form .members-container .project-members .project-member {
+                    #hero .edit-project .edit-project-form .members-container .selected-members .selected-members-container {
                         display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        height: 3rem;
-                        width: auto;
-                        background-color: var(--gray-100);
-                        border-radius: 1rem;
-                        padding: 0.5rem;
-                        font-size: 14px;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
                         cursor: pointer;
+                        gap: 0.5rem;
+                        margin-inline: 1rem;
+                        padding-bottom: 1rem;
                     }
 
-                    #hero .edit-project .edit-project-form .members-container .project-members i {
-                        margin-left: auto;
-                    }
+                        #hero .edit-project .edit-project-form .members-container .selected-members .selected-members-container .selected-member {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 1rem;
+                            height: auto;
+                            width: 45%;
+                            border: 1px solid var(--border-100);
+                            background-color: var(--accent-opacity);
+                            border-radius: 1rem;
+                            padding-inline: 1rem;
+                            font-size: 0.7rem;
+                            -webkit-hyphens: auto;
+                            hyphens: auto;
+                            overflow-wrap: break-word;
+                        }
 
             #hero .edit-project .edit-project-form .budget-container {
                 display: flex;
@@ -1071,6 +1062,15 @@ i {
             justify-content: center;
             margin-bottom: 2rem;
         }
+
+    #hero .member-select {
+        height: 3rem;
+        border: 1px solid var(--border-100);
+        border-radius: 1rem;
+        padding-inline: 1rem;
+        width: 90%;
+        cursor: pointer;
+    }
 
 .members-main {
     margin-top: 1.5rem;

@@ -1,0 +1,85 @@
+﻿@model ProjectUpdateDto
+
+<div class="over-box">
+    <div class="over-box-content">
+        <div class="edit-project-top">
+            <h2>Edit Project - @Model.ProjectId</h2>
+            <button class="btn-close"><i class="fa-solid fa-times close" id="close-button"></i></button>
+        </div>
+
+        <div class="edit-image">
+            <i class="fa-duotone fa-solid fa-pencil"></i>
+        </div>
+
+        <form class="edit-project-form" asp-action="UpdateProject" method="post">
+
+            <input type="hidden" name="id" value="@ViewData["ProjectId"]" />
+
+            <label asp-for="ProjectName"></label>
+            <input asp-for="ProjectName" type="text" id="project-name" placeholder="Project name" value="ASP.NET Web App">
+
+            <label asp-for="ClientName">Client Name</label>
+            <input asp-for="ClientName" type=" text" id="project-client" placeholder="Client name">
+
+            <label asp-for="ProjectDescription">Description</label>
+            <input asp-for="ProjectDescription" id="project-description" placeholder="Type Something" />
+
+            <div class="date-container">
+                <div class="project-start">
+                    <label asp-for="StartDate">Start Date</label>
+                    <input asp-for="StartDate" type="date" id="project-start">
+                </div>
+
+                <div class="project-end">
+                    <label asp-for="EndDate">End Date</label>
+                    <input asp-for="EndDate" type="date" id="project-end">
+                </div>
+            </div>
+
+            <div class="members-container">
+                <label asp-for="Members">Members</label>
+                <select class="member-select" id="member-select-edit" onchange="updateSelectedMembers('member-select-edit', 'selected-members-container-edit')">
+                    <option value="-- Assign members --" disabled selected>-- Assign members --</option>
+                    @foreach (var member in ViewBag.Members)
+                    {
+                        <option value="@member.Id" data-name="@member.FirstName @member.LastName">@member.FirstName @member.LastName</option>
+                    }
+                </select>
+
+                <div id="selected-members-container" class="selected-members-container-edit">
+                    <p>Selected Members</p>
+                    <div class="selected-members-container-edit">
+                        @if (Model.Members != null)
+                        {
+                            foreach (var memberId in Model.Members)
+                            {
+                                var member = ((List<MemberDto>?)ViewBag.Members)?.FirstOrDefault(m => m.Id == memberId);
+                                if (member != null)
+                                {
+                                    <div class="selected-member" data-id="@member.Id">
+                                        <p>@member.FirstName @member.LastName</p>
+                                        <button type="button" class="btn-close" onclick="removeSelectedMember('@member.Id', 'selected-members-container-edit')">
+                                            <i class="fa-solid fa-times close"></i>
+                                        </button>
+                                        <input type="hidden" name="Members" value="@member.Id" />
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <label asp-for="Budget"></label>
+            <div class="input-container">
+                <span class="input-prefix">$</span>
+                <input asp-for="Budget" type="number" id="project-budget" placeholder="0">
+            </div>
+
+            <div class="edit-project-bottom">
+                <button class="btn btn--update" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>

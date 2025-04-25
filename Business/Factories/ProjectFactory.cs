@@ -9,11 +9,7 @@ public class ProjectFactory
 {
     public static ProjectEntity CreateProjectEntity(ProjectDto dto, List<MemberEntity> members)
     {
-        Debug.WriteLine($"Creating ProjectEntity for ProjectName: {dto.ProjectName}");
-        Debug.WriteLine($"Members in DTO: {string.Join(", ", dto.Members)}");
-
         var filteredMembers = members.Where(m => dto.Members.Contains(m.Id)).ToList();
-        Debug.WriteLine($"Filtered Members: {string.Join(", ", filteredMembers.Select(m => m.FirstName + " " + m.LastName))}");
 
         return new ProjectEntity
         {
@@ -31,11 +27,11 @@ public class ProjectFactory
 
     public static Project CreateProjectModel(ProjectEntity entity)
     {
-        Debug.WriteLine($"Creating ProjectModel for ProjectId: {entity.ProjectId}");
-        Debug.WriteLine($"Members in ProjectEntity: {string.Join(", ", entity.Members?.Select(m => m.FirstName + " " + m.LastName) ?? new List<string>())}");
+
 
         return new Project
         {
+            Id = entity.Id,
             ProjectId = entity.ProjectId,
             ProjectName = entity.ProjectName,
             ClientName = entity.ClientName,
@@ -65,7 +61,7 @@ public class ProjectFactory
         {
             projectEntity.Members = projectEntity.Members?
                 .Where(m => m.FirstName != null && m.LastName != null &&
-                            projectUpdate.Members.Contains($"{m.FirstName} {m.LastName}"))
+                            projectUpdate.Members.Contains(m.Id))
                 .ToList();
         }
         return projectEntity;

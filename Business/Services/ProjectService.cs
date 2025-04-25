@@ -2,15 +2,19 @@
 using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
+using Data.Contexts;
+using Data.Entities;
 using Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository, IMemberRepository memberRepository) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IMemberRepository memberRepository, DataContext context) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
     private readonly IMemberRepository _memberRepository = memberRepository;
+    private readonly DataContext _context = context;
 
     public async Task<bool> CreateProjectAsync(ProjectDto dto)
     {
@@ -26,7 +30,6 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
             var members = (await _memberRepository.GetAllAsync())?.ToList() ?? [];
             Debug.WriteLine($"Retrieved Members: {string.Join(", ", members.Select(m => m.FirstName + " " + m.LastName))}");
 
-            // Generate a new ProjectId
             var highestPID = await _projectRepository.GetAllAsync();
             var lastPID = highestPID!
                 .Select(x => int.TryParse(x.ProjectId.Substring(2), out var id) ? id : 0)
@@ -64,21 +67,26 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
         return projects;
     }
 
-    public async Task<Project?> GetProjectByIdAsync(string projectId)
+    public async Task<Project?> GetProjectByIdAsync(int id)
     {
-        var projectEntity = await _projectRepository.GetAsync(x => x.ProjectId == projectId);
+        // This is added to get the members of the project
+        var projectEntity = await _context.Projects
+            .Include(p => p.Members)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
         if (projectEntity == null)
         {
             return null;
         }
+
         var project = ProjectFactory.CreateProjectModel(projectEntity);
         return project;
     }
 
-    public async Task<bool> UpdateProjectAsync(string projectId, ProjectUpdateDto updateDto)
+    public async Task<bool> UpdateProjectAsync(int id, ProjectUpdateDto updateDto)
     {
         await _projectRepository.BeginTransactionAsync();
-        var projectEntity = await _projectRepository.GetAsync(x => x.ProjectId == projectId);
+        var projectEntity = await _projectRepository.GetAsync(x => x.Id == id);
 
         if (projectEntity == null)
         {
@@ -87,14 +95,10 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
 
         try
         {
-            var updatedProject = ProjectFactory.UpdateProject(projectEntity, updateDto);
-            var result = await _projectRepository.UpdateAsync(updatedProject);
-
-            if (result)
-            {
-                await _projectRepository.CommitTransactionAsync();
-            }
-            return true;
+            projectEntity = ProjectFactory.UpdateProject(projectEntity, updateDto);
+            var result = await _projectRepository.UpdateAsync(projectEntity);
+            await _projectRepository.CommitTransactionAsync();
+            return result;
         }
         catch
         {
@@ -103,10 +107,10 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
         }
     }
 
-    public async Task<bool> DeleteProjectAsync(string projectId)
+    public async Task<bool> DeleteProjectAsync(int id)
     {
         await _projectRepository.BeginTransactionAsync();
-        var projectEntity = await _projectRepository.GetAsync(x => x.ProjectId == projectId);
+        var projectEntity = await _projectRepository.GetAsync(x => x.Id == id);
 
         if (projectEntity == null)
         {
