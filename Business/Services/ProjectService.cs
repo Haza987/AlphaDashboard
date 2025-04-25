@@ -3,6 +3,7 @@ using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 using Data.Interfaces;
+using System.Diagnostics;
 
 namespace Business.Services;
 
@@ -18,23 +19,28 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
         {
             if (await _projectRepository.ExistsAsync(x => x.ProjectName == dto.ProjectName))
             {
-                // Project with the same name already exists message
+                Debug.WriteLine($"Project with name {dto.ProjectName} already exists.");
                 return false;
             }
 
             var members = (await _memberRepository.GetAllAsync())?.ToList() ?? [];
+            Debug.WriteLine($"Retrieved Members: {string.Join(", ", members.Select(m => m.FirstName + " " + m.LastName))}");
 
-            // New ProjectId
+            // Generate a new ProjectId
             var highestPID = await _projectRepository.GetAllAsync();
             var lastPID = highestPID!
-                .Select(x => int.Parse(x.ProjectId.Substring(2)))
+                .Select(x => int.TryParse(x.ProjectId.Substring(2), out var id) ? id : 0)
                 .DefaultIfEmpty(101)
                 .Max();
             var nextPN = lastPID + 1;
             var newPN = $"P-{nextPN}";
             dto.ProjectId = newPN;
 
+            Debug.WriteLine($"Generated ProjectId: {dto.ProjectId}");
+
             var project = ProjectFactory.CreateProjectEntity(dto, members);
+            Debug.WriteLine($"Created ProjectEntity: {project.ProjectName}, ProjectId: {project.ProjectId}");
+
             var result = await _projectRepository.CreateAsync(project);
             if (result)
             {
@@ -43,8 +49,9 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
             }
             return false;
         }
-        catch
+        catch (Exception ex)
         {
+            Debug.WriteLine($"Exception in CreateProjectAsync: {ex.Message}");
             await _projectRepository.RollbackTransactionAsync();
             throw;
         }

@@ -3,6 +3,7 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -55,6 +56,16 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (form.Members != null && form.Members.Any())
+                {
+                    Debug.WriteLine("Members added to the project:");
+                    Debug.WriteLine($"Member IDs: {string.Join(", ", form.Members)}");
+                }
+                else
+                {
+                    Debug.WriteLine("No members were added to the project.");
+                }
+
                 var result = await _projectService.CreateProjectAsync(form);
                 if (result)
                 {

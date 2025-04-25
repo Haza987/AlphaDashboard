@@ -11,5 +11,5 @@ public class ProjectDto
     public DateTime EndDate { get; set; } = DateTime.Now.AddYears(1);
     public decimal Budget { get; set; }
     public bool IsCompleted { get; set; }
-    public int Members { get; set; }
+    public List<int> Members { get; set; } = [];
 }

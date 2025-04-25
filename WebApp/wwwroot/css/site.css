@@ -86,6 +86,12 @@
         background-color: var(--dark-red);
     }
 
+.btn-close {
+    all: unset;
+    margin-left: auto;
+    font-size: 20px;
+}
+
 body {
     font-size: 16px;
     font-weight: 400;
@@ -152,6 +158,44 @@ a {
 i {
     cursor: pointer;
 }
+
+.more-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: absolute;
+    right: 2.5rem;
+    top: 1.5rem;
+    width: 7rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: var(--surface);
+    z-index: 1;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+    .more-container .edit, .more-container .delete {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+    }
+
+    .more-container .edit {
+        margin-bottom: 0.5rem;
+    }
+
+        .more-container .edit:hover {
+            color: var(--accent);
+        }
+
+    .more-container .delete {
+        color: var(--red);
+    }
+
+        .more-container .delete:hover {
+            color: var(--dark-red);
+        }
 
 #admin-signin {
     display: grid;
@@ -642,46 +686,43 @@ i {
                     cursor: pointer;
                 }
 
-                #hero .project-main .project-card .project-top .more-expanded {
-                    /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
-                    display: none !important;
-                    width: 15rem;
-                    height: 10rem;
+                #hero .project-main .project-card .project-top .more-container {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
                     position: absolute;
-                    top: 3rem;
                     right: 2.5rem;
-                    background-color: var(--surface);
-                    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+                    top: 1.5rem;
+                    width: 7rem;
                     border-radius: 1rem;
-                    padding-inline: 1rem;
-                    display: grid;
-                    grid-template-rows: 1fr 1fr 1fr;
-                    grid-template-areas: "edit" "add" "delete";
+                    padding: 1rem;
+                    background-color: var(--surface);
+                    z-index: 1;
+                    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
                 }
 
-                    #hero .project-main .project-card .project-top .more-expanded .more-edit {
-                        grid-area: edit;
+                    #hero .project-main .project-card .project-top .more-container .edit, #hero .project-main .project-card .project-top .more-container .delete {
                         display: flex;
                         align-items: center;
                         gap: 1rem;
+                        cursor: pointer;
                     }
 
-                    #hero .project-main .project-card .project-top .more-expanded .more-add {
-                        grid-area: add;
-                        display: flex;
-                        align-items: center;
-                        gap: 1rem;
-                        border-top: 1px solid var(--border-100);
-                        border-bottom: 1px solid var(--border-100);
+                    #hero .project-main .project-card .project-top .more-container .edit {
+                        margin-bottom: 0.5rem;
                     }
 
-                    #hero .project-main .project-card .project-top .more-expanded .more-delete {
-                        grid-area: delete;
-                        display: flex;
-                        align-items: center;
-                        gap: 1rem;
+                        #hero .project-main .project-card .project-top .more-container .edit:hover {
+                            color: var(--accent);
+                        }
+
+                    #hero .project-main .project-card .project-top .more-container .delete {
                         color: var(--red);
                     }
+
+                        #hero .project-main .project-card .project-top .more-container .delete:hover {
+                            color: var(--dark-red);
+                        }
 
             #hero .project-main .project-card .description {
                 grid-area: description;
@@ -735,11 +776,6 @@ i {
             display: flex;
             align-items: center;
         }
-
-            #hero .add-project .add-project-top i {
-                margin-left: auto;
-                font-size: 20px;
-            }
 
         #hero .add-project .add-image {
             display: flex;
@@ -1131,42 +1167,6 @@ i {
         .members-main .members-container .email, .members-main .members-container .phone {
             color: var(--body-dark);
         }
-
-        .members-main .members-container .more-container {
-            flex-direction: column;
-            position: absolute;
-            right: 2.5rem;
-            top: 1.5rem;
-            width: 7rem;
-            border-radius: 1rem;
-            padding: 1rem;
-            background-color: var(--surface);
-            z-index: 1;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-            .members-main .members-container .more-container .edit, .members-main .members-container .more-container .delete {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                cursor: pointer;
-            }
-
-            .members-main .members-container .more-container .edit {
-                margin-bottom: 0.5rem;
-            }
-
-                .members-main .members-container .more-container .edit:hover {
-                    color: var(--accent);
-                }
-
-            .members-main .members-container .more-container .delete {
-                color: var(--red);
-            }
-
-                .members-main .members-container .more-container .delete:hover {
-                    color: var(--dark-red);
-                }
 
     .members-main .over-box {
         width: 30rem;

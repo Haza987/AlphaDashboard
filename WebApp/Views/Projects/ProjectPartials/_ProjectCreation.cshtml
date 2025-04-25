@@ -5,7 +5,7 @@
 
         <div class="add-project-top">
             <h2>Add Project</h2>
-            <i class="fa-solid fa-times close" id="project-close-button"></i>
+            <button class="btn-close"><i class="fa-solid fa-times close" id="project-close-button"></i></button>
         </div>
 
         <div class="add-image">
@@ -42,7 +42,7 @@
 
             <div class="members-container">
                 <label asp-for="Members">Members</label>
-                <select asp-for="Members" class="member-select" id="member-select" onchange="updateSelectedMembers()">
+                <select class="member-select" id="member-select" onchange="updateSelectedMembers()">
                     <option disabled selected>-- Assign members --</option>
                     @foreach (var member in ViewBag.Members)
                     {

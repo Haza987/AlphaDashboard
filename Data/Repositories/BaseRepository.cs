@@ -64,6 +64,7 @@ public class BaseRepository<TEntity>(DbContext context) : IBaseRepository<TEntit
     public virtual async Task<IEnumerable<TEntity>?> GetAllAsync()
     {
         var entities = await _dbSet.ToListAsync();
+        Debug.WriteLine($"Retrieved {entities.Count} entities of type {typeof(TEntity).Name}");
         return entities;
     }
 

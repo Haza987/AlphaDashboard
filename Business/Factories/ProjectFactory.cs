@@ -1,43 +1,56 @@
 ﻿using Business.Dtos;
 using Business.Models;
 using Data.Entities;
+using System.Diagnostics;
 
 namespace Business.Factories;
 
 public class ProjectFactory
 {
-    public static ProjectEntity CreateProjectEntity(ProjectDto dto, List<MemberEntity> members) => new()
+    public static ProjectEntity CreateProjectEntity(ProjectDto dto, List<MemberEntity> members)
     {
-        ProjectId = dto.ProjectId!,
-        ProjectName = dto.ProjectName,
-        ClientName = dto.ClientName,
-        ProjectDescription = dto.ProjectDescription,
-        StartDate = dto.StartDate,
-        EndDate = dto.EndDate,
-        Budget = dto.Budget,
-        IsCompleted = dto.IsCompleted,
+        Debug.WriteLine($"Creating ProjectEntity for ProjectName: {dto.ProjectName}");
+        Debug.WriteLine($"Members in DTO: {string.Join(", ", dto.Members)}");
 
-        Members = members
-        .Where(m => m.Id == dto.Members)
-        .ToList()
-    };
+        var filteredMembers = members.Where(m => dto.Members.Contains(m.Id)).ToList();
+        Debug.WriteLine($"Filtered Members: {string.Join(", ", filteredMembers.Select(m => m.FirstName + " " + m.LastName))}");
 
-    public static Project CreateProjectModel(ProjectEntity entity) => new Project
-    {
-        ProjectId = entity.ProjectId,
-        ProjectName = entity.ProjectName,
-        ClientName = entity.ClientName,
-        ProjectDescription = entity.ProjectDescription,
-        StartDate = entity.StartDate,
-        EndDate = entity.EndDate,
-        Budget = entity.Budget,
-        IsCompleted = entity.IsCompleted,
-        Members = entity.Members?.Select(m => new MemberDto
+        return new ProjectEntity
         {
-            FirstName = m.FirstName,
-            LastName = m.LastName
-        }).ToList() ?? []
-    };
+            ProjectId = dto.ProjectId!,
+            ProjectName = dto.ProjectName,
+            ClientName = dto.ClientName,
+            ProjectDescription = dto.ProjectDescription,
+            StartDate = dto.StartDate,
+            EndDate = dto.EndDate,
+            Budget = dto.Budget,
+            IsCompleted = dto.IsCompleted,
+            Members = filteredMembers
+        };
+    }
+
+    public static Project CreateProjectModel(ProjectEntity entity)
+    {
+        Debug.WriteLine($"Creating ProjectModel for ProjectId: {entity.ProjectId}");
+        Debug.WriteLine($"Members in ProjectEntity: {string.Join(", ", entity.Members?.Select(m => m.FirstName + " " + m.LastName) ?? new List<string>())}");
+
+        return new Project
+        {
+            ProjectId = entity.ProjectId,
+            ProjectName = entity.ProjectName,
+            ClientName = entity.ClientName,
+            ProjectDescription = entity.ProjectDescription,
+            StartDate = entity.StartDate,
+            EndDate = entity.EndDate,
+            Budget = entity.Budget,
+            IsCompleted = entity.IsCompleted,
+            Members = entity.Members?.Select(m => new MemberDto
+            {
+                FirstName = m.FirstName,
+                LastName = m.LastName
+            }).ToList() ?? []
+        };
+    }
 
     public static ProjectEntity UpdateProject(ProjectEntity projectEntity, ProjectUpdateDto projectUpdate)
     {
