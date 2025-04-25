@@ -9,21 +9,17 @@
             <h4 class="project-title">@Model.ProjectName</h4>
             <p class="project-company">@Model.ClientName</p>
         </div>
-        <i class="more fa-solid fa-ellipsis"></i>
-        <div class="more-expanded">
-            <div class="more-edit">
-                <i class="fa-duotone fa-solid fa-pencil"></i>
-                <p>Edit</p>
+        <i onclick="showProjectMoreModal(this)" class="more fa-solid fa-ellipsis"></i>
+
+        <div class="project-more-modal more-container" style="display: none;">
+            <div class="edit" onclick="hideProjectMoreModal();">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <p class="edit">Edit
             </div>
 
-            <div class="more-add">
-                <i class="fa-duotone fa-solid fa-user-plus"></i>
-                <p>Add</p>
-            </div>
-
-            <div class="more-delete">
-                <i class="fa-duotone fa-solid fa-trash"></i>
-                <p>Delete</p>
+            <div class="delete" onclick="hideProjectMoreModal();">
+                <i class="fa-solid fa-trash-can"></i>
+                <p class="delete">Delete</p>
             </div>
         </div>
     </div>

@@ -11,7 +11,7 @@ function showMemberMoreModal(icon) {
         modal.style.display = "flex";
 
         // Add event listener to close modal when clicking outside
-        document.addEventListener("click", closeModal);
+        document.addEventListener("click", closeMemberMoreModal);
     }
 }
 
@@ -22,10 +22,10 @@ function hideMemberMoreModal() {
     });
 
     // Remove the event listener when modal is closed
-    document.removeEventListener("click", closeModal);
+    document.removeEventListener("click", closeMemberMoreModal);
 }
 
-function closeModal(event) {
+function closeMemberMoreModal(event) {
     const modals = document.querySelectorAll(".member-more-modal");
     modals.forEach((modal) => {
         if (!modal.contains(event.target) && !event.target.classList.contains("more")) {
@@ -265,6 +265,39 @@ document.addEventListener("click", (event) => {
 
 // Project scripts
 
+// Project more
+
+function showProjectMoreModal(icon) {
+    hideProjectMoreModal();
+
+    const container = icon.closest(".project-card");
+    const modal = container.querySelector(".project-more-modal");
+    if (modal) {
+        modal.style.display = "flex";
+
+        document.addEventListener("click", closeProjectMoreModal);
+    }
+}
+
+function hideProjectMoreModal() {
+    const modals = document.querySelectorAll(".project-more-modal");
+    modals.forEach((modal) => {
+        modal.style.display = "none";
+    });
+
+    // Remove the event listener when modal is closed
+    document.removeEventListener("click", closeProjectMoreModal);
+}
+
+function closeProjectMoreModal(event) {
+    const modals = document.querySelectorAll(".project-more-modal");
+    modals.forEach((modal) => {
+        if (!modal.contains(event.target) && !event.target.classList.contains("more")) {
+            modal.style.display = "none";
+        }
+    });
+}
+
 // Add project
 function showAddProjectModal() {
     const modal = document.getElementById("add-project-modal");
@@ -336,23 +369,25 @@ function removeSelectedMember(memberId) {
 
 
 // Add hidden inputs for selected members before form submission
-document.querySelector(".add-project-form").addEventListener("submit", (event) => {
-    const form = event.target;
+const addProjectForm = document.querySelector(".add-project-form");
+if (addProjectForm) {
+    addProjectForm.addEventListener("submit", (event) => {
+        const form = event.target;
 
-    // Remove any existing hidden inputs
-    form.querySelectorAll("input[name='Members']").forEach(input => {
-        input.remove();
-    });
+        form.querySelectorAll("input[name='Members']").forEach(input => {
+            input.remove();
+        });
 
-    // Add hidden inputs for each selected member
-    selectedMembers.forEach(memberId => {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "Members";
-        input.value = memberId;
-        form.appendChild(input);
+        // Add hidden inputs for each selected member
+        selectedMembers.forEach(memberId => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "Members";
+            input.value = memberId;
+            form.appendChild(input);
+        });
     });
-});
+}
 
 // End of add project
 
