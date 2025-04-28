@@ -1,0 +1,67 @@
+﻿@model ProjectDto
+
+<div class="over-box">
+    <div class="over-box-content">
+        <div class="project-info-card-top">
+            <h2 id="project-id"></h2>
+            <i class="fa-solid fa-times close" id="close-button"></i>
+
+            <input type="hidden" name="id" value="@ViewData["ProjectId"]" />
+        </div>
+
+        @* <div class="project-info-card-image">             *@
+        @*     <img src="Images/project greenyellow.svg" alt="project image"> *@
+        @* </div> *@
+
+        <div class="project-info-card-form">
+            <div class="name-container">            
+                <h4>Project Name</h4>
+                <p id="project-name"></p> 
+            </div>
+
+            <div class="client-container">
+                <h4>Client Name</h4>
+                <p id="project-client"></p>
+            </div>
+
+            <div class="description-container">
+                <h4>Description</h4>
+                <p id="project-description"></p>
+            </div>
+
+            <div class="date-container">
+                <div class="project-start">
+                    <h4>Start Date</h4>
+                    <p id ="project-start"></p>
+                </div>
+
+                <div class="project-end">
+                    <h4>End Date</h4>
+                    <p id="project-end"></p>
+                </div>
+            </div>
+
+            <div id="selected-members" class="selected-members">
+                <h4>Project Members</h4>
+                <div class="selected-members-container">
+                    <div class="selected-member">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="budget-container">
+            <h4>Budget</h4>
+                <div class="span-container">
+                    <span class="prefix">$</span>
+                    <p id="project-budget"></p>
+                </div>
+            </div>
+
+            <div class="project-info-card-bottom">
+                <button class="btn btn--completed" onclick="ProjectCompleted(@Model.Id)">Completed</button>
+                <button class="btn btn--not-completed" onclick="ProjectNotCompleted(@Model.Id)">Not Completed</button>
+            </div>
+        </div>
+    </div>
+</div>

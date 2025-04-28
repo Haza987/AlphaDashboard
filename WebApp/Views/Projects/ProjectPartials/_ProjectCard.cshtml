@@ -2,22 +2,22 @@
 
 @model Business.Models.Project
 
-<div class="project-card">
+<div class="project-card" onclick="showProjectInfoModal(@Model.Id)">
     <div class="project-top">
         <img class="project-img" alt="project image" src="">
         <div class="project-info">
             <h4 class="project-title">@Model.ProjectName</h4>
             <p class="project-company">@Model.ClientName</p>
         </div>
-        <i onclick="showProjectMoreModal(this)" class="more fa-solid fa-ellipsis"></i>
+        <i onclick="showProjectMoreModal(this, event)" class="more fa-solid fa-ellipsis"></i>
 
         <div class="project-more-modal more-container" style="display: none;">
-            <div class="edit" onclick="hideProjectMoreModal(); showEditProjectModal(@Model.Id)">
+            <div class="edit" onclick="hideProjectMoreModal(); showEditProjectModal(@Model.Id, event)">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <p class="edit">Edit</p>
             </div>
 
-            <div class="delete" onclick="hideProjectMoreModal(); showDeleteProjectModal(@Model.Id)">
+            <div class="delete" onclick="hideProjectMoreModal(); showDeleteProjectModal(@Model.Id,event)">
                 <i class="fa-solid fa-trash-can"></i>
                 <p class="delete">Delete</p>
             </div>
@@ -72,4 +72,4 @@
         <div class="members">
         </div>
     </div>
-</div>
+</div> 

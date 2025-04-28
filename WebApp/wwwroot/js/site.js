@@ -1,6 +1,6 @@
 ﻿// Member scripts
 
-// Member more
+// Member more modal
 
 function showMemberMoreModal(icon) {
     hideMemberMoreModal();
@@ -34,10 +34,10 @@ function closeMemberMoreModal(event) {
     });
 }
 
-// End of member more
+// End of member more modal
 
 
-// Add member
+// Add member modal
 function showAddMemberModal() {
     const modal = document.getElementById("add-member-modal");
     if (modal) {
@@ -76,10 +76,10 @@ function addDateOfBirth() {
     }
 }
 
-// End of add member
+// End of add member modal
 
 
-// Edit member
+// Edit member modal
 
 async function showEditMemberModal(memberId) {
     const modal = document.getElementById("edit-member-modal");
@@ -195,10 +195,10 @@ if (editMemberForm) {
     });
 }
 
-// End of edit member
+// End of edit member modal
 
 
-// Delete Member
+// Delete Member modal
 
 async function showDeleteMemberModal(memberId) {
     const modal = document.getElementById("delete-member-modal");
@@ -256,7 +256,7 @@ document.addEventListener("click", (event) => {
         hideDeleteMemberModal();
     }
 });
-// End of delete member
+// End of delete member modal
 
 // End of member scripts
 
@@ -264,9 +264,10 @@ document.addEventListener("click", (event) => {
 
 // Project scripts
 
-// Project more
+// Project more modal
 
-function showProjectMoreModal(icon) {
+function showProjectMoreModal(icon, event) {
+    event.stopPropagation(event);
     hideProjectMoreModal();
 
     const container = icon.closest(".project-card");
@@ -297,10 +298,95 @@ function closeProjectMoreModal(event) {
     });
 }
 
-// End of project more
+// End of project more modal
 
 
-// Add project
+// Project info modal
+
+async function showProjectInfoModal(projectId) {
+    const modal = document.getElementById("project-info-modal");
+
+    if (modal) {
+        const response = await fetch(`/Projects/UpdateProject?id=${projectId}`);
+        if (response.ok) {
+            const project = await response.json();
+
+            modal.querySelector("#project-id").textContent = project.projectId;
+            modal.querySelector("#project-name").textContent = project.projectName;
+            modal.querySelector("#project-client").textContent = project.clientName;
+            modal.querySelector("#project-description").textContent = project.projectDescription;
+            modal.querySelector("#project-start").textContent = new Date(project.startDate).toLocaleDateString("en-GB");
+            modal.querySelector("#project-end").textContent = new Date(project.endDate).toLocaleDateString("en-GB");
+            modal.querySelector("#project-budget").textContent = project.budget;
+
+            modal.style.display = "flex";
+        }
+
+
+    }
+}
+
+function hideProjectInfoModal() {
+    const modal = document.getElementById("project-info-modal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+document.addEventListener("click", (event) => {
+    if (event.target && event.target.id === "close-button") {
+        hideProjectInfoModal();
+    }
+});
+
+
+async function ProjectCompleted(projectId){
+    try {
+        const response = await fetch(`/Projects/UpdateProjectStatus`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: projectId,
+                isCompleted: true,
+            }),
+        });
+
+        if (response.ok) {
+            location.reload();
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while updating the project status.");
+    }
+}
+
+async function ProjectNotCompleted(projectId) {
+    try {
+        const response = await fetch(`/Projects/UpdateProjectStatus`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: projectId,
+                isCompleted: false,
+            }),
+        });
+
+        if (response.ok) {
+            location.reload();
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while updating the project status.");
+    }
+}
+// End of project info modal
+
+
+// Add project modal
 function showAddProjectModal() {
     const modal = document.getElementById("add-project-modal");
     if (modal) {
@@ -354,7 +440,7 @@ if (addProjectForm) {
     });
 }
 
-// End of add project
+// End of add project modal
 
 
 // Shared selected members container
@@ -414,24 +500,25 @@ function removeSelectedMember(memberId, containerClass) {
 // End of shared section
 
 
-// Edit project
+// Edit project modal
 
-async function showEditProjectModal(projectId) {
+async function showEditProjectModal(projectId, event) {
+    event.stopPropagation();
     const modal = document.getElementById("edit-project-modal");
 
     if (modal) {
         const response = await fetch(`/Projects/UpdateProject?id=${projectId}`);
         if (response.ok) {
-            const html = await response.text();
-            modal.innerHTML = html;
+            const html = await response.json();           
         }
 
         const project = await getProjectDataById(projectId);
 
         if (project) {
-            const idInput = modal.querySelector("input[name='id']");
-            if (idInput) {
-                idInput.value = projectId;
+
+            const titleElement = modal.querySelector("#project-id");
+            if (titleElement) {
+                titleElement.textContent = `Edit Project - ${project.projectId}`;
             }
 
             const ProjectNameInput = modal.querySelector("#project-name");
@@ -529,12 +616,13 @@ if (editProjectForm) {
         }
     });
 }
-// End of edit project
+// End of edit project modal
 
 
-// Delete project
+// Delete project modal
 
-async function showDeleteProjectModal(projectId) {
+async function showDeleteProjectModal(projectId, event) {
+    event.stopPropagation();
     const modal = document.getElementById("delete-project-modal");
     if (modal) {
         const project = await getProjectDataById(projectId);
@@ -590,7 +678,7 @@ document.addEventListener("click", (event) => {
         hideDeleteProjectModal();
     }
 });
-// End of delete project
+// End of delete project modal
 
 
 // End of project scripts

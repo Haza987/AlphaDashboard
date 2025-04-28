@@ -3,6 +3,7 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -111,26 +112,26 @@ namespace WebApp.Controllers
 
             ViewBag.Members = allMembers;
 
-            return PartialView("ProjectPartials/_ProjectUpdate", updateDto);
+            return Json(updateDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProject(int id, ProjectUpdateDto form)
+        public async Task<IActionResult> UpdateProject(int id, ProjectUpdateDto dto)
         {
-            form.Members = form.Members?.Distinct().ToList();
+            dto.Members = dto.Members?.Distinct().ToList();
 
             if (ModelState.IsValid)
             {
-                var result = await _projectService.UpdateProjectAsync(id, form);
+                var result = await _projectService.UpdateProjectAsync(id, dto);
 
                 if (result)
                 {
                     return RedirectToAction("Projects");
                 }
             }
-            return PartialView("ProjectPartials/_ProjectUpdate", form);
+            return PartialView("ProjectPartials/_ProjectUpdate", dto);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> DeleteProject(int id)
         {
@@ -142,5 +143,32 @@ namespace WebApp.Controllers
             return BadRequest("Failed to delete project.");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateProjectStatus(int id, ProjectUpdateDto dto)
+        {
+            var project = await _projectService.GetProjectByIdAsync(id);
+
+            if (project == null)
+            {
+                Debug.WriteLine($"Project with ID {id} not found.");
+                return NotFound();
+            }
+
+            Debug.WriteLine($"Updating project status for ID {id}. Current IsCompleted: {project.IsCompleted}, New IsCompleted: {dto.IsCompleted}");
+
+            project.IsCompleted = dto.IsCompleted ?? project.IsCompleted;
+
+            var result = await _projectService.UpdateProjectAsync(id, new ProjectUpdateDto
+            {
+                IsCompleted = dto.IsCompleted
+            });
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Failed to update project status.");
+        }
     }
 }
