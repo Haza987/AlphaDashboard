@@ -2,7 +2,6 @@
 using Business.Interfaces;
 using Business.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -95,14 +94,11 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteMember(int id)
         {
-            Debug.WriteLine($"Received ID for deletion: {id}");
             var result = await _memberService.DeleteMemberAsync(id);
             if (result)
             {
-                Debug.WriteLine($"Successfully deleted member with ID: {id}");
                 return Ok();
             }
-            Debug.WriteLine($"Failed to delete member with ID: {id}");
             return BadRequest("Failed to delete member.");
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Business.Dtos;
 using Business.Models;
 using Data.Entities;
-using System.Diagnostics;
 
 namespace Business.Factories;
 
@@ -27,8 +26,6 @@ public class ProjectFactory
 
     public static Project CreateProjectModel(ProjectEntity entity)
     {
-
-
         return new Project
         {
             Id = entity.Id,
@@ -42,9 +39,10 @@ public class ProjectFactory
             IsCompleted = entity.IsCompleted,
             Members = entity.Members?.Select(m => new MemberDto
             {
+                Id = m.Id,
                 FirstName = m.FirstName,
                 LastName = m.LastName
-            }).ToList() ?? []
+            }).ToList() ?? new List<MemberDto>()
         };
     }
 
@@ -57,13 +55,14 @@ public class ProjectFactory
         projectEntity.EndDate = projectUpdate.EndDate ?? projectEntity.EndDate;
         projectEntity.Budget = projectUpdate.Budget ?? projectEntity.Budget;
         projectEntity.IsCompleted = projectUpdate.IsCompleted ?? projectEntity.IsCompleted;
+
         if (projectUpdate.Members != null)
         {
             projectEntity.Members = projectEntity.Members?
-                .Where(m => m.FirstName != null && m.LastName != null &&
-                            projectUpdate.Members.Contains(m.Id))
+                .Where(m => projectUpdate.Members.Contains(m.Id))
                 .ToList();
         }
+
         return projectEntity;
     }
 }

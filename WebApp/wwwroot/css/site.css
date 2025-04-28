@@ -195,40 +195,6 @@ i {
             color: var(--dark-red);
         }
 
-.selected-members {
-    border: 1px solid var(--border-100);
-    border-radius: 1rem;
-    padding-inline: 1rem;
-    width: 90%;
-}
-
-    .selected-members .selected-members-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        cursor: pointer;
-        gap: 0.5rem;
-        margin-inline: 1rem;
-        padding-bottom: 1rem;
-    }
-
-        .selected-members .selected-members-container .selected-member {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            height: auto;
-            width: 45%;
-            border: 1px solid var(--border-100);
-            background-color: var(--accent-opacity);
-            border-radius: 1rem;
-            padding-inline: 1rem;
-            font-size: 0.7rem;
-            -webkit-hyphens: auto;
-            hyphens: auto;
-            overflow-wrap: break-word;
-        }
-
 #admin-signin {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -876,6 +842,40 @@ i {
                 height: auto;
             }
 
+                #hero .add-project .add-project-form .members-container .selected-members {
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    width: 90%;
+                }
+
+                    #hero .add-project .add-project-form .members-container .selected-members .selected-members-container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+                        cursor: pointer;
+                        gap: 0.5rem;
+                        margin-inline: 1rem;
+                        padding-bottom: 1rem;
+                    }
+
+                        #hero .add-project .add-project-form .members-container .selected-members .selected-members-container .selected-member {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 1rem;
+                            height: auto;
+                            width: 45%;
+                            border: 1px solid var(--border-100);
+                            background-color: var(--accent-opacity);
+                            border-radius: 1rem;
+                            padding-inline: 1rem;
+                            font-size: 0.7rem;
+                            -webkit-hyphens: auto;
+                            hyphens: auto;
+                            overflow-wrap: break-word;
+                        }
+
             #hero .add-project .add-project-form .budget-container {
                 display: flex;
                 gap: 0.5rem;
@@ -1011,6 +1011,40 @@ i {
                 width: auto;
                 height: auto;
             }
+
+                #hero .edit-project .edit-project-form .members-container .selected-members {
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    width: 90%;
+                }
+
+                    #hero .edit-project .edit-project-form .members-container .selected-members .selected-members-container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+                        cursor: pointer;
+                        gap: 0.5rem;
+                        margin-inline: 1rem;
+                        padding-bottom: 1rem;
+                    }
+
+                        #hero .edit-project .edit-project-form .members-container .selected-members .selected-members-container .selected-member {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 1rem;
+                            height: auto;
+                            width: 45%;
+                            border: 1px solid var(--border-100);
+                            background-color: var(--accent-opacity);
+                            border-radius: 1rem;
+                            padding-inline: 1rem;
+                            font-size: 0.7rem;
+                            -webkit-hyphens: auto;
+                            hyphens: auto;
+                            overflow-wrap: break-word;
+                        }
 
             #hero .edit-project .edit-project-form .budget-container {
                 display: flex;

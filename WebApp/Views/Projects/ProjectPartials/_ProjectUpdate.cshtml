@@ -40,35 +40,25 @@
                 <label asp-for="Members">Members</label>
                 <select class="member-select" id="member-select-edit" onchange="updateSelectedMembers('member-select-edit', 'selected-members-container-edit')">
                     <option value="-- Assign members --" disabled selected>-- Assign members --</option>
-                    @foreach (var member in ViewBag.Members)
+                    @if (ViewBag.Members != null)
                     {
-                        <option value="@member.Id" data-name="@member.FirstName @member.LastName">@member.FirstName @member.LastName</option>
+                        foreach (var member in ViewBag.Members)
+                        {
+                            <option value="@member.Id" data-name="@member.FirstName @member.LastName">@member.FirstName @member.LastName</option>
+                        }
                     }
                 </select>
 
-                <div id="selected-members-container" class="selected-members-container-edit">
+                <div id="selected-members-container-edit" class="selected-members">
                     <p>Selected Members</p>
-                    <div class="selected-members-container-edit">
-                        @if (Model.Members != null)
-                        {
-                            foreach (var memberId in Model.Members)
-                            {
-                                var member = ((List<MemberDto>?)ViewBag.Members)?.FirstOrDefault(m => m.Id == memberId);
-                                if (member != null)
-                                {
-                                    <div class="selected-member" data-id="@member.Id">
-                                        <p>@member.FirstName @member.LastName</p>
-                                        <button type="button" class="btn-close" onclick="removeSelectedMember('@member.Id', 'selected-members-container-edit')">
-                                            <i class="fa-solid fa-times close"></i>
-                                        </button>
-                                        <input type="hidden" name="Members" value="@member.Id" />
-                                    </div>
-                                }
-                            }
-                        }
+                    <div class="selected-members-container">
                     </div>
                 </div>
 
+                @foreach (var memberId in Model.Members ?? new List<int>())
+                {
+                    <input type="hidden" name="Members" value="@memberId" />
+                }
             </div>
 
             <label asp-for="Budget"></label>
