@@ -1,0 +1,24 @@
+﻿@model ProjectDto
+
+<div class="delete-container">
+
+    <button class="btn-close"><i class="fa-solid fa-times close" id="close-button"></i></button>
+    <div class="delete-top">
+        <h2>Delete Project</h2>
+    </div>
+
+    <div class="delete-info">
+        <img src="" alt="project image">
+        <h2 id="project-name">@Model.ProjectName</h2>
+        <p id="project-id">@Model.ProjectId</p>
+        <input type="hidden" name="id" value="" />
+
+        <div class="delete-bottom">
+            <p>Are you sure you want to delete this project?</p>
+            <div class="delete-btns">
+                <button class="btn btn--delete" onclick="confirmDelete()">Delete</button>
+                <button class="btn btn--cancel" id="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -360,6 +360,9 @@ function updateSelectedMembers(dropdownId, containerClass) {
     const selectedMemberId = dropdown.value;
     const selectedMemberName = dropdown.options[dropdown.selectedIndex]?.getAttribute('data-name');
 
+    console.log("[DEBUG] Selected Member ID:", selectedMemberId);
+    console.log("[DEBUG] Selected Member Name:", selectedMemberName);
+
     // Ignore the default option
     if (selectedMemberId === "-- Assign members --" || !selectedMemberName) {
         console.error("[ERROR] Member ID or Name is invalid.");
@@ -367,23 +370,26 @@ function updateSelectedMembers(dropdownId, containerClass) {
     }
 
     const container = document.querySelector(`.${containerClass}`);
+    console.log("[DEBUG] Selected Members Container:", container);
 
     if (!selectedMembers.has(selectedMemberId)) {
         selectedMembers.add(selectedMemberId);
+        console.log("[DEBUG] Added Member ID to selectedMembers:", selectedMemberId);
 
         const memberDiv = document.createElement("div");
         memberDiv.classList.add("selected-member");
         memberDiv.setAttribute("data-id", selectedMemberId);
 
         memberDiv.innerHTML = `
-            <p>${selectedMemberName}</p>
-            <button type="button" class="btn-close" onclick="removeSelectedMember('${selectedMemberId}', '${containerClass}')">
-                <i class="fa-solid fa-times close"></i>
-            </button>
-            <input type="hidden" name="Members" value="${selectedMemberId}" />
-        `;
+        <p>${selectedMemberName} updateSelectedMembers</p>
+        <button type="button" class="btn-close" onclick="removeSelectedMember('${selectedMemberId}', '${containerClass}')">
+            <i class="fa-solid fa-times close"></i>
+        </button>
+        <input type="hidden" name="Members" value="${selectedMemberId}" />
+    `;
 
         container.appendChild(memberDiv);
+        console.log("[DEBUG] Member added to container:", memberDiv);
     } else {
         console.log("[DEBUG] Member already exists in selectedMembers.");
     }
@@ -450,20 +456,20 @@ async function showEditProjectModal(projectId) {
                 endDateInput.value = project.endDate.split("T")[0];
             }
 
-            const membersContainer = modal.querySelector(".selected-members-container");
+            const membersContainer = modal.querySelector(".selected-members");
             if (membersContainer && project.members) {
                 project.members.forEach(member => {
                     const memberDiv = document.createElement("div");
                     memberDiv.classList.add("selected-member");
-                    memberDiv.setAttribute("data-id", selectedMemberId);
+                    memberDiv.setAttribute("data-id", member.id); // Use member.id instead of selectedMemberId
 
                     memberDiv.innerHTML = `
-       <p>${selectedMemberName}</p>
-       <button type="button" class="btn-close" onclick="removeSelectedMember('${selectedMemberId}', '${containerClass}')">
-           <i class="fa-solid fa-times close"></i>
-       </button>
-       <input type="hidden" name="Members" value="${selectedMemberId}" />
-   `;
+                    <p>${member.firstName} ${member.lastName} showEditProjectModal</p>
+                    <button type="button" class="btn-close" onclick="removeSelectedMember('${member.id}', 'selected-members-container')">
+                        <i class="fa-solid fa-times close"></i>
+                    </button>
+                    <input type="hidden" name="Members" value="${member.id}" />
+    `;
 
                     membersContainer.appendChild(memberDiv);
                 });
@@ -534,6 +540,68 @@ if (editProjectForm) {
 }
 
 // End of edit project
+
+
+// Delete project
+
+async function showDeleteProjectModal(projectId) {
+    const modal = document.getElementById("delete-project-modal");
+    if (modal) {
+        const project = await getProjectDataById(projectId);
+
+        if (project) {
+            const id = modal.querySelector("input[name='id']");
+            if (id) {
+                id.value = projectId;
+            }
+
+            const nameElement = modal.querySelector("#project-name");
+            if (nameElement) {
+                nameElement.textContent = `${project.projectName}`;
+            }
+        }
+        modal.style.display = "flex";
+    }
+}
+
+async function confirmDelete() {
+    const modal = document.getElementById("delete-project-modal");
+    const id = modal.querySelector("input[name='id']");
+    const projectId = id ? id.value : null;
+
+    if (!projectId) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/Projects/DeleteProject?id=${projectId}`, {
+            method: "POST",
+        });
+
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert("Failed to delete project.");
+        }
+    } catch (error) {
+        alert("An error occurred while deleting the project.");
+    }
+}
+
+function hideDeleteProjectModal() {
+    const modal = document.getElementById("delete-project-modal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+document.addEventListener("click", (event) => {
+    if (event.target && event.target.id === "close-button" || event.target.id === "btn-cancel") {
+        hideDeleteProjectModal();
+    }
+});
+// End of delete project
+
 
 // End of project scripts
 

@@ -42,7 +42,7 @@
 
             <div class="members-container">
                 <label asp-for="Members">Members</label>
-                <select class="member-select" id="member-select-add" onchange="updateSelectedMembers('member-select-add', 'selected-members-container-add')">
+                <select class="member-select" id="member-select-add" onchange="updateSelectedMembers('member-select-add', 'selected-members-container')">
                     <option value="-- Assign members --" disabled selected>-- Assign members --</option>
                     @foreach (var member in ViewBag.Members)
                     {
@@ -50,9 +50,9 @@
                     }
                 </select>
 
-                <div id="selected-members-container" class="selected-members-container-add">
+                <div id="selected-members-container" class="selected-members-container">
                     <p>Selected Members</p>
-                    <div class="selected-members-container-add">
+                    <div class="selected-members-container">
 
                     </div>
                 </div>

@@ -17,7 +17,7 @@
                 <p class="edit">Edit</p>
             </div>
 
-            <div class="delete" onclick="hideProjectMoreModal();">
+            <div class="delete" onclick="hideProjectMoreModal(); showDeleteProjectModal(@Model.Id)">
                 <i class="fa-solid fa-trash-can"></i>
                 <p class="delete">Delete</p>
             </div>

@@ -56,24 +56,30 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProject(ProjectDto form)
         {
+            Debug.WriteLine("[DEBUG] CreateProject called.");
+            Debug.WriteLine($"[DEBUG] Form Data: ProjectName={form.ProjectName}, ClientName={form.ClientName}, Description={form.ProjectDescription}, StartDate={form.StartDate}, EndDate={form.EndDate}, Budget={form.Budget}");
+            Debug.WriteLine($"[DEBUG] Members: {string.Join(", ", form.Members ?? new List<int>())}");
+
             if (ModelState.IsValid)
             {
-                if (form.Members != null && form.Members.Any())
-                {
-                    Debug.WriteLine("Members added to the project:");
-                    Debug.WriteLine($"Member IDs: {string.Join(", ", form.Members)}");
-                }
-                else
-                {
-                    Debug.WriteLine("No members were added to the project.");
-                }
-
+                Debug.WriteLine("[DEBUG] ModelState is valid.");
                 var result = await _projectService.CreateProjectAsync(form);
+                Debug.WriteLine($"[DEBUG] CreateProjectAsync result: {result}");
+
                 if (result)
                 {
                     return RedirectToAction("Projects");
                 }
             }
+            else
+            {
+                Debug.WriteLine("[DEBUG] ModelState is invalid.");
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Debug.WriteLine($"[DEBUG] ModelState Error: {error.ErrorMessage}");
+                }
+            }
+
             return View("ProjectPartials/_ProjectCreation", form);
         }
 
@@ -104,18 +110,11 @@ namespace WebApp.Controllers
 
             Debug.WriteLine($"[DEBUG] Project Details:");
             Debug.WriteLine($"  - Project ID: {project.ProjectId}");
-            Debug.WriteLine($"  - Project Name: {project.ProjectName}");
-            Debug.WriteLine($"  - Client Name: {project.ClientName}");
-            Debug.WriteLine($"  - Description: {project.ProjectDescription}");
-            Debug.WriteLine($"  - Start Date: {project.StartDate}");
-            Debug.WriteLine($"  - End Date: {project.EndDate}");
-            Debug.WriteLine($"  - Budget: {project.Budget}");
-            Debug.WriteLine($"  - Is Completed: {project.IsCompleted}");
             Debug.WriteLine($"  - Members: {string.Join(", ", project.Members.Select(m => m.Id))}");
 
             var updateDto = new ProjectUpdateDto
             {
-                ProjectId = project!.ProjectId,
+                ProjectId = project.ProjectId,
                 ProjectName = project.ProjectName,
                 ClientName = project.ClientName,
                 ProjectDescription = project.ProjectDescription,
@@ -127,7 +126,6 @@ namespace WebApp.Controllers
             };
 
             Debug.WriteLine($"[DEBUG] ProjectUpdateDto created:");
-            Debug.WriteLine($"  - Project ID: {updateDto.ProjectId}");
             Debug.WriteLine($"  - Members: {string.Join(", ", updateDto.Members)}");
 
             var allMembers = _context.Members
@@ -153,17 +151,45 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProject(int id, ProjectUpdateDto form)
         {
+            Debug.WriteLine("[DEBUG] UpdateProject called.");
+            Debug.WriteLine($"[DEBUG] Form Data: ProjectName={form.ProjectName}, ClientName={form.ClientName}, Description={form.ProjectDescription}, StartDate={form.StartDate}, EndDate={form.EndDate}, Budget={form.Budget}");
+            Debug.WriteLine($"[DEBUG] Members: {string.Join(", ", form.Members ?? new List<int>())}");
+
             if (ModelState.IsValid)
             {
+                Debug.WriteLine("[DEBUG] ModelState is valid.");
                 var result = await _projectService.UpdateProjectAsync(id, form);
+                Debug.WriteLine($"[DEBUG] UpdateProjectAsync result: {result}");
 
                 if (result)
                 {
                     return RedirectToAction("Projects");
                 }
             }
+            else
+            {
+                Debug.WriteLine("[DEBUG] ModelState is invalid.");
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Debug.WriteLine($"[DEBUG] ModelState Error: {error.ErrorMessage}");
+                }
+            }
 
             return PartialView("ProjectPartials/_ProjectUpdate", form);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteProject(int id)
+        {
+            Debug.WriteLine($"Received ID for deletion: {id}");
+            var result = await _projectService.DeleteProjectAsync(id);
+            if (result)
+            {
+                Debug.WriteLine($"Successfully deleted project with ID: {id}");
+                return Ok();
+            }
+            Debug.WriteLine($"Failed to delete project with ID: {id}");
+            return BadRequest("Failed to delete project.");
         }
 
     }
