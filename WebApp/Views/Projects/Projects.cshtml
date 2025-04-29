@@ -7,14 +7,26 @@
     </div>
 
     <div class="project-selection">
-        <p class="active">ALL [@ViewBag.ProjectCount]</p>
-        <p>STARTED [@ViewBag.ProjectInProgress]</p>
-        <p>COMPLETED [@ViewBag.ProjectComplete]</p>
+        <button class="@(ViewBag.Filter == "ALL" ? "active" : "")" onclick="filterProjects('ALL')">ALL [@ViewBag.ProjectCount]</button>
+        <button class="@(ViewBag.Filter == "STARTED" ? "active" : "")" onclick="filterProjects('STARTED')">STARTED [@ViewBag.ProjectInProgress]</button>
+        <button class="@(ViewBag.Filter == "COMPLETED" ? "active" : "")" onclick="filterProjects('COMPLETED')">COMPLETED [@ViewBag.ProjectComplete]</button>
     </div>
 
     <div class="project-main">
-        @foreach (var project in Model.Projects)
+        @foreach (var project in Model.Projects
+        .OrderBy(p => p.IsCompleted)
+        .ThenBy(p => p.EndDate))
         {
+            if (ViewBag.Filter == "STARTED" && project.IsCompleted)
+            {
+                continue;
+            }
+
+            if (ViewBag.Filter == "COMPLETED" && !project.IsCompleted)
+            {
+                continue;
+            }
+
             <partial name="ProjectPartials/_ProjectCard" model="project" />
         }
     </div>

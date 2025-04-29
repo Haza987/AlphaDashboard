@@ -14,13 +14,13 @@ namespace WebApp.Controllers
         private readonly IProjectService _projectService = projectService;
 
         [Route("projects")]
-        public async Task<IActionResult> Projects()
+        public async Task<IActionResult> Projects(string filter = "ALL")
         {
+            var projects = await _projectService.GetAllProjectsAsync();
+
             int projectCount = _context.Projects.Count();
             int projectInProgress = _context.Projects.Count(p => !p.IsCompleted);
             int projectComplete = _context.Projects.Count(p => p.IsCompleted);
-
-            var projects = await _projectService.GetAllProjectsAsync();
 
             var viewModel = new ProjectViewModel
             {
@@ -31,6 +31,7 @@ namespace WebApp.Controllers
             ViewBag.ProjectCount = projectCount;
             ViewBag.ProjectInProgress = projectInProgress;
             ViewBag.ProjectComplete = projectComplete;
+            ViewBag.Filter = filter.ToUpper();
 
             ViewBag.Members = _context.Members
                 .Select(m => new MemberDto

@@ -264,6 +264,16 @@ document.addEventListener("click", (event) => {
 
 // Project scripts
 
+// Project filter
+function filterProjects(filter) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('filter', filter);
+    window.location.href = url.toString();
+}
+
+// End of project filter
+
+
 // Project more modal
 
 function showProjectMoreModal(icon, event) {
