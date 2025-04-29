@@ -5,6 +5,7 @@ using Business.Models;
 using Data.Contexts;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Business.Services;
 
@@ -61,12 +62,21 @@ public class ProjectService(IProjectRepository projectRepository, IMemberReposit
 
     public async Task<Project?> GetProjectByIdAsync(int id)
     {
+        if (id <= 0)
+        {
+            return null;
+        }
+
         var projectEntity = await _context.Projects
             .Include(p => p.Members)
             .FirstOrDefaultAsync(p => p.Id == id);
 
-        var project = ProjectFactory.CreateProjectModel(projectEntity!);
-        return project;
+        if (projectEntity == null)
+        {
+            return null;
+        }
+
+        return ProjectFactory.CreateProjectModel(projectEntity);
     }
 
 

@@ -2,7 +2,7 @@
 
 @model Business.Models.Project
 
-<div class="project-card" onclick="showProjectInfoModal(@Model.Id)">
+<div class="project-card" onclick="showProjectInfoModal(@Model.Id, event)">
     <div class="project-top">
         <img class="project-img" alt="project image" src="">
         <div class="project-info">

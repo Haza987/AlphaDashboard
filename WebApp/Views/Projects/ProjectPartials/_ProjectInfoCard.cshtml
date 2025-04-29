@@ -1,19 +1,20 @@
-﻿@model ProjectDto
+﻿@model ProjectUpdateDto
 
 <div class="over-box">
     <div class="over-box-content">
         <div class="project-info-card-top">
-            <h2 id="project-id"></h2>
+            <h2 id="project-id-custom"></h2>
             <i class="fa-solid fa-times close" id="close-button"></i>
-
-            <input type="hidden" name="id" value="@ViewData["ProjectId"]" />
         </div>
 
         @* <div class="project-info-card-image">             *@
         @*     <img src="Images/project greenyellow.svg" alt="project image"> *@
         @* </div> *@
 
-        <div class="project-info-card-form">
+        <form class="project-info-card-form" asp-action="UpdateProjectStatus" method="post">
+
+            <input id="project-id-input" name="id" type="hidden" />
+
             <div class="name-container">            
                 <h4>Project Name</h4>
                 <p id="project-name"></p> 
@@ -41,12 +42,10 @@
                 </div>
             </div>
 
-            <div id="selected-members" class="selected-members">
+            <div id="selected-members-info" class="selected-members">
                 <h4>Project Members</h4>
                 <div class="selected-members-container">
-                    <div class="selected-member">
-                        
-                    </div>
+
                 </div>
             </div>
 
@@ -59,9 +58,10 @@
             </div>
 
             <div class="project-info-card-bottom">
-                <button class="btn btn--completed" onclick="ProjectCompleted(@Model.Id)">Completed</button>
-                <button class="btn btn--not-completed" onclick="ProjectNotCompleted(@Model.Id)">Not Completed</button>
+                <input id="is-completed-input" name="IsCompleted" type="hidden" />
+                <button class="btn btn--completed" type="submit" onclick="setIsCompleted(true)">Completed</button>
+                <button class="btn btn--not-completed" type="submit" onclick="setIsCompleted(false)">Not Completed</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>

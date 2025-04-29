@@ -72,7 +72,7 @@ namespace WebApp.Controllers
             var project = await _projectService.GetProjectByIdAsync(id);
             if (project == null)
             {
-                return NotFound();
+                return NotFound($"Project with ID {id} not found.");
             }
 
             return Json(project);
@@ -90,6 +90,7 @@ namespace WebApp.Controllers
 
             var updateDto = new ProjectUpdateDto
             {
+                id = project.Id,
                 ProjectId = project.ProjectId,
                 ProjectName = project.ProjectName,
                 ClientName = project.ClientName,
@@ -111,6 +112,7 @@ namespace WebApp.Controllers
                 .ToList();
 
             ViewBag.Members = allMembers;
+            ViewData["ProjectId"] = project.Id;
 
             return Json(updateDto);
         }
@@ -143,6 +145,7 @@ namespace WebApp.Controllers
             return BadRequest("Failed to delete project.");
         }
 
+
         [HttpPost]
         public async Task<IActionResult> UpdateProjectStatus(int id, ProjectUpdateDto dto)
         {
@@ -150,11 +153,8 @@ namespace WebApp.Controllers
 
             if (project == null)
             {
-                Debug.WriteLine($"Project with ID {id} not found.");
                 return NotFound();
             }
-
-            Debug.WriteLine($"Updating project status for ID {id}. Current IsCompleted: {project.IsCompleted}, New IsCompleted: {dto.IsCompleted}");
 
             project.IsCompleted = dto.IsCompleted ?? project.IsCompleted;
 

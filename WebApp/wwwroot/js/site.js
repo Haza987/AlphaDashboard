@@ -310,19 +310,37 @@ async function showProjectInfoModal(projectId) {
         const response = await fetch(`/Projects/UpdateProject?id=${projectId}`);
         if (response.ok) {
             const project = await response.json();
-
-            modal.querySelector("#project-id").textContent = project.projectId;
+            modal.querySelector("#project-id-custom").textContent = project.projectId;
             modal.querySelector("#project-name").textContent = project.projectName;
             modal.querySelector("#project-client").textContent = project.clientName;
             modal.querySelector("#project-description").textContent = project.projectDescription;
             modal.querySelector("#project-start").textContent = new Date(project.startDate).toLocaleDateString("en-GB");
             modal.querySelector("#project-end").textContent = new Date(project.endDate).toLocaleDateString("en-GB");
             modal.querySelector("#project-budget").textContent = project.budget;
+            modal.querySelector("#project-id-input").value = project.id;
+
+            const membersContainer = modal.querySelector("#selected-members-info .selected-members-container");
+            membersContainer.innerHTML = "";
+
+            if (project.members && project.members.length > 0) {
+
+                for (const memberId of project.members) {
+                    const member = await getMemberDataById(memberId);
+                    if (member) {
+                        const memberDiv = document.createElement("div");
+                        memberDiv.classList.add("selected-member");
+                        memberDiv.innerHTML = `
+                            <p>${member.firstName} ${member.lastName}</p>
+                        `;
+                        membersContainer.appendChild(memberDiv);
+                    }
+                }
+            } else {
+                membersContainer.innerHTML = "<p>No members assigned to this project.</p>";
+            }
 
             modal.style.display = "flex";
         }
-
-
     }
 }
 
@@ -339,50 +357,39 @@ document.addEventListener("click", (event) => {
     }
 });
 
+const projectInfoCardForm = document.querySelector(".project-info-card-form");
 
-async function ProjectCompleted(projectId){
-    try {
-        const response = await fetch(`/Projects/UpdateProjectStatus`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                id: projectId,
-                isCompleted: true,
-            }),
-        });
+if (projectInfoCardForm) {
+    projectInfoCardForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent default form submission
 
-        if (response.ok) {
-            location.reload();
+        const form = event.target;
+        const formData = new FormData(form);
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                location.reload(); // Reload the page on success
+            } else {
+                console.error("Failed to update project status.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while updating the project status.");
         }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred while updating the project status.");
+    });
+}
+
+function setIsCompleted(value) {
+    const isCompletedInput = document.getElementById("is-completed-input");
+    if (isCompletedInput) {
+        isCompletedInput.value = value;
     }
 }
 
-async function ProjectNotCompleted(projectId) {
-    try {
-        const response = await fetch(`/Projects/UpdateProjectStatus`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                id: projectId,
-                isCompleted: false,
-            }),
-        });
-
-        if (response.ok) {
-            location.reload();
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred while updating the project status.");
-    }
-}
 // End of project info modal
 
 
@@ -412,7 +419,6 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// Hidden inputs for selected members before form submission
 const addProjectForm = document.querySelector(".add-project-form");
 if (addProjectForm) {
     addProjectForm.addEventListener("submit", (event) => {
@@ -507,14 +513,16 @@ async function showEditProjectModal(projectId, event) {
     const modal = document.getElementById("edit-project-modal");
 
     if (modal) {
-        const response = await fetch(`/Projects/UpdateProject?id=${projectId}`);
-        if (response.ok) {
-            const html = await response.json();           
-        }
+        await fetch(`/Projects/UpdateProject?id=${projectId}`);
 
         const project = await getProjectDataById(projectId);
 
         if (project) {
+
+            const idInput = modal.querySelector("input[name='id']");
+            if (idInput) {
+                idInput.value = project.id;
+            }
 
             const titleElement = modal.querySelector("#project-id");
             if (titleElement) {
@@ -596,7 +604,7 @@ document.addEventListener("click", (event) => {
 const editProjectForm = document.querySelector(".edit-project-form");
 if (editProjectForm) {
     editProjectForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
         const form = event.target;
 
         const formData = new FormData(form);
@@ -608,8 +616,7 @@ if (editProjectForm) {
             });
 
             if (response.ok) {
-                const html = await response.text();
-                document.querySelector(".over-box").innerHTML = html;
+                location.reload();
             } 
         } catch (error) {
             console.error("[DEBUG] Error while updating project:", error);
