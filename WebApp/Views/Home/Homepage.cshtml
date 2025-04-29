@@ -1,1 +1,35 @@
-﻿<h1>@ViewBag.Title</h1>
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+    <div class="welcome-container">
+        <h1>Welcome to </h1>
+        <a class="logo" asp-action="Homepage" asp-controller="Home">
+            <img src="Images/Logo.svg" alt="Logo">
+            <h1>alpha</h1>
+        </a>
+    </div>
+
+    <div class="options-container">
+        <a class="register-option" asp-action="SignUp" asp-controller="Auth">
+            <i class="fa-duotone fa-solid fa-user-plus"></i>
+            <h3>Join the team</h3>
+            <p>Become a part of our community</p>
+        </a>
+
+        <a class="signin-option" asp-action="SignIn" asp-controller="Auth">
+            <i class="fa-duotone fa-solid fa-briefcase"></i>
+            <h3>Projects</h3>
+            <p>Sign in and manage your projects easily with us</p>
+        </a>
+
+        <a class="admin-option" asp-action="AdminSignIn" asp-controller="Auth">
+            <i class="fa-duotone fa-solid fa-user-tie"></i>
+            <h3>Admin</h3>
+            <p>Take control over your team</p>
+        </a>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 alpha. All rights reserved.</p>
+    </footer>
