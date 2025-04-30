@@ -1,6 +1,7 @@
 ﻿using Business.Dtos;
 using Business.Interfaces;
 using Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.ViewModels;
 
@@ -10,6 +11,7 @@ namespace WebApp.Controllers
     {
         private readonly IMemberService _memberService = memberService;
 
+        [Authorize(Roles = "Admin")]
         [Route("members")]
         public async Task<IActionResult> Members()
         {

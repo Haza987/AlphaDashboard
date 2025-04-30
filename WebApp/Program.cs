@@ -28,14 +28,29 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ProjectFactory>();
 
+builder.Services.ConfigureApplicationCookie(x =>
+{
+    x.LoginPath = "/Auth/SignIn";
+    x.LogoutPath = "/Auth/SignOut";
+    x.AccessDeniedPath = "/Auth/AccessDenied";
+    x.SlidingExpiration = true;
+    x.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    x.Cookie.HttpOnly = true;
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+});
+
 var app = builder.Build();
 
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {

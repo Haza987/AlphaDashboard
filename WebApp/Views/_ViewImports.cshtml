@@ -1,4 +1,6 @@
-﻿@using WebApp
+﻿@using Microsoft.AspNetCore.Authorization
+@using WebApp
 @using WebApp.ViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using Business.Dtos
+@inject IAuthorizationService authorizationService

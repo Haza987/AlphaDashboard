@@ -2,6 +2,7 @@
 using Business.Interfaces;
 using Business.Models;
 using Data.Contexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.ViewModels;
@@ -13,6 +14,7 @@ namespace WebApp.Controllers
         private readonly DataContext _context = context;
         private readonly IProjectService _projectService = projectService;
 
+        [Authorize]
         [Route("projects")]
         public async Task<IActionResult> Projects(string filter = "ALL")
         {

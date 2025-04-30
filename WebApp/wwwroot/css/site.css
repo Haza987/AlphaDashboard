@@ -679,6 +679,18 @@ i {
         bottom: 1rem;
     }
 
+#access-denied {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+    #access-denied h1 {
+        color: red;
+    }
+
 #hero {
     grid-area: main;
     margin-left: 2rem;

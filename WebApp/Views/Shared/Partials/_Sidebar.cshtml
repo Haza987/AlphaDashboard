@@ -1,9 +1,13 @@
-﻿<a class="logo" asp-action="Homepage" asp-controller="Home">
+﻿@{
+    var isAdmin = (await authorizationService.AuthorizeAsync(User, "Admin")).Succeeded;
+}
+
+<a class="logo" asp-action="Homepage" asp-controller="Home">
     <img src="Images/Logo.svg" alt="Logo">
     <p>alpha</p>
 </a>
 
-<div class="menu">
+<nav class="menu">
     <ul>
         <li class="item-box">
             <a asp-action="Projects" asp-controller="Projects">
@@ -14,13 +18,16 @@
             </a>
         </li>
 
-        <li class="item-box">
-            <a asp-action="Members" asp-controller="Members">
-                <div class="list-item">
-                    <i class="fa-duotone fa-solid fa-users"></i>
-                    <span class="sidebar-active">Members</span>
-                </div>
-            </a>
-        </li>
+        @if (isAdmin)
+        {
+            <li class="item-box">
+                <a asp-action="Members" asp-controller="Members">
+                    <div class="list-item">
+                        <i class="fa-duotone fa-solid fa-users"></i>
+                        <span class="sidebar-active">Members</span>
+                    </div>
+                </a>
+            </li>
+        }
     </ul>
-</div>
+</nav>

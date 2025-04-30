@@ -105,10 +105,18 @@ namespace WebApp.Controllers
 
 
         [Authorize]
+        [Route("SignOut")]
         public new async Task<IActionResult> SignOut()
         {
             await _userService.SignOutAsync();
             return RedirectToAction("Homepage", "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
