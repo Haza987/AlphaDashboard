@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /Data/Contexts/Migrations
 /ToDo.txt
 /Data/Migrations
+/WebApp/appsettings.json

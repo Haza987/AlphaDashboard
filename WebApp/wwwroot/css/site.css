@@ -99,6 +99,12 @@
         background-color: var(--dark-green);
     }
 
+.btn-google {
+    display: flex;
+    justify-content: center;
+    all: unset;
+}
+
 .btn-close {
     all: unset;
     margin-left: auto;
