@@ -825,6 +825,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // User scripts
 
+// Sign in validation
+
+function validateSignIn() {
+    let isValid = true;
+
+    const email = document.forms["signIn"]["email"].value;
+    const emailError = document.getElementById("email-error");
+    if (email == "") {
+        emailError.style.display = "block";
+        isValid = false;
+    } else {
+        emailError.style.display = "none";
+    }
+
+    const password = document.forms["signIn"]["password"].value;
+    const passwordError = document.getElementById("password-error");
+    if (password == "") {
+        passwordError.style.display = "block";
+        isValid = false;
+    } else {
+        passwordError.style.display = "none";
+    }
+
+    if (!isValid) {
+        event.preventDefault();
+    }
+
+    return isValid;
+}
+
+// end of sign in validation
+
 // Sign up validation
 
 function validateSignUp() {

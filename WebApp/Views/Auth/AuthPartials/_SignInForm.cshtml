@@ -16,17 +16,18 @@
     <p class="or">OR</p>
 
     <div class="form-signin">
-        <form asp-action="@ViewBag.FormAction" method="post">
+        <form asp-action="@ViewBag.FormAction" name="signIn" method="post" onsubmit="return validateSignIn(event)">
             <div class="email-container">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="email" placeholder="Enter your email" />
+                <input asp-for="Email" name="email" class="email" placeholder="Enter your email" />
+                <div id="email-error" class="user-error text-danger" style="display: none;">Please enter your email address.</div>
                 <span asp-validation-for="Email" class="user-error text-danger"></span>
             </div>
 
             <div class="password-container">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="password" type="password" placeholder="Enter your password" />
-                <span asp-validation-for="Password" class="user-error text-danger"></span>
+                <input asp-for="Password" name="password" class="password" type="password" placeholder="Enter your password" />
+                <div id="password-error" class="user-error text-danger" style="display: none;">Please enter your password.</div>
             </div>
 
             <div class="bottom-container">

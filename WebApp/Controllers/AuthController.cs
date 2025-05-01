@@ -31,10 +31,16 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(form.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError("Email", "User does not exist.");
+                    return View(form);
+                }
+
                 var result = await _userService.SignInAsync(form.Email, form.Password);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(form.Email);
                     var isAdmin = await _userManager.IsInRoleAsync(user!, "Admin");
 
                     if (isAdmin)
@@ -81,7 +87,6 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    Debug.WriteLine("Email exists");
                     ModelState.AddModelError("Email", "A user with this email already exists.");
                 }
             }
