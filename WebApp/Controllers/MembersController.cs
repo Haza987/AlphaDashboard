@@ -11,7 +11,7 @@ namespace WebApp.Controllers
     {
         private readonly IMemberService _memberService = memberService;
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("members")]
         public async Task<IActionResult> Members()
         {
