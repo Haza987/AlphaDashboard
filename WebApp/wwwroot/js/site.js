@@ -267,7 +267,7 @@ function validateMember() {
         emailError.style.display = "none";
     }
 
-    const phone = document.forms["createMember"]["phone"].value;
+    const phone = document.forms["createMember"]["phoneNumber"].value;
     const phoneError = document.getElementById("phone-error");
     if (phone == "") {
         phoneError.style.display = "block";
@@ -292,6 +292,17 @@ function validateMember() {
         isValid = false;
     } else {
         addressError.style.display = "none";
+    }
+
+    const day = document.getElementById("member-day").value;
+    const month = document.getElementById("member-month").value;
+    const year = document.getElementById("member-year").value;
+    const dateOfBirthError = document.getElementById("date-of-birth-error");
+    if (day == "" || month == "" || year == "") {
+        dateOfBirthError.style.display = "block";
+        isValid = false;
+    } else {
+        dateOfBirthError.style.display = "none";
     }
 
     if (!isValid) {
@@ -790,6 +801,33 @@ function validateProject() {
         isValid = false;
     } else {
         projectDescriptionError.style.display = "none";
+    }
+
+    const startDate = document.forms["createProject"]["startDate"].value;
+    const startDateError = document.getElementById("start-date-error");
+    if (startDate == "") {
+        startDateError.style.display = "block";
+        isValid = false;
+    } else {
+        startDateError.style.display = "none";
+    }
+
+    const endDate = document.forms["createProject"]["endDate"].value;
+    const endDateError = document.getElementById("end-date-error");
+    if (endDate == "") {
+        endDateError.style.display = "block";
+        isValid = false;
+    } else {
+        endDateError.style.display = "none";
+    }
+
+    const budget = document.forms["createProject"]["budget"].value;
+    const budgetError = document.getElementById("budget-error");
+    if (budget == "") {
+        budgetError.style.display = "block";
+        isValid = false;
+    } else {
+        budgetError.style.display = "none";
     }
 
     if (!isValid) {

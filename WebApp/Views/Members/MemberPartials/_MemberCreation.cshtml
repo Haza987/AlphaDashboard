@@ -85,8 +85,9 @@
                     </select>
                 </div>
 
-                <input asp-for="DateOfBirth" type="hidden" id="date-of-birth" />
+                <input asp-for="DateOfBirth" name="dateOfBirth" type="hidden" id="date-of-birth" />
             </div>
+                <div id="date-of-birth-error" class="member-error text-danger" style="display: none;">Please select a date of birth.</div>
 
             <div class="add-member-bottom">
                 <button class="btn btn--create" type="submit">Create</button>
