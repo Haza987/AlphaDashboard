@@ -20,13 +20,13 @@
             <div class="email-container">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="email" placeholder="Enter your email" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <span asp-validation-for="Email" class="user-error text-danger"></span>
             </div>
 
             <div class="password-container">
                 <label asp-for="Password"></label>
                 <input asp-for="Password" class="password" type="password" placeholder="Enter your password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <span asp-validation-for="Password" class="user-error text-danger"></span>
             </div>
 
             <div class="bottom-container">

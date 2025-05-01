@@ -4,6 +4,7 @@ using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Security.Claims;
 using WebApp.ViewModels;
 
@@ -69,10 +70,19 @@ namespace WebApp.Controllers
                     Role = "User"
                 };
 
-                var result = await _userService.CreateUserAsync(user);
-                if (result.Succeeded)
+                var exists = await _userService.UserExistsAsync(user.Email);
+                if (!exists)
                 {
-                    return RedirectToAction("SignIn");
+                    var result = await _userService.CreateUserAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("SignIn");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("Email exists");
+                    ModelState.AddModelError("Email", "A user with this email already exists.");
                 }
             }
             return View(form);

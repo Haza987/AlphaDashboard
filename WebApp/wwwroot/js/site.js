@@ -820,3 +820,77 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // End of sidebar scripts
+
+
+
+// User scripts
+
+// Sign up validation
+
+function validateSignUp() {
+    let isValid = true;
+
+    const firstName = document.forms["signUp"]["firstName"].value;
+    const firstNameError = document.getElementById("first-name-error");
+    if (firstName == "") {
+        firstNameError.style.display = "block";
+        isValid = false;
+    } else {
+        firstNameError.style.display = "none";
+    }
+
+    const lastName = document.forms["signUp"]["lastName"].value;
+    const lastNameError = document.getElementById("last-name-error");
+    if (lastName == "") {
+        lastNameError.style.display = "block";
+        isValid = false;
+    } else {
+        lastNameError.style.display = "none";
+    }
+
+    const email = document.forms["signUp"]["email"].value;
+    const emailError = document.getElementById("email-error");
+    if (email == "") {
+        emailError.style.display = "block";
+        isValid = false;
+    } else {
+        emailError.style.display = "none";
+    }
+
+    const password = document.forms["signUp"]["password"].value;
+    const passwordError = document.getElementById("password-error");
+    if (password == "") {
+        passwordError.style.display = "block";
+        isValid = false;
+    } else {
+        passwordError.style.display = "none";
+    }
+
+    const confirmPassword = document.forms["signUp"]["confirmPassword"].value;
+    const confirmPasswordError = document.getElementById("confirm-password-error");
+    if (confirmPassword == "") {
+        confirmPasswordError.style.display = "block";
+        isValid = false;
+    } else {
+        confirmPasswordError.style.display = "none";
+    }
+
+    const terms = document.forms["signUp"]["terms"].checked;
+    const termsError = document.getElementById("terms-error");
+    if (!terms) {
+        termsError.style.display = "block";
+        isValid = false;
+    } else {
+        termsError.style.display = "none";
+    }
+
+    if (!isValid) {
+        event.preventDefault();
+    }
+
+    return isValid;
+}
+
+// end of sign up validation
+
+// end of user scripts

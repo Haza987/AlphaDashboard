@@ -114,6 +114,12 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
         }
     }
 
+    public async Task<bool> UserExistsAsync(string email)
+    {
+        var userEntity = await _userRepository.GetAsync(x => x.Email == email);
+        return userEntity != null;
+    }
+
     #endregion
 
     #region User operations

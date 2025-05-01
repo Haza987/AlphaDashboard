@@ -16,45 +16,49 @@
         <p class="or">OR</p>
 
         <div class="form-signup">
-            <form asp-action="SignUp" method="post">
+            <form asp-action="SignUp" name="signUp" method="post" onsubmit="return validateSignUp(event)">
                 <div class="name-container">
                     <div class="first-name">
                         <label asp-for="FirstName"></label>
-                        <input asp-for="FirstName" class="form-control" placeholder="Your first name" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        <input asp-for="FirstName" name="firstName" class="form-control" placeholder="Your first name" />
+                        <div id="first-name-error" class="user-error text-danger" style="display: none;">Please enter a first name.</div>
                     </div>
 
                     <div class="last-name">
                         <label asp-for="LastName"></label>
-                        <input asp-for="LastName" class="form-control" placeholder="Your last name" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        <input asp-for="LastName" name="lastName" class="form-control" placeholder="Your last name" />
+                        <div id="last-name-error" class="user-error text-danger" style="display: none;">Please enter a last name.</div>
                     </div>
                 </div>
 
                 <div class="email-container">
                     <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" placeholder="Enter your email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="Email" name="email" class="form-control" placeholder="Enter your email" />
+                    <div id="email-error" class="user-error text-danger" style="display: none;">Please enter an email address.</div>
+                    <span asp-validation-for="Email" class="user-error text-danger"></span>
                 </div>
+
 
                 <div class="password-container">
                     <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input asp-for="Password" name="password" class="form-control" type="password" placeholder="Enter your password" />
+                    <div id="password-error" class="user-error text-danger" style="display: none;">Please enter a password.</div>
+                    <span asp-validation-for="Password" class="user-error text-danger"></span>
                 </div>
 
                 <div class="password-container">
                     <label asp-for="ConfirmPassword"></label>
-                    <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm your password" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <input asp-for="ConfirmPassword" name="confirmPassword" class="form-control" type="password" placeholder="Confirm your password" />
+                    <div id="confirm-password-error" class="user-error text-danger" style="display: none;">You must confirm your password.</div>
+                    <span asp-validation-for="ConfirmPassword" class="user-error text-danger"></span>
                 </div>
 
                 <div class="bottom-container">
-                    <input asp-for="TermsAccepted" type="checkbox" name="Terms" />
+                    <input asp-for="TermsAccepted" type="checkbox" name="terms" />
                     <label Asp-for="TermsAccepted" class="custom-checkbox">I accept the</label>
                     <a class="terms-and-conditions" href="#">Terms and Conditions</a>
-                    <span asp-validation-for="TermsAccepted" class="text-danger"></span>
                 </div>
+                    <div id="terms-error" class="user-error text-danger" style="display: none;">You must accept the terms & conditions.</div>
 
                 <button type="submit" class="btn btn--signup">Create Account</button>
             </form>

@@ -314,6 +314,12 @@ i {
             height: 90svh;
         }
 
+            #admin-signin .right-side .signin-container .user-error {
+                font-size: 14px;
+                padding-left: 1rem;
+                cursor: default;
+            }
+
             #admin-signin .right-side .signin-container .google-signin {
                 display: flex;
                 align-items: center;
@@ -1813,6 +1819,12 @@ i {
         height: 90svh;
     }
 
+        #signin .signin-container .user-error {
+            font-size: 14px;
+            padding-left: 1rem;
+            cursor: default;
+        }
+
         #signin .signin-container .google-signin {
             display: flex;
             align-items: center;
@@ -1939,6 +1951,12 @@ i {
         overflow: auto;
         min-height: 90svh;
     }
+
+        #signup .signup-container .user-error {
+            font-size: 14px;
+            padding-left: 1rem;
+            cursor: default;
+        }
 
         #signup .signup-container .google-signup {
             display: flex;
