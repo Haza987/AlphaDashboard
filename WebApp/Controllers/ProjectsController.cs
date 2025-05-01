@@ -14,7 +14,7 @@ namespace WebApp.Controllers
         private readonly DataContext _context = context;
         private readonly IProjectService _projectService = projectService;
 
-        [Authorize]
+        //[Authorize]
         [Route("projects")]
         public async Task<IActionResult> Projects(string filter = "ALL")
         {
@@ -51,15 +51,27 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult CreateProject()
         {
-            return PartialView("ProjectPartials/_ProjectCreation", new ProjectDto());
+            return PartialView("ProjectPartials/_ProjectCreation", new ProjectCreationViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProject(ProjectDto form)
+        public async Task<IActionResult> CreateProject(ProjectCreationViewModel form)
         {
             if (ModelState.IsValid)
             {
-                var result = await _projectService.CreateProjectAsync(form);
+                var project = new ProjectDto
+                {
+                    ProjectName = form.ProjectName,
+                    ClientName = form.ClientName,
+                    ProjectDescription = form.ProjectDescription,
+                    StartDate = form.StartDate,
+                    EndDate = form.EndDate,
+                    Budget = form.Budget,
+                    IsCompleted = form.IsCompleted,
+                    Members = form.Members?.Distinct().ToList() ?? new List<int>()
+                };
+
+                var result = await _projectService.CreateProjectAsync(project);
                 if (result)
                 {
                     return RedirectToAction("Projects");

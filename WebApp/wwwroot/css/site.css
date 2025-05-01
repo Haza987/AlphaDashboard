@@ -980,8 +980,8 @@ i {
         }
 
     #hero .add-project {
-        display: none;
         /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
+        display: flex;
     }
 
         #hero .add-project .add-project-top {
@@ -1032,6 +1032,12 @@ i {
                 border-radius: 1rem;
                 resize: none;
                 padding: 1rem;
+            }
+
+            #hero .add-project .add-project-form .project-error {
+                font-size: 14px;
+                padding-left: 1rem;
+                cursor: default;
             }
 
             #hero .add-project .add-project-form .name-container {
@@ -1311,7 +1317,7 @@ i {
         }
 
     #hero .delete-project {
-        display: flex;
+        display: none;
     }
 
         #hero .delete-project .delete-container {

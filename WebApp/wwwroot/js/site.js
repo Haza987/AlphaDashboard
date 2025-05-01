@@ -420,6 +420,11 @@ function hideAddProjectModal() {
         if (form) {
             form.reset();
         }
+
+        const errorMessages = modal.querySelectorAll(".project-error");
+        errorMessages.forEach((error) => {
+            error.style.display = "none";
+        });
     }
 }
 
@@ -435,10 +440,13 @@ if (addProjectForm) {
         const form = event.target;
 
         // Ensure at least one member is selected
+        const memberError = document.getElementById("member-error");
         if (selectedMembers.size === 0) {
-            alert("Please assign at least one member to the project.");
+            memberError.style.display = "block";
             event.preventDefault();
             return;
+        } else {
+            memberError.style.display = "none";
         }
 
         form.querySelectorAll("input[name='Members']").forEach(input => {
@@ -491,6 +499,7 @@ function updateSelectedMembers(dropdownId, containerId) {
     `;
 
         container.querySelector(".selected-members-container").appendChild(memberDiv);
+        console.log(`Member added: ID=${selectedMemberId}, Name=${selectedMemberName}`);
     }
 }
 
@@ -498,15 +507,25 @@ function updateSelectedMembers(dropdownId, containerId) {
 //<img class="member-icon" src="" alt="Member Image" />
 
 
-function removeSelectedMember(memberId, containerClass) {
+function removeSelectedMember(memberId, containerId) {
+    // Remove the member from the selectedMembers set
     selectedMembers.delete(memberId);
 
-    const memberDiv = document.querySelector(`.${containerClass} .selected-member[data-id="${memberId}"]`);
+    // Find the container where the member div is located
+    const container = document.getElementById(containerId);
 
+    // Find the specific member div within the container
+    const memberDiv = container.querySelector(`.selected-member[data-id="${memberId}"]`);
+
+    // Remove the member div if it exists
     if (memberDiv) {
         memberDiv.remove();
+        console.log(`Member removed: ID=${memberId}`);
+    } else {
+        console.error(`Member div not found for ID=${memberId}`);
     }
 
+    // Remove the hidden input field for the member
     const hiddenInput = document.querySelector(`input[name="Members"][value="${memberId}"]`);
     if (hiddenInput) {
         hiddenInput.remove();
@@ -697,6 +716,47 @@ document.addEventListener("click", (event) => {
 });
 // End of delete project modal
 
+
+// Project creation form validaiton
+
+function validateProject() {
+    let isValid = true;
+
+    const projectName = document.forms["createProject"]["projectName"].value;
+    const projectNameError = document.getElementById("project-name-error");
+    if (projectName == "") {
+        projectNameError.style.display = "block";
+        isValid = false;
+    } else {
+        projectNameError.style.display = "none";
+    }
+
+    const clientName = document.forms["createProject"]["clientName"].value;
+    const clientNameError = document.getElementById("client-name-error");
+    if (clientName == "") {
+        clientNameError.style.display = "block";
+        isValid = false;
+    } else {
+    clientNameError.style.display = "none";
+    }
+
+    
+    const projectDescription = document.forms["createProject"]["projectDescription"].value;
+    const projectDescriptionError = document.getElementById("project-description-error");
+
+    if (projectDescription == "") {
+        projectDescriptionError.style.display = "block";
+        isValid = false;
+    } else {
+        projectDescriptionError.style.display = "none";
+    }
+
+    if (!isValid) {
+        event.preventDefault();
+    }
+}
+
+// end of project creation form validation
 
 // End of project scripts
 
