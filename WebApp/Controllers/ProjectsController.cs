@@ -14,7 +14,7 @@ namespace WebApp.Controllers
         private readonly DataContext _context = context;
         private readonly IProjectService _projectService = projectService;
 
-        //[Authorize]
+        [Authorize]
         [Route("projects")]
         public async Task<IActionResult> Projects(string filter = "ALL")
         {

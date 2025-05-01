@@ -11,7 +11,7 @@ namespace WebApp.Controllers
     {
         private readonly IMemberService _memberService = memberService;
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("members")]
         public async Task<IActionResult> Members()
         {
@@ -30,21 +30,32 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult CreateMember()
         {
-            return PartialView("MemberPartials/_MemberCreation", new MemberDto());
+            return PartialView("MemberPartials/_MemberCreation", new MemberCreationViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMember(MemberDto form)
+        public async Task<IActionResult> CreateMember(MemberCreationViewModel form)
         {
             if (ModelState.IsValid)
             {
-                var result = await _memberService.CreateMemberAsync(form);
+                var member = new MemberDto
+                {
+                    FirstName = form.FirstName,
+                    LastName = form.LastName,
+                    Email = form.Email,
+                    PhoneNumber = form.PhoneNumber,
+                    JobTitle = form.JobTitle,
+                    Address = form.Address,
+                    DateOfBirth = form.DateOfBirth
+                };
+
+                var result = await _memberService.CreateMemberAsync(member);
                 if (result)
                 {
                     return RedirectToAction("Members");
                 }
             }
-            return View(form);
+            return View("MemberPartials/_MemberCreation", form);
         }
 
         [HttpGet]
@@ -99,7 +110,7 @@ namespace WebApp.Controllers
             var result = await _memberService.DeleteMemberAsync(id);
             if (result)
             {
-                return Ok();
+                return RedirectToAction("Members");
             }
             return BadRequest("Failed to delete member.");
         }

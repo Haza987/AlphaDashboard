@@ -220,30 +220,6 @@ async function showDeleteMemberModal(memberId) {
     }
 }
 
-async function confirmDelete() {
-    const modal = document.getElementById("delete-member-modal");
-    const id = modal.querySelector("input[name='id']");
-    const memberId = id ? id.value : null;
-
-    if (!memberId) {
-        return;
-    }
-
-    try {
-        const response = await fetch(`/Members/DeleteMember?id=${memberId}`, {
-            method: "POST",
-        });
-
-        if (response.ok) {
-            location.reload();
-        } else {
-            alert("Failed to delete member.");
-        }
-    } catch (error) {
-        alert("An error occurred while deleting the member.");
-    }
-}
-
 function hideDeleteMemberModal() {
     const modal = document.getElementById("delete-member-modal");
     if (modal) {
@@ -257,6 +233,73 @@ document.addEventListener("click", (event) => {
     }
 });
 // End of delete member modal
+
+
+// Member creation form validation
+
+function validateMember() {
+    let isValid = true;
+
+    const firstName = document.forms["createMember"]["firstName"].value;
+    const firstNameError = document.getElementById("first-name-error");
+    if (firstName == "") {
+        firstNameError.style.display = "block";
+        isValid = false;
+    } else {
+        firstNameError.style.display = "none";
+    }
+
+    const lastName = document.forms["createMember"]["lastName"].value;
+    const lastNameError = document.getElementById("last-name-error");
+    if (lastName == "") {
+        lastNameError.style.display = "block";
+        isValid = false;
+    } else {
+        lastNameError.style.display = "none";
+    }
+
+    const email = document.forms["createMember"]["email"].value;
+    const emailError = document.getElementById("email-error");
+    if (email == "") {
+        emailError.style.display = "block";
+        isValid = false;
+    } else {
+        emailError.style.display = "none";
+    }
+
+    const phone = document.forms["createMember"]["phone"].value;
+    const phoneError = document.getElementById("phone-error");
+    if (phone == "") {
+        phoneError.style.display = "block";
+        isValid = false;
+    } else {
+        phoneError.style.display = "none";
+    }
+
+    const jobTitle = document.forms["createMember"]["jobTitle"].value;
+    const jobTitleError = document.getElementById("job-title-error");
+    if (jobTitle == "") {
+        jobTitleError.style.display = "block";
+        isValid = false;
+    } else {
+        jobTitleError.style.display = "none";
+    }
+
+    const address = document.forms["createMember"]["address"].value;
+    const addressError = document.getElementById("address-error");
+    if (address == "") {
+        addressError.style.display = "block";
+        isValid = false;
+    } else {
+        addressError.style.display = "none";
+    }
+
+    if (!isValid) {
+        event.preventDefault();
+    }
+}
+
+// end of member creation form validation
 
 // End of member scripts
 
@@ -740,10 +783,8 @@ function validateProject() {
     clientNameError.style.display = "none";
     }
 
-    
     const projectDescription = document.forms["createProject"]["projectDescription"].value;
     const projectDescriptionError = document.getElementById("project-description-error");
-
     if (projectDescription == "") {
         projectDescriptionError.style.display = "block";
         isValid = false;

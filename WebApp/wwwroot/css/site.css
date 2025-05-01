@@ -1457,7 +1457,7 @@ i {
     }
 
     .members-main .add-member {
-        display: none;
+        display: flex;
     }
 
         .members-main .add-member .add-member-top {
@@ -1515,6 +1515,12 @@ i {
                 padding: 1rem;
             }
 
+            .members-main .add-member .add-member-form .member-error {
+                font-size: 14px;
+                padding-left: 1rem;
+                cursor: default;
+            }
+
             .members-main .add-member .add-member-form .name-container {
                 display: flex;
                 gap: 0.5rem;
@@ -1532,6 +1538,14 @@ i {
                 gap: 1rem;
                 grid-template-areas: "start middle end";
             }
+
+                .members-main .add-member .add-member-form .date-of-birth-container .dob-select {
+                    height: 3rem;
+                    border: 1px solid var(--border-100);
+                    border-radius: 1rem;
+                    padding-inline: 1rem;
+                    cursor: pointer;
+                }
 
                 .members-main .add-member .add-member-form .date-of-birth-container .day-container {
                     grid-area: start;
@@ -1667,7 +1681,7 @@ i {
         }
 
     .members-main .delete-member {
-        display: flex;
+        display: none;
     }
 
         .members-main .delete-member .delete-container {

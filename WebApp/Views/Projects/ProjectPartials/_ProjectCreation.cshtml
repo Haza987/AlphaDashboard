@@ -12,39 +12,39 @@
             <i class="fa-duotone fa-solid fa-camera"></i>
         </div>
         
-        <form name="createProject" class="add-project-form" asp-action="CreateProject" method="post" onsubmit="validateProject()">
+        <form class="add-project-form" name="createProject" asp-action="CreateProject" method="post" onsubmit="validateProject()">
             <div class="name-container">
-                <label asp-for="ProjectName">Project Name</label>
+                <label asp-for="ProjectName"></label>
                 <input asp-for="ProjectName" name="projectName" type="text" id="project-name" placeholder="Project name"/>
                 <div id="project-name-error" class="project-error text-danger" style="display: none;">Project must have a name.</div>
             </div>
 
             <div class="client-container">
-                <label asp-for="ClientName">Client Name</label>
+                <label asp-for="ClientName"></label>
                 <input asp-for="ClientName" name="clientName" type="text" id="project-client" placeholder="Client name"/>
                 <div id="client-name-error" class="project-error text-danger" style="display: none;">Project must have a client.</div>
             </div>
 
             <div class="description-container">
-                <label asp-for="ProjectDescription">Description</label>
+                <label asp-for="ProjectDescription"></label>
                 <input asp-for="ProjectDescription" name="projectDescription" id="project-description" placeholder="Type Something" />
                 <div id="project-description-error" class="project-error text-danger" style="display: none;">Please add a description of the project.</div>
             </div>
 
             <div class="date-container">
                 <div class="project-start">
-                    <label asp-for="StartDate">Start Date</label>
+                    <label asp-for="StartDate"></label>
                     <input asp-for="StartDate" type="date" id="project-start"/>
                 </div>
 
                 <div class="project-end">
-                    <label asp-for="EndDate">End Date</label>
+                    <label asp-for="EndDate"></label>
                     <input asp-for="EndDate" type="date" id="project-end"/>
                 </div>
             </div>
 
             <div class="members-container">
-                <label asp-for="Members">Members</label>
+                <label asp-for="Members"></label>
                 <select class="member-select" id="member-select-add" onchange="updateSelectedMembers('member-select-add', 'selected-members-container-add')">
                     <option value="-- Assign members --" disabled selected>-- Assign members --</option>
                     @foreach (var member in ViewBag.Members)
@@ -62,7 +62,7 @@
             </div>
 
             <div class="budget-container">
-                <label asp-for="Budget">Budget</label>
+                <label asp-for="Budget"></label>
                 <div class="input-container">
                     <span>$</span>
                     <input asp-for="Budget" type="text" id="project-budget" placeholder="0"/>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="add-project-bottom">
-                <button type="submit" class="btn btn--update">Create</button>
+                <button type="submit" class="btn btn--create">Create</button>
             </div>
         </form>
     </div>

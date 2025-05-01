@@ -1,4 +1,4 @@
-﻿@model MemberDto
+﻿@model MemberCreationViewModel
 
 <div class="over-box">
     <div class="over-box-content">
@@ -11,43 +11,50 @@
             <i class="fa-duotone fa-solid fa-camera"></i>
         </div>
 
-        <form class="add-member-form" asp-action="CreateMember" method="post">
+        <form class="add-member-form" name="createMember" asp-action="CreateMember" method="post" onsubmit="validateMember()">
             <div class="name-container">
                 <div class="first-name">
-                    <label asp-for="FirstName">First Name</label>
-                    <input asp-for="FirstName" type="text" id="first-name" placeholder="Your first name" />
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" name="firstName" type="text" id="first-name" placeholder="First name" />
+                    <div id="first-name-error" class="member-error text-danger" style="display: none;">Member must have a first name.</div>
                 </div>
 
                 <div class="last-name">
-                    <label asp-for="LastName">Last Name</label>
-                    <input asp-for="LastName" type="text" id="last-name" placeholder="Your Last name" />
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" name="lastName" type="text" id="last-name" placeholder="Last name" />
+                    <div id="last-name-error" class="member-error text-danger" style="display: none;">Member must have a last name.</div>
                 </div>
             </div>
 
             <div class="email-container">
-                <label asp-for="Email">Email</label>
-                <input asp-for="Email" type="text" id="member-email" placeholder="Your email address" />
+                <label asp-for="Email"></label>
+                <input asp-for="Email" name="email" type="text" id="member-email" placeholder="Email address" />
+                <div id="email-error" class="member-error text-danger" style="display: none;">Member must have an email address.</div>
             </div>
 
             <div class="phone-container">
-                <label asp-for="PhoneNumber">Phone</label>
-                <input asp-for="PhoneNumber" id="member-phone" placeholder="Your phone number" />
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" name="phoneNumber" id="member-phone" placeholder="Phone number" />
+                <div id="phone-error" class="member-error text-danger" style="display: none;">Member must have a phone number.</div>
             </div>
 
             <div class="job-container">
-                <label asp-for="JobTitle">Job Title</label>
-                <input asp-for="JobTitle" id="member-job" placeholder="Your job title" />
+                <label asp-for="JobTitle"></label>
+                <input asp-for="JobTitle" name="jobTitle" id="member-job" placeholder="Job title" />
+                <div id="job-title-error" class="member-error text-danger" style="display: none;">Member must have a job title.</div>
             </div>
 
             <div class="address-container">
-                <label asp-for="Address">Address</label>
-                <input asp-for="Address" id="member-address" placeholder="Your address" />
+                <label asp-for="Address"></label>
+                <input asp-for="Address" name="address" id="member-address" placeholder="Address" />
+                <div id="address-error" class="member-error text-danger" style="display: none;">Member must have an address.</div>
             </div>
 
+            <label asp-for="DateOfBirth"></label>
             <div class="date-of-birth-container">
                 <div class="day-container">
                     <label for="member-day">Day</label>
-                    <select id="member-day" onchange="addDateOfBirth()">
+                    <select class="dob-select" id="member-day" onchange="addDateOfBirth()">
                         <option value="">Day</option>
                         @for (int i = 1; i <= 31; i++)
                         {
@@ -58,7 +65,7 @@
 
                 <div class="month-container">
                     <label for="member-month">Month</label>
-                    <select id="member-month" onchange="addDateOfBirth()">
+                    <select class="dob-select" id="member-month" onchange="addDateOfBirth()">
                         <option value="">Month</option>
                         @for (int i = 1; i <= 12; i++)
                         {
@@ -69,7 +76,7 @@
 
                 <div class="year-container">
                     <label for="member-year">Year</label>
-                    <select id="member-year" onchange="addDateOfBirth()">
+                    <select class="dob-select" id="member-year" onchange="addDateOfBirth()">
                         <option value="">Year</option>
                         @for (int i = DateTime.Now.Year; i >= 1900; i--)
                         {
@@ -82,7 +89,7 @@
             </div>
 
             <div class="add-member-bottom">
-                <button class="btn btn--create">Create</button>
+                <button class="btn btn--create" type="submit">Create</button>
             </div>
         </form>
     </div>
