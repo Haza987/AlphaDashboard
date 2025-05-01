@@ -29,4 +29,6 @@ public class ProjectCreationViewModel
 
     [Display(Name = "Members")]
     public List<int> Members { get; set; } = [];
+
+    public FileUploadViewModel FileUploadViewModel { get; set; } = new();
 }

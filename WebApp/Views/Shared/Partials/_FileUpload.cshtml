@@ -1,0 +1,20 @@
+﻿@model FileUploadViewModel
+
+<form asp-action="Upload" method="post" enctype="multipart/form-data">
+    <div class="add-image-container">
+        <div class="add-image">
+            <div id="circle-container" class="circle circle-gray">
+                <i class="fa-duotone fa-solid fa-camera"></i>
+            </div>
+        </div>
+
+        <div class="image-preview-container d-none">
+            <img id="image-preview" src="#" alt="Image Preview" />
+        </div>
+    </div>
+
+
+    <input asp-for="File" id="file" accept="image/*" class="form-control" />
+    <span asp-validation-for="File"></span>
+
+</form>

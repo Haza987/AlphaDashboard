@@ -8,9 +8,7 @@
             <button class="btn-close"><i class="fa-solid fa-times close" id="project-close-button"></i></button>
         </div>
 
-        <div class="add-image">
-            <i class="fa-duotone fa-solid fa-camera"></i>
-        </div>
+        <partial name="Partials/_FileUpload" model="Model.FileUploadViewModel" />
         
         <form class="add-project-form" name="createProject" asp-action="CreateProject" method="post" onsubmit="validateProject()">
             <div class="name-container">

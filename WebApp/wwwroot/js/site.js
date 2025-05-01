@@ -964,3 +964,44 @@ function validateSignUp() {
 // end of sign up validation
 
 // end of user scripts
+
+
+
+// file upload scripts
+
+document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.querySelector("#file");
+    const addImageDiv = document.querySelector(".add-image");
+
+    if (!fileInput || !addImageDiv) return;
+
+    addImageDiv.addEventListener("click", () => {
+        fileInput.click();
+    })
+
+    fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        console.log("Selected file:", file); // Log the selected file
+        const circle = document.querySelector("#circle-container");
+        const img = document.querySelector("#image-preview");
+        const previewContainer = document.querySelector(".image-preview-container");
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                console.log("FileReader result:", event.target.result);
+                img.src = event.target.result;
+                img.classList.remove("d-none");
+                circle.classList.add("d-none");
+                previewContainer.classList.remove("d-none");
+            }
+            reader.readAsDataURL(file);
+        } else {
+            img.classList.add("d-none");
+            circle.classList.remove("d-none");
+            previewContainer.classList.add("d-none");
+        }
+    });
+});
+
+// end of file upload scripts
