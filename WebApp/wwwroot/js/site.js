@@ -480,6 +480,25 @@ function hideAddProjectModal() {
         errorMessages.forEach((error) => {
             error.style.display = "none";
         });
+
+        const fileInput = document.querySelector("#file");
+        const img = document.querySelector("#image-preview");
+        const circle = document.querySelector("#circle-container");
+        const previewContainer = document.querySelector(".image-preview-container");
+
+        if (fileInput) {
+            fileInput.value = "";
+        }
+        if (img) {
+            img.src = "#";
+            img.classList.add("d-none");
+        }
+        if (circle) {
+            circle.classList.remove("d-none");
+        }
+        if (previewContainer) {
+            previewContainer.classList.add("d-none");
+        }
     }
 }
 
@@ -609,8 +628,7 @@ async function showEditProjectModal(projectId, event) {
 
         if (project) {
 
-            const imagePreview = modal.querySelector("#image-preview");
-
+            const imagePreview = modal.querySelector("#project-image");
             if (project.projectImageFilePath) {
                 imagePreview.src = project.projectImageFilePath;
             }
@@ -988,17 +1006,21 @@ function validateSignUp() {
 // file upload scripts
 
 document.addEventListener("DOMContentLoaded", () => {
+    fileUpload();
+});
+
+function fileUpload() {
     const fileInput = document.querySelector("#file");
     const addImageContainer = document.querySelector(".add-image-container");
 
     if (!fileInput || !addImageContainer) return;
 
-    addImageDiv.addEventListener("click", () => {
-        addImageContainer.click();
-    })
+    addImageContainer.addEventListener("click", () => {
+        fileInput.click();
+    });
 
     fileInput.addEventListener("change", (e) => {
-        console.log("File selected:", e.target.files[0]?.name || "No file selected");
+        console.log("File upload File selected:", e.target.files[0]?.name || "No file selected");
         const file = e.target.files[0];
         const circle = document.querySelector("#circle-container");
         const img = document.querySelector("#image-preview");
@@ -1011,7 +1033,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 img.classList.remove("d-none");
                 circle.classList.add("d-none");
                 previewContainer.classList.remove("d-none");
-            }
+            };
             reader.readAsDataURL(file);
         } else {
             img.classList.add("d-none");
@@ -1019,32 +1041,10 @@ document.addEventListener("DOMContentLoaded", () => {
             previewContainer.classList.add("d-none");
         }
     });
-});
+}
+
 
 // end of file upload scripts
 
-// file update scripts
-document.addEventListener("DOMContentLoaded", () => {
-    const fileInput = document.querySelector("#file");
-    const updateImageContainer = document.querySelector(".update-image-container");
-    const imagePreview = document.querySelector("#image-preview");
-
-    if (!fileInput || !updateImageContainer || !imagePreview) return;
-    updateImageContainer.addEventListener("click", () => {
-        fileInput.click();
-    });
-
-    fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                imagePreview.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-});
 
 
-// end of file update scripts
