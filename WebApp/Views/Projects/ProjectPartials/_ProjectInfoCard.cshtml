@@ -7,9 +7,9 @@
             <i class="fa-solid fa-times close" id="close-button"></i>
         </div>
 
-        @* <div class="project-info-card-image">             *@
-        @*     <img src="Images/project greenyellow.svg" alt="project image"> *@
-        @* </div> *@
+        <div class="project-info-card-image">
+            <img id="project-image" src="@Model.ProjectImageFilePath" alt="project image" />
+        </div>
 
         <form class="project-info-card-form" asp-action="UpdateProjectStatus" method="post">
 

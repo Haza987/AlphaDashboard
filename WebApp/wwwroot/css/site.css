@@ -919,6 +919,10 @@ i {
             #hero .project-info-card .project-info-card-image img {
                 width: 100%;
                 height: 100%;
+                -o-object-fit: cover;
+                object-fit: cover;
+                position: absolute;
+                border-radius: 1rem;
             }
 
         #hero .project-info-card .project-info-card-form {
@@ -1210,36 +1214,6 @@ i {
                 font-size: 20px;
             }
 
-        #hero .edit-project .edit-image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-inline: auto;
-            width: 10rem;
-            height: 10rem;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-            #hero .edit-project .edit-image img {
-                width: 100%;
-                height: 100%;
-            }
-
-            #hero .edit-project .edit-image i {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 3rem;
-                height: 3rem;
-                background-color: rgba(99, 112, 133, 0.8);
-                border-radius: 50%;
-                color: #ffffff;
-                position: absolute;
-                bottom: 1rem;
-            }
-
         #hero .edit-project .edit-project-form {
             display: flex;
             flex-direction: column;
@@ -1262,6 +1236,39 @@ i {
                 resize: none;
                 padding: 1rem;
             }
+
+            #hero .edit-project .edit-project-form .edit-image {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-inline: auto;
+                width: 10rem;
+                height: 10rem;
+                border-radius: 1rem;
+                margin-bottom: 1rem;
+                position: relative;
+            }
+
+                #hero .edit-project .edit-project-form .edit-image img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 1rem;
+                    -o-object-fit: cover;
+                    object-fit: cover;
+                }
+
+                #hero .edit-project .edit-project-form .edit-image i {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 3rem;
+                    height: 3rem;
+                    background-color: rgba(99, 112, 133, 0.8);
+                    border-radius: 50%;
+                    color: #ffffff;
+                    position: absolute;
+                    bottom: 1rem;
+                }
 
             #hero .edit-project .edit-project-form .name-container {
                 display: flex;
@@ -1396,15 +1403,21 @@ i {
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 1rem;
             }
+
+                #hero .delete-project .delete-container .delete-info img {
+                    width: 10rem;
+                    height: 10rem;
+                    border-radius: 1rem;
+                    -o-object-fit: cover;
+                    object-fit: cover;
+                }
 
             #hero .delete-project .delete-container .delete-bottom {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 1rem;
             }
 
                 #hero .delete-project .delete-container .delete-bottom .delete-btns {

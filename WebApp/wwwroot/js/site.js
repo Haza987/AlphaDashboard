@@ -375,6 +375,7 @@ async function showProjectInfoModal(projectId) {
         if (response.ok) {
             const project = await response.json();
             modal.querySelector("#project-id-custom").textContent = project.projectId;
+            modal.querySelector("#project-image").src = project.projectImageFilePath;
             modal.querySelector("#project-name").textContent = project.projectName;
             modal.querySelector("#project-client").textContent = project.clientName;
             modal.querySelector("#project-description").textContent = project.projectDescription;
@@ -611,6 +612,11 @@ async function showEditProjectModal(projectId, event) {
             const idInput = modal.querySelector("input[name='id']");
             if (idInput) {
                 idInput.value = project.id;
+            }
+
+            const imageElement = modal.querySelector("#project-image")
+            if (imageElement) {
+                imageElement.src = project.projectImageFilePath
             }
 
             const titleElement = modal.querySelector("#project-id");

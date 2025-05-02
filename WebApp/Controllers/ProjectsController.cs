@@ -135,6 +135,7 @@ namespace WebApp.Controllers
             {
                 id = project.Id,
                 ProjectId = project.ProjectId,
+                ProjectImageFilePath = project.ProjectImageFilePath,
                 ProjectName = project.ProjectName,
                 ClientName = project.ClientName,
                 ProjectDescription = project.ProjectDescription,
