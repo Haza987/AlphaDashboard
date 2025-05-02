@@ -13,6 +13,7 @@ public class MemberEntity
     public string JobTitle { get; set; } = null!;
     public string Address { get; set; } = null!;
     public DateOnly DateOfBirth { get; set; }
+    public string? MemberImageFilePath { get; set; }
 
     public ICollection<ProjectEntity>? Projects { get; set; } = [];
 }

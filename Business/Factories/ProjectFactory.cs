@@ -14,6 +14,7 @@ public class ProjectFactory
         return new ProjectEntity
         {
             ProjectId = dto.ProjectId!,
+            ProjectImageFilePath = dto.ProjectImageFilePath,
             ProjectName = dto.ProjectName,
             ClientName = dto.ClientName,
             ProjectDescription = dto.ProjectDescription,
@@ -31,6 +32,7 @@ public class ProjectFactory
         {
             Id = entity.Id,
             ProjectId = entity.ProjectId,
+            ProjectImageFilePath = entity.ProjectImageFilePath,
             ProjectName = entity.ProjectName,
             ClientName = entity.ClientName,
             ProjectDescription = entity.ProjectDescription,
@@ -49,6 +51,7 @@ public class ProjectFactory
 
     public static ProjectEntity UpdateProject(ProjectEntity projectEntity, ProjectUpdateDto projectUpdate)
     {
+        projectEntity.ProjectImageFilePath = projectUpdate.ProjectImageFilePath ?? projectEntity.ProjectImageFilePath;
         projectEntity.ProjectName = projectUpdate.ProjectName ?? projectEntity.ProjectName;
         projectEntity.ClientName = projectUpdate.ClientName ?? projectEntity.ClientName;
         projectEntity.ProjectDescription = projectUpdate.ProjectDescription ?? projectEntity.ProjectDescription;

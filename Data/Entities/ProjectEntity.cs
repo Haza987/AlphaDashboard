@@ -7,6 +7,7 @@ public class ProjectEntity
     [Key]
     public int Id { get; set; }
     public string ProjectId { get; set; } = null!;
+    public string? ProjectImageFilePath { get; set; }
     public string ProjectName { get; set; } = null!;
     public string ClientName { get; set; } = null!;
     public string ProjectDescription { get; set; } = null!;

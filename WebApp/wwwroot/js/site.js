@@ -493,13 +493,17 @@ if (addProjectForm) {
     addProjectForm.addEventListener("submit", (event) => {
         const form = event.target;
 
+        console.log("Submitting project creation form...");
+
         // Ensure at least one member is selected
         const memberError = document.getElementById("member-error");
         if (selectedMembers.size === 0) {
+            console.log("[ERROR] No members selected.");
             memberError.style.display = "block";
             event.preventDefault();
             return;
         } else {
+            console.log("Members selected:", Array.from(selectedMembers));
             memberError.style.display = "none";
         }
 
@@ -515,6 +519,8 @@ if (addProjectForm) {
             input.value = memberId;
             form.appendChild(input);
         });
+
+        console.log("Form data prepared for submission.");
     });
 }
 
@@ -726,6 +732,11 @@ async function showDeleteProjectModal(projectId, event) {
             const nameElement = modal.querySelector("#project-name");
             if (nameElement) {
                 nameElement.textContent = `${project.projectName}`;
+            }
+
+            const imageElement = modal.querySelector("#project-image")
+            if (imageElement) {
+                imageElement.src = project.projectImageFilePath
             }
         }
         modal.style.display = "flex";
@@ -980,8 +991,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     fileInput.addEventListener("change", (e) => {
+        console.log("File selected:", e.target.files[0]?.name || "No file selected");
         const file = e.target.files[0];
-        console.log("Selected file:", file); // Log the selected file
         const circle = document.querySelector("#circle-container");
         const img = document.querySelector("#image-preview");
         const previewContainer = document.querySelector(".image-preview-container");
@@ -989,7 +1000,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = function (event) {
-                console.log("FileReader result:", event.target.result);
                 img.src = event.target.result;
                 img.classList.remove("d-none");
                 circle.classList.add("d-none");

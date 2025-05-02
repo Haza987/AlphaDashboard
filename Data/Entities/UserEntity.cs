@@ -10,5 +10,7 @@ public class UserEntity : IdentityUser
     [ProtectedPersonalData]
     public string LastName { get; set; } = null!;
 
+    public string? UserImageFilePath { get; set; }
+
     public string Role { get; set; } = null!;
 }

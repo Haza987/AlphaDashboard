@@ -809,6 +809,14 @@ i {
                 gap: 1rem;
             }
 
+                #hero .project-main .project-card .project-top img {
+                    width: 7rem;
+                    height: 7rem;
+                    border-radius: 1rem;
+                    -o-object-fit: cover;
+                    object-fit: cover;
+                }
+
                 #hero .project-main .project-card .project-top .project-info .project-title {
                     margin-bottom: -0.5rem;
                     color: var(--heading);

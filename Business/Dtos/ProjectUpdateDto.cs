@@ -4,6 +4,7 @@ public class ProjectUpdateDto
 {
     public int id { get; set; }
     public string? ProjectId { get; set; }
+    public string? ProjectImageFilePath { get; set; }
     public string? ProjectName { get; set; }
     public string? ClientName { get; set; }
     public string? ProjectDescription { get; set; }

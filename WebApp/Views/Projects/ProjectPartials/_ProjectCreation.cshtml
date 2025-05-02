@@ -8,9 +8,11 @@
             <button class="btn-close"><i class="fa-solid fa-times close" id="project-close-button"></i></button>
         </div>
 
-        <partial name="Partials/_FileUpload" model="Model.FileUploadViewModel" />
         
-        <form class="add-project-form" name="createProject" asp-action="CreateProject" method="post" onsubmit="validateProject()">
+        <form class="add-project-form" name="createProject" asp-action="CreateProject" method="post" enctype="multipart/form-data" onsubmit="validateProject()">
+
+        <partial name="Partials/_FileUpload" model="Model.FileUploadViewModel" />
+
             <div class="name-container">
                 <label asp-for="ProjectName"></label>
                 <input asp-for="ProjectName" name="projectName" type="text" id="project-name" placeholder="Project name"/>

@@ -4,7 +4,7 @@
 
 <div class="project-card" onclick="showProjectInfoModal(@Model.Id, event)">
     <div class="project-top">
-        <img class="project-img" alt="project image" src="">
+        <img class="project-img" alt="project image" src="@Model.ProjectImageFilePath">
         <div class="project-info">
             <h4 class="project-title">@Model.ProjectName</h4>
             <p class="project-company">@Model.ClientName</p>
