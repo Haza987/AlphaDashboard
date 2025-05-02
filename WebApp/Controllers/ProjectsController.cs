@@ -162,12 +162,22 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProject(int id, ProjectUpdateDto dto)
+        public async Task<IActionResult> UpdateProject(int id, ProjectUpdateDto dto, IFormFile? file)
         {
             dto.Members = dto.Members?.Distinct().ToList();
 
             if (ModelState.IsValid)
             {
+                var project = await _projectService.GetProjectByIdAsync(id);
+
+                string? newImagePath = project!.ProjectImageFilePath;
+                if (file != null && file.Length > 0)
+                {
+                    newImagePath = await _fileService.UpdateFileAsync(file, "ProjectImages", project.ProjectImageFilePath);
+                }
+
+                dto.ProjectImageFilePath = newImagePath;
+
                 var result = await _projectService.UpdateProjectAsync(id, dto);
 
                 if (result)

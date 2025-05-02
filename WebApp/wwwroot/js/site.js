@@ -609,14 +609,15 @@ async function showEditProjectModal(projectId, event) {
 
         if (project) {
 
+            const imagePreview = modal.querySelector("#image-preview");
+
+            if (project.projectImageFilePath) {
+                imagePreview.src = project.projectImageFilePath;
+            }
+
             const idInput = modal.querySelector("input[name='id']");
             if (idInput) {
                 idInput.value = project.id;
-            }
-
-            const imageElement = modal.querySelector("#project-image")
-            if (imageElement) {
-                imageElement.src = project.projectImageFilePath
             }
 
             const titleElement = modal.querySelector("#project-id");
@@ -988,12 +989,12 @@ function validateSignUp() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.querySelector("#file");
-    const addImageDiv = document.querySelector(".add-image");
+    const addImageContainer = document.querySelector(".add-image-container");
 
-    if (!fileInput || !addImageDiv) return;
+    if (!fileInput || !addImageContainer) return;
 
     addImageDiv.addEventListener("click", () => {
-        fileInput.click();
+        addImageContainer.click();
     })
 
     fileInput.addEventListener("change", (e) => {
@@ -1021,3 +1022,29 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // end of file upload scripts
+
+// file update scripts
+document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.querySelector("#file");
+    const updateImageContainer = document.querySelector(".update-image-container");
+    const imagePreview = document.querySelector("#image-preview");
+
+    if (!fileInput || !updateImageContainer || !imagePreview) return;
+    updateImageContainer.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                imagePreview.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+
+// end of file update scripts

@@ -7,11 +7,12 @@
             <button class="btn-close"><i class="fa-solid fa-times close" id="close-button"></i></button>
         </div>
 
-        <div class="edit-image">
-            <i class="fa-duotone fa-solid fa-pencil"></i>
-        </div>
 
-        <form class="edit-project-form" asp-action="UpdateProject" method="post">
+        <form class="edit-project-form" asp-action="UpdateProject" method="post" enctype="multipart/form-data">
+        
+        <div class="edit-image">
+                <partial name="Partials/_FileUpdate" model="new FileUploadViewModel {FilePath = Model.ProjectImageFilePath}" />
+        </div>
 
             <input type="hidden" name="id" value="@ViewData["ProjectId"]" />
 

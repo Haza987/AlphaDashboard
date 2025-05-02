@@ -30,4 +30,23 @@ public class FileService(IWebHostEnvironment env) : IFileService
 
         return $"/uploads/{folderName}/{fileName}";
     }
+
+    public async Task<string?> UpdateFileAsync(IFormFile newFile, string foldername, string? oldFilePath)
+    {
+        if (newFile == null || newFile.Length == 0)
+        {
+            return oldFilePath;
+        }
+
+        if (!string.IsNullOrEmpty(oldFilePath))
+        {
+            var oldFileFullPath = Path.Combine(_env.WebRootPath, oldFilePath.TrimStart('/'));
+            if (File.Exists(oldFileFullPath))
+            {
+                File.Delete(oldFileFullPath);
+            }
+        }
+        
+        return await SaveFileAsync(newFile, foldername);
+    }
 }
