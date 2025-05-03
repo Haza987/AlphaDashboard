@@ -1,0 +1,64 @@
+﻿<div id="cookie-modal">
+    <div class="cookie-card">
+        <div class="cookie-content">
+            <h3>Cookie Consent</h3>
+            <p>We use cookies to improve your browsing experience, analyze site traffic, and personalize content. By continuing to use our site, you consent to our use of cookies.</p>
+            <p>Cookies help us understand how you use our site and improve your experience. You can choose to disable cookies through your browser settings at any time, though this may affect site functionality.</p>
+            <p>For more information about how we use cookies and how you can control them, please review our <a href="#">Privacy Policy</a>.</p>
+        </div>
+
+        <form id="cookie-consent-form" class="cookie-consent">
+            <h4>Cookie Preference</h4>
+            <div class="cookie-options">
+                <div class="cookie-option">
+                    <label class="switch-label" for="cookie-essentials">
+                        <i class="fa-duotone fa-solid fa-chevron-down"></i>
+                        Necessary (always active)
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="cookie-essentials" name="essentials" checked disabled>
+                        <span class="switch-slider round"></span>
+                    </label>
+                </div>
+                <div class="cookie-option">
+                    <label class="switch-label" for="cookie-functional">
+                        <i class="fa-duotone fa-solid fa-chevron-down"></i>
+                        Functional
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="cookie-functional" name="functional">
+                        <span class="switch-slider round"></span>
+                    </label>
+                </div>
+                <div class="cookie-option">
+                    <label class="switch-label" for="cookie-analytics">
+                        <i class="fa-duotone fa-solid fa-chevron-down"></i>
+                        Analytics and statistics
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="cookie-analytics" name="analytics">
+                        <span class="switch-slider round"></span>
+                    </label>
+                </div>
+                <div class="cookie-option">
+                    <label class="switch-label" for="cookie-marketing">
+                        <i class="fa-duotone fa-solid fa-chevron-down"></i>
+                        Marketing
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="cookie-marketing" name="marketing">
+                        <span class="switch-slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="cookie-buttons">
+                <button type="button" class="btn btn--cookie" onclick="acceptAll()">Accept all</button>
+                <button type="submit" class="btn btn--cookie" onclick="acceptSelected() ">Save Preferences</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="cookie-icon" onclick="showCookieModal()">
+    <i class="fa-duotone fa-solid fa-cookie-bite"></i>
+</div>

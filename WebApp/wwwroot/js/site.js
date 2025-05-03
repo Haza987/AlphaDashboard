@@ -1114,8 +1114,4 @@ function fileUpload() {
     });
 }
 
-
 // end of file upload scripts
-
-
-

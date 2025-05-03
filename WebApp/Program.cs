@@ -32,6 +32,12 @@ builder.Services.AddScoped<ProjectFactory>();
 
 builder.Services.AddScoped<IFileService, FileService>();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => !context.Request.Cookies.ContainsKey("cookieConsent");
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+});
+
 builder.Services.ConfigureApplicationCookie(x =>
 {
     x.LoginPath = "/Auth/SignIn";
@@ -65,6 +71,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 
