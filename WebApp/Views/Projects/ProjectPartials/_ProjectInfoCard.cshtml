@@ -1,5 +1,9 @@
 ﻿@model ProjectUpdateDto
 
+@{
+    var isAdmin = (await authorizationService.AuthorizeAsync(User, "Admin")).Succeeded;
+}
+
 <div class="over-box">
     <div class="over-box-content">
         <div class="project-info-card-top">
@@ -57,11 +61,14 @@
                 </div>
             </div>
 
-            <div class="project-info-card-bottom">
-                <input id="is-completed-input" name="IsCompleted" type="hidden" />
-                <button class="btn btn--completed" type="submit" onclick="setIsCompleted(true)">Completed</button>
-                <button class="btn btn--not-completed" type="submit" onclick="setIsCompleted(false)">Not Completed</button>
-            </div>
+            @if (isAdmin)
+            {
+                <div class="project-info-card-bottom">
+                    <input id="is-completed-input" name="IsCompleted" type="hidden" />
+                    <button class="btn btn--completed" type="submit" onclick="setIsCompleted(true)">Completed</button>
+                    <button class="btn btn--not-completed" type="submit" onclick="setIsCompleted(false)">Not Completed</button>
+                </div>
+            }
         </form>
     </div>
 </div>
