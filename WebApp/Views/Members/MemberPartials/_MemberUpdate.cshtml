@@ -56,7 +56,7 @@
             <div class="date-of-birth-container">
                 <div class="day-container">
                     <label for="member-day">Day</label>
-                    <select id="member-day" onchange="addDateOfBirth()">
+                    <select class="dob-select" id="member-day" onchange="addDateOfBirth()">
                         <option value="">Day</option>
                         @for (int i = 1; i <= 31; i++)
                         {
@@ -74,7 +74,7 @@
 
                 <div class="month-container">
                     <label for="member-month">Month</label>
-                    <select id="member-month" onchange="addDateOfBirth()">
+                    <select class="dob-select" id="member-month" onchange="addDateOfBirth()">
                         <option value="">Month</option>
                         @for (int i = 1; i <= 12; i++)
                         {
@@ -92,7 +92,7 @@
 
                 <div class="year-container">
                     <label for="member-year">Year</label>
-                    <select id="member-year" onchange="addDateOfBirth()">
+                    <select class="dob-select" id="member-year" onchange="addDateOfBirth()">
                         <option value="">Year</option>
                         @for (int i = DateTime.Now.Year; i >= 1900; i--)
                         {

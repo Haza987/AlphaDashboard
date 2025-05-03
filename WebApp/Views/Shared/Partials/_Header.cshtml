@@ -8,7 +8,8 @@
         <i class="fa-duotone fa-solid fa-bell"></i>
         <span class="notification-indicator"></span>
     </div>
-    <i class="fa-duotone fa-solid fa-gear"></i>
+
+    <i onclick="showSettingsModal(this)" class="fa-duotone fa-solid fa-gear"></i>
 
     <div class="notification-container">
         <div class="notification-container-top">
@@ -50,12 +51,14 @@
     <div class="dark-mode">
         <i class="fa-duotone fa-solid fa-moon"></i>
         <p>Dark Mode</p>
-        <input type="checkbox" id="custom-checkbox" class="custom-checkbox">
-        <label for="dark-mode" class="custom-slider"></label>
+        <label class="toggle-switch">
+            <input type="checkbox" id="custom-checkbox" class="custom-checkbox">
+            <span class="custom-slider round"></span>
+        </label>
     </div>
 
-    <div class="logout">
+    <a class="logout" asp-action="SignOut" asp-controller="Auth">
         <i class="fa-duotone fa-solid fa-sign-out"></i>
         <p>Logout</p>
-    </div>
+    </a>
 </div>

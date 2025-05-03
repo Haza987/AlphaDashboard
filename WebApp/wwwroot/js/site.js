@@ -1,4 +1,75 @@
-﻿// Member scripts
+﻿// Theme scripts
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+
+    document.documentElement.setAttribute("data-theme", newTheme);
+
+    localStorage.setItem("theme", newTheme);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const checkbox = document.getElementById("custom-checkbox");
+    const savedTheme = localStorage.getItem("theme") || "light";
+
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    checkbox.checked = savedTheme === "dark";
+
+    checkbox.addEventListener("change", toggleTheme);
+});
+
+// End of theme scripts
+
+
+// Header scripts
+
+function showSettingsModal(icon) {
+    const modal = document.querySelector(".user-container");
+
+    if (modal) {
+
+        if (modal.style.display === "grid") {
+            modal.style.display = "none";
+            console.log("Modal closed.");
+            document.removeEventListener("click", closeSettingsModal);
+        } else {
+            modal.style.display = "grid";
+            console.log("Modal opened.");
+            document.addEventListener("click", closeSettingsModal);
+        }
+    }
+}
+
+function hideSettingsModal() {
+    const modals = document.querySelectorAll(".user-container");
+    modals.forEach((modal) => {
+        modal.style.display = "none";
+    });
+    // Remove the event listener when modal is closed
+    document.removeEventListener("click", closeSettingsModal);
+}
+
+function closeSettingsModal(event) {
+    const modal = document.querySelector(".user-container");
+    console.log("Close modal triggered:", event.target);
+    if (modal && !modal.contains(event.target) && !event.target.classList.contains("fa-gear")) {
+        modal.style.display = "none";
+        console.log("Modal display set to none.");
+        document.removeEventListener("click", closeSettingsModal);
+    }
+}
+
+// End of header scripts
+
+
+// Member scripts
 
 // Member more modal
 
