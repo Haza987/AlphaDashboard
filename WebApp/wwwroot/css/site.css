@@ -268,23 +268,22 @@ i {
             color: var(--dark-red);
         }
 
-/* Global Scrollbar Styles */
 *::-webkit-scrollbar {
-    width: 8px; /* Width of the scrollbar */
+    width: 8px;
 }
 
 *::-webkit-scrollbar-track {
-    background: var(--surface); /* Match the background color */
-    border-radius: 4px; /* Optional: round the edges */
+    background: var(--surface);
+    border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background: var(--gray-300); /* Color of the scrollbar thumb */
-    border-radius: 4px; /* Optional: round the edges */
+    background: var(--gray-300);
+    border-radius: 4px;
 }
 
     *::-webkit-scrollbar-thumb:hover {
-        background: var(--gray-400); /* Color when hovered */
+        background: var(--gray-400);
     }
 
 #admin-signin {
@@ -1043,7 +1042,6 @@ i {
 
     #hero .project-info-card {
         display: none;
-        /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
     }
 
         #hero .project-info-card .project-info-card-top {
@@ -1157,7 +1155,6 @@ i {
         }
 
     #hero .add-project {
-        /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
         display: flex;
     }
 
@@ -1352,7 +1349,6 @@ i {
 
     #hero .edit-project {
         display: none;
-        /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
     }
 
         #hero .edit-project .edit-project-top {

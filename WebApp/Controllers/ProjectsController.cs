@@ -116,8 +116,6 @@ namespace WebApp.Controllers
                 return NotFound($"Project with ID {id} not found.");
             }
 
-            Debug.WriteLine($"ProjectImageFilePath: {project.ProjectImageFilePath}");
-
             return Json(project);
         }
 

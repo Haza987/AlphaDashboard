@@ -37,11 +37,9 @@ function showSettingsModal(icon) {
 
         if (modal.style.display === "grid") {
             modal.style.display = "none";
-            console.log("Modal closed.");
             document.removeEventListener("click", closeSettingsModal);
         } else {
             modal.style.display = "grid";
-            console.log("Modal opened.");
             document.addEventListener("click", closeSettingsModal);
         }
     }
@@ -58,10 +56,8 @@ function hideSettingsModal() {
 
 function closeSettingsModal(event) {
     const modal = document.querySelector(".user-container");
-    console.log("Close modal triggered:", event.target);
     if (modal && !modal.contains(event.target) && !event.target.classList.contains("fa-gear")) {
         modal.style.display = "none";
-        console.log("Modal display set to none.");
         document.removeEventListener("click", closeSettingsModal);
     }
 }
@@ -76,12 +72,11 @@ function closeSettingsModal(event) {
 function showMemberMoreModal(icon) {
     hideMemberMoreModal();
 
-    const container = icon.closest(".members-container"); // Find the closest parent container
-    const modal = container.querySelector(".member-more-modal"); // Find the modal within the container
+    const container = icon.closest(".members-container");
+    const modal = container.querySelector(".member-more-modal");
     if (modal) {
         modal.style.display = "flex";
 
-        // Add event listener to close modal when clicking outside
         document.addEventListener("click", closeMemberMoreModal);
     }
 }
@@ -92,7 +87,6 @@ function hideMemberMoreModal() {
         modal.style.display = "none";
     });
 
-    // Remove the event listener when modal is closed
     document.removeEventListener("click", closeMemberMoreModal);
 }
 
@@ -420,7 +414,6 @@ function hideProjectMoreModal() {
         modal.style.display = "none";
     });
 
-    // Remove the event listener when modal is closed
     document.removeEventListener("click", closeProjectMoreModal);
 }
 
@@ -497,7 +490,7 @@ const projectInfoCardForm = document.querySelector(".project-info-card-form");
 
 if (projectInfoCardForm) {
     projectInfoCardForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
         const form = event.target;
         const formData = new FormData(form);
@@ -508,7 +501,7 @@ if (projectInfoCardForm) {
             });
 
             if (response.ok) {
-                location.reload(); // Reload the page on success
+                location.reload();
             } else {
                 console.error("Failed to update project status.");
             }
@@ -584,16 +577,12 @@ if (addProjectForm) {
     addProjectForm.addEventListener("submit", (event) => {
         const form = event.target;
 
-        console.log("Submitting project creation form...");
-
         const memberError = document.getElementById("member-error");
         if (selectedMembers.size === 0) {
-            console.log("[ERROR] No members selected.");
             memberError.style.display = "block";
             event.preventDefault();
             return;
         } else {
-            console.log("Members selected:", Array.from(selectedMembers));
             memberError.style.display = "none";
         }
 
@@ -608,8 +597,6 @@ if (addProjectForm) {
             input.value = memberId;
             form.appendChild(input);
         });
-
-        console.log("Form data prepared for submission.");
     });
 }
 
@@ -626,7 +613,6 @@ function updateSelectedMembers(dropdownId, containerId) {
 
     // Ignore the default option
     if (selectedMemberId === "-- Assign members --" || !selectedMemberName) {
-        console.error("[ERROR] Member ID or Name is invalid.");
         return;
     }
 
@@ -648,28 +634,20 @@ function updateSelectedMembers(dropdownId, containerId) {
     `;
 
         container.querySelector(".selected-members-container").appendChild(memberDiv);
-        console.log(`Member added: ID=${selectedMemberId}, Name=${selectedMemberName}`);
     }
 }
 function removeSelectedMember(memberId, containerId) {
-    // Remove the member from the selectedMembers set
+
     selectedMembers.delete(memberId);
 
-    // Find the container where the member div is located
     const container = document.getElementById(containerId);
 
-    // Find the specific member div within the container
     const memberDiv = container.querySelector(`.selected-member[data-id="${memberId}"]`);
 
-    // Remove the member div if it exists
     if (memberDiv) {
         memberDiv.remove();
-        console.log(`Member removed: ID=${memberId}`);
-    } else {
-        console.error(`Member div not found for ID=${memberId}`);
     }
 
-    // Remove the hidden input field for the member
     const hiddenInput = document.querySelector(`input[name="Members"][value="${memberId}"]`);
     if (hiddenInput) {
         hiddenInput.remove();
@@ -796,8 +774,6 @@ if (editProjectForm) {
             if (response.ok) {
                 location.reload();
             } 
-        } catch (error) {
-            console.error("[DEBUG] Error while updating project:", error);
         }
     });
 }
@@ -1084,7 +1060,6 @@ function fileUpload() {
     });
 
     fileInput.addEventListener("change", (e) => {
-        console.log("File upload File selected:", e.target.files[0]?.name || "No file selected");
         const file = e.target.files[0];
         const circle = document.querySelector("#circle-container");
         const img = document.querySelector("#image-preview");
@@ -1123,11 +1098,9 @@ function showNotificationModal() {
     if (modal) {
         if (modal.style.display === "block") {
             modal.style.display = "none";
-            console.log("Notification modal closed.");
             document.removeEventListener("click", closeNotificationModal);
         } else {
             modal.style.display = "block";
-            console.log("Notification modal opened.");
             document.addEventListener("click", closeNotificationModal);
         }
     }
@@ -1139,7 +1112,6 @@ function closeNotificationModal(event) {
 
     if (modal && !modal.contains(event.target) && event.target !== bellIcon) {
         modal.style.display = "none";
-        console.log("Notification modal closed via outside click.");
         document.removeEventListener("click", closeNotificationModal);
     }
 }
