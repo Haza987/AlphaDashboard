@@ -2,6 +2,7 @@
 using Business.Interfaces;
 using Business.Models;
 using Data.Contexts;
+using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,11 +11,12 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class ProjectsController(DataContext context, IProjectService projectService, IFileService fileService) : Controller
+    public class ProjectsController(DataContext context, IProjectService projectService, IFileService fileService, INotificationService notificationService) : Controller
     {
         private readonly DataContext _context = context;
         private readonly IProjectService _projectService = projectService;
         private readonly IFileService _fileService = fileService;
+        private readonly INotificationService _notificationService = notificationService;
 
         [Authorize]
         [Route("projects")]
@@ -63,24 +65,15 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProject(ProjectCreationViewModel form)
         {
-            Debug.WriteLine("Received CreateProject form data:");
-            Debug.WriteLine($"ProjectName: {form.ProjectName}");
-            Debug.WriteLine($"ClientName: {form.ClientName}");
-            Debug.WriteLine($"ProjectDescription: {form.ProjectDescription}");
-            Debug.WriteLine($"StartDate: {form.StartDate}");
-            Debug.WriteLine($"EndDate: {form.EndDate}");
-            Debug.WriteLine($"Budget: {form.Budget}");
-            Debug.WriteLine($"IsCompleted: {form.IsCompleted}");
-            Debug.WriteLine($"Members: {string.Join(", ", form.Members ?? new List<int>())}");
-            Debug.WriteLine($"FileUploadViewModel: {(form.FileUploadViewModel != null ? "Exists" : "Null")}");
-            Debug.WriteLine($"FileUploadViewModel.File: {(form.FileUploadViewModel?.File != null ? form.FileUploadViewModel.File.FileName : "No file uploaded")}");
-
-
             if (ModelState.IsValid)
             {
-                string? uploadedFilePath = null;
+                string uploadedFilePath;
 
-                if (form.FileUploadViewModel?.File != null && form.FileUploadViewModel.File.Length > 0)
+                if (form.FileUploadViewModel?.File == null || form.FileUploadViewModel.File.Length == 0)
+                {
+                    uploadedFilePath = "/images/default-project.svg";
+                }
+                else
                 {
                     uploadedFilePath = await _fileService.SaveFileAsync(form.FileUploadViewModel.File, "ProjectImages") ?? string.Empty;
                 }
@@ -101,8 +94,15 @@ namespace WebApp.Controllers
                 var result = await _projectService.CreateProjectAsync(project);
                 if (result)
                 {
-                    return RedirectToAction("Projects");
+                    var notificationEntity = new NotificationEntity
+                    {
+                        Message = $"Project {project.ProjectName} created.",
+                        NotificationTypeId = 2
+                    };
+
+                    await _notificationService.AddNotificationAsync(notificationEntity);
                 }
+                return RedirectToAction("Projects");            
             }
             return View("ProjectPartials/_ProjectCreation", form);
         }

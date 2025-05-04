@@ -8,10 +8,12 @@ using Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Hubs;
 using WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 
@@ -31,6 +33,7 @@ builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ProjectFactory>();
 
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -115,5 +118,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Homepage}/{id?}")
     .WithStaticAssets();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

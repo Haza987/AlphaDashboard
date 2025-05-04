@@ -586,7 +586,6 @@ if (addProjectForm) {
 
         console.log("Submitting project creation form...");
 
-        // Ensure at least one member is selected
         const memberError = document.getElementById("member-error");
         if (selectedMembers.size === 0) {
             console.log("[ERROR] No members selected.");
@@ -602,7 +601,6 @@ if (addProjectForm) {
             input.remove();
         });
 
-        // Add hidden inputs for each selected member
         selectedMembers.forEach(memberId => {
             const input = document.createElement("input");
             input.type = "hidden";
@@ -653,11 +651,6 @@ function updateSelectedMembers(dropdownId, containerId) {
         console.log(`Member added: ID=${selectedMemberId}, Name=${selectedMemberName}`);
     }
 }
-
-//add this back in when image functionality works
-//<img class="member-icon" src="" alt="Member Image" />
-
-
 function removeSelectedMember(memberId, containerId) {
     // Remove the member from the selectedMembers set
     selectedMembers.delete(memberId);
@@ -1115,3 +1108,165 @@ function fileUpload() {
 }
 
 // end of file upload scripts
+
+
+// Notification scripts
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateRelativeTimes();
+    setInterval(updateRelativeTimes, 60000);
+});
+
+function showNotificationModal() {
+    const modal = document.querySelector(".notification-container");
+
+    if (modal) {
+        if (modal.style.display === "block") {
+            modal.style.display = "none";
+            console.log("Notification modal closed.");
+            document.removeEventListener("click", closeNotificationModal);
+        } else {
+            modal.style.display = "block";
+            console.log("Notification modal opened.");
+            document.addEventListener("click", closeNotificationModal);
+        }
+    }
+}
+
+function closeNotificationModal(event) {
+    const modal = document.querySelector(".notification-container");
+    const bellIcon = document.querySelector(".notification-icon i");
+
+    if (modal && !modal.contains(event.target) && event.target !== bellIcon) {
+        modal.style.display = "none";
+        console.log("Notification modal closed via outside click.");
+        document.removeEventListener("click", closeNotificationModal);
+    }
+}
+
+document.querySelector(".notification-icon i").addEventListener("click", (event) => {
+    event.stopPropagation();
+    showNotificationModal();
+});
+
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/notificationHub")
+    .build();
+
+connection.on("ReceiveNotification", function (notification) {
+    const notificationContainer = document.querySelector('.notification-container-bottom');
+    const icon = notification.icon || "/images/default-user.svg";
+    const message = notification.message || "No message provided.";
+    const created = notification.created ? new Date(notification.created).toISOString() : new Date().toISOString();
+
+    const notificationItem = document.createElement("div");
+    notificationItem.className = "notification";
+    notificationItem.setAttribute("data-id", notification.id);
+    notificationItem.innerHTML = `
+        <img class="image" alt="Notification Icon" src="${icon}">
+        <div class="notification-info">
+            <p class="notification-message">${message}</p>
+            <p class="notification-time" data-created="${created}">${formatRelativeTime(created)}</p>
+        </div>
+        <button class="btn-close" onclick="dismissNotification('${notification.id}')">
+            <i class="fa-solid fa-times close"></i>
+        </button>
+    `;
+    notificationContainer.insertBefore(notificationItem, notificationContainer.firstChild);
+
+    updateNotificationCount();
+    updateRelativeTimes();
+});
+
+connection.on("NotificationDismissed", function (notificationId) {
+    const element = document.querySelector(`.notification[data-id="${notificationId}"]`);
+    if (element) {
+        element.remove();
+        updateNotificationCount();
+    }
+});
+
+connection.start().catch(error => console.error(error))
+
+async function dismissNotification(notificationId) {
+    try {
+        const res = await fetch(`/api/notifications/dismiss/${encodeURIComponent(notificationId)}`, { method: 'POST' });
+        if (res.ok) {
+            removeNotification(notificationId)
+        } else {
+            console.error("Failed to dismiss notification. Status:", res.status);
+        }
+    } catch (error) {
+        console.error("Error dismissing notification:", error);
+    }
+}
+
+
+function removeNotification(notificationId) {
+    const notification = document.querySelector(`.notification[data-id="${notificationId}"]`);
+    if (notification) {
+        notification.remove();
+        updateNotificationCount();
+    }
+}
+
+function removeNotification(notificationId) {
+    const notification = document.querySelector(`.notification[data-id="${notificationId}"]`);
+    if (notification) {
+        notification.remove();
+        updateNotificationCount()
+    }
+}
+
+
+function updateNotificationCount() {
+    const notifications = document.querySelector('.notification-container-bottom')
+    const notificationNumber = document.querySelector('.notification-number')
+    const notificationIcon = document.querySelector('.notification-icon')
+    const count = notifications.querySelectorAll('.notification').length
+
+    if (notificationNumber) {
+        notificationNumber.textContent = count
+    }
+
+    let dot = notificationIcon.querySelector('.notification-indicator')
+    if (count > 0 && !dot) {
+        dot = document.createElement('span')
+        dot.className = 'notification-indicator'
+        notificationIcon.appendChild(dot)
+    }
+
+    if (count === 0 && dot) {
+        dot.remove()
+    }
+}
+
+
+function updateRelativeTimes() {
+    const notificationItems = document.querySelectorAll('.notification-container-bottom .notification');
+    const now = new Date();
+
+    notificationItems.forEach(item => {
+        const created = new Date(item.querySelector('.notification-time').getAttribute('data-created'));
+        const relativeTime = formatRelativeTime(created);
+        item.querySelector('.notification-time').textContent = relativeTime;
+    });
+}
+
+function formatRelativeTime(created) {
+    const now = new Date();
+    const difference = now - new Date(created);
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes} min ago`;
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+}
+// End of notification scripts

@@ -5,15 +5,19 @@ using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
+using WebApp.Hubs;
+using WebApp.ViewModels;
 
-namespace Business.Services;
+namespace WebApp.Services;
 
-public class UserService(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, IUserRepository userRepository, UserFactory userFactory) : IUserService
+public class UserService(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, IUserRepository userRepository, UserFactory userFactory, INotificationService notificationService) : IUserService
 {
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
     private readonly IUserRepository _userRepository = userRepository;
     private readonly UserFactory _userFactory = userFactory;
+    private readonly INotificationService _notificationService = notificationService;
 
     #region CRUD operations
     public async Task<IdentityResult> CreateUserAsync(UserDto dto)
@@ -123,12 +127,24 @@ public class UserService(SignInManager<UserEntity> signInManager, UserManager<Us
     #endregion
 
     #region User operations
-    public async Task<SignInResult> SignInAsync(string email, string password)
+    public async Task<SignInResult> SignInAsync(SignInViewModel model)
     {
-        var user = await _userManager.FindByEmailAsync(email);
-        if (user != null)
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+        if (result.Succeeded)
         {
-            return await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                var notificationEntity = new NotificationEntity
+                {
+                    Message = $"{user.FirstName} {user.LastName} signed in.",
+                    NotificationTypeId = 1
+                };
+
+                await _notificationService.AddNotificationAsync(notificationEntity);
+            }
+            return result;
         }
         return SignInResult.Failed;
     }

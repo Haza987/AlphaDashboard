@@ -617,8 +617,7 @@ i {
         }
 
             #header .header-right .notification-icon .notification-indicator {
-                /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
-                /* display: none; */
+                display: none;
                 position: absolute;
                 top: -0.1rem;
                 right: -0.23rem;
@@ -631,7 +630,6 @@ i {
 
         #header .header-right .notification-container {
             display: none;
-            /* CHANGE WHEN YOU WANT TO EDIT AND USE JAVA TO MAKE AUTOMATIC */
             flex-direction: column;
             position: absolute;
             top: 1.5rem;
@@ -653,7 +651,7 @@ i {
                 align-items: center;
             }
 
-                #header .header-right .notification-container .notification-container-top p {
+                #header .header-right .notification-container .notification-container-top .notification-number {
                     margin-left: auto;
                     display: flex;
                     justify-content: center;
@@ -684,7 +682,13 @@ i {
                     gap: 1rem;
                 }
 
-                    #header .header-right .notification-container .notification-container-bottom .notification .notification-info .notification-title {
+                    #header .header-right .notification-container .notification-container-bottom .notification .image {
+                        width: 3rem;
+                        height: 3rem;
+                        border-radius: 50%;
+                    }
+
+                    #header .header-right .notification-container .notification-container-bottom .notification .notification-info .notification-message {
                         font-size: 15px;
                     }
 

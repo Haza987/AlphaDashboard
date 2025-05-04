@@ -1,4 +1,10 @@
-﻿<div class="header-left">
+﻿@{
+    var userID = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
+    var notifications = await notificationService.GetNotificationsAsync(userID);
+    notifications = notifications.OrderByDescending(n => n.Created);
+}
+
+<div class="header-left">
     <i class="fa-duotone fa-solid fa-magnifying-glass"></i>
     <input class="search" type="text" placeholder="Search anything...">
 </div>
@@ -6,7 +12,10 @@
 <div class="header-right">
     <div class="notification-icon">
         <i class="fa-duotone fa-solid fa-bell"></i>
-        <span class="notification-indicator"></span>
+        @if (notifications.Any())
+        {
+            <span class="notification-indicator"></span>
+        }
     </div>
 
     <i onclick="showSettingsModal(this)" class="fa-duotone fa-solid fa-gear"></i>
@@ -14,28 +23,24 @@
     <div class="notification-container">
         <div class="notification-container-top">
             <h4>Notifications</h4>
-            <p>1</p>
+            <span class="notification-number">@notifications.Count()</span>
         </div>
 
         <div class="notification-container-bottom">
-            <div class="notification">
-                <img class="project-img" alt="project image" src="Images/Avatar2.svg">
-                <div class="notification-info">
-                    <p class="notification-title">Harry Holmes updated</p>
-                    <p class="notification-time">1 min ago</p>
-                </div>
+            @foreach (var notification in notifications)
+            {
+                <div class="notification" data-id="@notification.Id">
+                    <img class="image" alt="Notification Icon" src="@notification.Icon">
+                    <div class="notification-info">
+                        <p class="notification-message">@notification.Message</p>
+                        <p class="notification-time" data-created="@notification.Created.ToString("s")">@notification.Created</p>
+                    </div>
 
-                <button class="btn-close"><i class="fa-solid fa-times close"></i></button>
-            </div>
-
-            <div class="notification">
-                <img class="project-img" alt="project image" src="Images/Avatar5.svg">
-                <div class="notification-info">
-                    <p class="notification-title">Connor Bullen added</p>
-                    <p class="notification-time">3 min ago</p>
+                    <button class="btn-close" onclick="dismissNotification('@notification.Id')">
+                        <i class="fa-solid fa-times close"></i>
+                    </button>
                 </div>
-                <button class="btn-close"><i class="fa-solid fa-times close"></i></button>
-            </div>
+            }
         </div>
     </div>
 </div>

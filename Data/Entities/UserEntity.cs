@@ -13,4 +13,5 @@ public class UserEntity : IdentityUser
     public string? UserImageFilePath { get; set; }
 
     public string Role { get; set; } = null!;
+    public ICollection<NotificationDismissedEntity> DismissedNotifications { get; set; } = [];
 }

@@ -6,15 +6,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using WebApp.Services;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class AuthController(IUserService userService, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager) : Controller
+    public class AuthController(IUserService userService, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, INotificationService notificationService) : Controller
     {
         private readonly IUserService _userService = userService;
         private readonly UserManager<UserEntity> _userManager = userManager;
         private readonly SignInManager<UserEntity> _signInManager = signInManager;
+        private readonly INotificationService _notificationService = notificationService;
 
         #region Local authentication
 
@@ -31,30 +33,28 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(form.Email);
-                if (user == null)
-                {
-                    ModelState.AddModelError("Email", "User does not exist.");
-                    return View(form);
-                }
-
-                var result = await _userService.SignInAsync(form.Email, form.Password);
+                var result = await _userService.SignInAsync(form);
                 if (result.Succeeded)
                 {
-                    var isAdmin = await _userManager.IsInRoleAsync(user!, "Admin");
-
-                    if (isAdmin)
+                    var user = await _userManager.FindByEmailAsync(form.Email);
+                    if (user != null)
                     {
-                        return RedirectToAction("AdminSignIn", "Auth");
-                    }
+                        var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-                    return LocalRedirect(returnUrl);
+                        if (isAdmin)
+                        {
+                            return RedirectToAction("AdminSignIn", "Auth");
+                        }
+
+                        return LocalRedirect(returnUrl);
+                    }
                 }
+
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
+
             return View(form);
         }
-
         [HttpGet]
         public IActionResult SignUp()
         {
@@ -82,7 +82,18 @@ namespace WebApp.Controllers
                     var result = await _userService.CreateUserAsync(user);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("SignIn");
+                        {
+                            var notificationEntity = new NotificationEntity
+                            {
+                                Message = $"{user.FirstName} {user.LastName} was created.",
+                                NotificationTypeId = 1,
+                                NotificationTargetGroupId = 2
+                            };
+
+                            await _notificationService.AddNotificationAsync(notificationEntity);
+                        }
+
+                        return RedirectToAction("SignIn");                   
                     }
                 }
                 else
@@ -106,7 +117,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.SignInAsync(form.Email, form.Password);
+                var result = await _userService.SignInAsync(form);
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(form.Email);
